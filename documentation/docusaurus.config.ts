@@ -7,7 +7,7 @@ import type * as Preset from '@docusaurus/preset-classic';
 const config: Config = {
   title: 'After Hours Desk',
   tagline: 'A confidential OTC dark-pool desk on Nox (iExec), live on Ethereum Sepolia',
-  favicon: 'img/favicon.ico',
+  favicon: 'img/favicon.svg',
 
   future: {
     v4: true,
