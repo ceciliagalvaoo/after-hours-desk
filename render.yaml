@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: after-hours-desk
+    env: static
+    buildCommand: npm ci && npm run compile && cd frontend && npm ci && npm run build
+    staticPublishPath: frontend/dist
+    pullRequestPreviewsEnabled: false
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
