@@ -1,0 +1,86 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(4, 4, 6, 0.72);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 50;
+  padding: 1.5rem;
+}
+
+.modal {
+  width: 100%;
+  max-width: 30rem;
+  background: var(--ahd-bg-raised);
+  border: 1px solid var(--ahd-border);
+  border-radius: var(--ahd-radius);
+  padding: 1.25rem 1.4rem 1.4rem;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+}
+
+.head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+
+.eyebrow {
+  font-family: var(--ahd-font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ahd-yellow);
+}
+
+.closeBtn {
+  background: none;
+  border: none;
+  color: var(--ahd-text-dim);
+  font-size: 1.4rem;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0.1rem 0.4rem;
+}
+
+.closeBtn:hover {
+  color: var(--ahd-text);
+}
+
+.title {
+  font-size: 1.05rem;
+  color: var(--ahd-text);
+  margin-bottom: 0.55rem;
+}
+
+.body {
+  font-size: 0.85rem;
+  line-height: 1.55;
+  color: var(--ahd-text-dim);
+  min-height: 6.5rem;
+}
+
+.dots {
+  display: flex;
+  gap: 0.35rem;
+  justify-content: center;
+  margin: 1rem 0 0.85rem;
+}
+
+.dot {
+  width: 0.4rem;
+  height: 0.4rem;
+  border-radius: 50%;
+  background: var(--ahd-border);
+}
+
+.dotActive {
+  background: var(--ahd-yellow);
+}
+
+.actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.6rem;
+}

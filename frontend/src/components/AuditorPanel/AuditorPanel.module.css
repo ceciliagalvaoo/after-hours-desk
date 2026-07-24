@@ -1,0 +1,97 @@
+.panel {
+  display: flex;
+  flex-direction: column;
+}
+
+.head {
+  padding: 0.9rem 1.1rem;
+  border-bottom: 1px solid var(--ahd-border-soft);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.head h2 {
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.tag {
+  font-family: var(--ahd-font-mono);
+  font-size: 0.68rem;
+  padding: 0.25rem 0.55rem;
+  border-radius: var(--ahd-radius);
+  border: 1px solid var(--ahd-border);
+  color: var(--ahd-text-dim);
+}
+
+.tagAuditor {
+  color: var(--ahd-yellow);
+  border-color: var(--ahd-yellow-dim);
+}
+
+.locked {
+  padding: 1.5rem 1.1rem;
+  color: var(--ahd-text-dim);
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+
+.locked code {
+  font-family: var(--ahd-font-mono);
+  color: var(--ahd-text);
+}
+
+.body {
+  padding: 0.9rem 1.1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0.75rem 0.85rem;
+  border: 1px solid var(--ahd-border-soft);
+  border-radius: var(--ahd-radius);
+}
+
+.rowHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
+.rowActions {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.acl {
+  font-family: var(--ahd-font-mono);
+  font-size: 0.72rem;
+  color: var(--ahd-text-dim);
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.error {
+  color: var(--ahd-danger);
+  font-size: 0.75rem;
+}
+
+.empty {
+  padding: 2rem;
+  text-align: center;
+  color: var(--ahd-text-faint);
+  font-size: 0.8rem;
+}

@@ -1,0 +1,39 @@
+.redacted {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  min-width: 5.5em;
+  height: 1.4em;
+  border-radius: 2px;
+  overflow: hidden;
+  vertical-align: middle;
+}
+
+.real {
+  font-family: var(--ahd-font-mono);
+  white-space: nowrap;
+}
+
+.real--revealed {
+  color: var(--ahd-phosphor);
+}
+
+.bar {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: repeating-linear-gradient(
+    135deg,
+    #1a1a20,
+    #1a1a20 4px,
+    #202028 4px,
+    #202028 8px
+  );
+  color: var(--ahd-text-faint);
+  font-family: var(--ahd-font-mono);
+  font-size: 0.72em;
+  letter-spacing: 0.12em;
+  border: 1px solid var(--ahd-border-soft);
+}

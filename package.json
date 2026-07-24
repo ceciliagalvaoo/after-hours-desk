@@ -1,0 +1,51 @@
+{
+  "name": "after-hours-desk",
+  "version": "0.1.0",
+  "private": true,
+  "description": "After Hours Desk — confidential OTC dark-pool settlement desk on Nox (iExec), referencing a public Uniswap Sepolia pool for pricing. iExec WTF Hackathon (Summer Edition).",
+  "type": "module",
+  "scripts": {
+    "clean": "hardhat clean",
+    "build": "hardhat compile",
+    "compile": "hardhat compile",
+    "test": "hardhat test test/unit/*.test.ts",
+    "test:unit": "hardhat test test/unit/*.test.ts",
+    "test:e2e:sepolia": "npm run e2e:wrap-check:sepolia && npm run e2e:settle-check:sepolia && npm run e2e:auditor-check:sepolia && npm run e2e:price-check:sepolia",
+    "deploy:mock-usdc:sepolia": "hardhat run scripts/deploy/01-deploy-mock-usdc.ts --network sepolia",
+    "deploy:cusdc:sepolia": "hardhat run scripts/deploy/02-deploy-confidential-usdc.ts --network sepolia",
+    "deploy:desk-v1-phase2:sepolia": "hardhat run scripts/deploy/03-deploy-after-hours-desk.ts --network sepolia",
+    "deploy:viewer-registry:sepolia": "hardhat run scripts/deploy/04-deploy-viewer-registry.ts --network sepolia",
+    "deploy:desk-v2-phase3:sepolia": "hardhat run scripts/deploy/05-deploy-after-hours-desk.ts --network sepolia",
+    "deploy:price-reader:sepolia": "hardhat run scripts/deploy/06-deploy-uniswap-price-reader.ts --network sepolia",
+    "deploy:desk:sepolia": "hardhat run scripts/deploy/07-deploy-after-hours-desk.ts --network sepolia",
+    "e2e:wrap-check:sepolia": "hardhat run scripts/e2e/wrap-check.sepolia.ts --network sepolia",
+    "e2e:settle-check:sepolia": "hardhat run scripts/e2e/settle-check.sepolia.ts --network sepolia",
+    "e2e:auditor-check:sepolia": "hardhat run scripts/e2e/auditor-check.sepolia.ts --network sepolia",
+    "e2e:price-check:sepolia": "hardhat run scripts/e2e/price-check.sepolia.ts --network sepolia",
+    "verify:all:sepolia": "hardhat run scripts/verify/verify-all.ts --network sepolia"
+  },
+  "devDependencies": {
+    "@iexec-nox/nox-hardhat-plugin": "^0.1.0",
+    "@nomicfoundation/hardhat-ignition": "^3.1.2",
+    "@nomicfoundation/hardhat-ignition-viem": "^3.0.7",
+    "@nomicfoundation/hardhat-keystore": "^3.0.0",
+    "@nomicfoundation/hardhat-network-helpers": "^3.0.0",
+    "@nomicfoundation/hardhat-node-test-runner": "^3.0.0",
+    "@nomicfoundation/hardhat-toolbox-viem": "^5.0.4",
+    "@nomicfoundation/hardhat-verify": "^3.0.0",
+    "@nomicfoundation/hardhat-viem": "^3.0.4",
+    "@nomicfoundation/hardhat-viem-assertions": "^3.0.5",
+    "@nomicfoundation/ignition-core": "^3.0.7",
+    "@types/node": "^22.11.0",
+    "dotenv-cli": "^11.0.0",
+    "hardhat": "^3.9.0",
+    "typescript": "~5.8.0",
+    "viem": "^2.48.0"
+  },
+  "dependencies": {
+    "@iexec-nox/handle": "^0.1.0-beta.13",
+    "@iexec-nox/nox-confidential-contracts": "^0.2.2",
+    "@iexec-nox/nox-protocol-contracts": "^0.2.4",
+    "@openzeppelin/contracts": "^5.6.1"
+  }
+}

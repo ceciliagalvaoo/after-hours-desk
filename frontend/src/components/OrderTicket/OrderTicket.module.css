@@ -1,0 +1,223 @@
+.panel {
+  display: flex;
+  flex-direction: column;
+}
+
+.head {
+  padding: 0.9rem 1.1rem;
+  border-bottom: 1px solid var(--ahd-border-soft);
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.head h2 {
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.body {
+  padding: 1.1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.balanceRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6rem;
+  padding: 0.6rem 0.75rem;
+  border: 1px solid var(--ahd-border-soft);
+  border-radius: var(--ahd-radius);
+  background: var(--ahd-bg-raised);
+  flex-wrap: wrap;
+}
+
+.balanceLabel {
+  font-size: 0.7rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ahd-text-dim);
+}
+
+.faucetRow {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  padding: 0.6rem 0.75rem;
+  border: 1px dashed var(--ahd-border);
+  border-radius: var(--ahd-radius);
+}
+
+.faucetLabel {
+  font-size: 0.7rem;
+  color: var(--ahd-text-faint);
+  line-height: 1.4;
+}
+
+.faucetControls {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.faucetInput {
+  width: 6rem;
+  padding: 0.45rem 0.6rem;
+  background: var(--ahd-bg);
+  border: 1px solid var(--ahd-border);
+  border-radius: var(--ahd-radius);
+  color: var(--ahd-text);
+  font-size: 0.85rem;
+}
+
+.faucetSuccess {
+  color: var(--ahd-phosphor);
+  font-size: 0.72rem;
+}
+
+.sideToggle {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.sideBtn {
+  flex: 1;
+  padding: 0.6rem;
+  border-radius: var(--ahd-radius);
+  border: 1px solid var(--ahd-border);
+  background: transparent;
+  color: var(--ahd-text-dim);
+  font-family: var(--ahd-font-mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-size: 0.78rem;
+  cursor: pointer;
+}
+
+.sideBtnActiveBuy {
+  border-color: var(--ahd-phosphor);
+  color: var(--ahd-phosphor);
+  box-shadow: 0 0 0 1px var(--ahd-phosphor);
+}
+
+.sideBtnActiveSell {
+  border-color: var(--ahd-amber);
+  color: var(--ahd-amber);
+  box-shadow: 0 0 0 1px var(--ahd-amber);
+}
+
+.inputRow label {
+  display: block;
+  font-size: 0.7rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ahd-text-dim);
+  margin-bottom: 0.35rem;
+}
+
+.input {
+  width: 100%;
+  padding: 0.65rem 0.75rem;
+  background: var(--ahd-bg);
+  border: 1px solid var(--ahd-border);
+  border-radius: var(--ahd-radius);
+  color: var(--ahd-text);
+  font-family: var(--ahd-font-mono);
+  font-size: 1rem;
+}
+
+.input:focus {
+  outline: none;
+  border-color: var(--ahd-yellow-dim);
+}
+
+.hint {
+  font-size: 0.72rem;
+  color: var(--ahd-text-faint);
+  line-height: 1.4;
+}
+
+.error {
+  color: var(--ahd-danger);
+  font-size: 0.78rem;
+}
+
+.actions {
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
+.divider {
+  border-top: 1px solid var(--ahd-border-soft);
+  margin: 0.25rem 0;
+}
+
+.settleRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
+.matchBanner {
+  padding: 0.8rem 1rem;
+  border-radius: var(--ahd-radius);
+  border: 1px solid var(--ahd-yellow);
+  background: rgba(245, 197, 24, 0.08);
+  color: var(--ahd-yellow);
+  font-family: var(--ahd-font-mono);
+  font-size: 0.82rem;
+}
+
+.matchBannerSub {
+  display: block;
+  margin-top: 0.35rem;
+  color: var(--ahd-text-dim);
+  font-size: 0.72rem;
+  line-height: 1.4;
+  text-transform: none;
+  letter-spacing: normal;
+}
+
+.ordersHead {
+  font-size: 0.7rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ahd-text-dim);
+}
+
+.ordersList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  max-height: 260px;
+  overflow-y: auto;
+}
+
+.orderRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6rem;
+  padding: 0.5rem 0.65rem;
+  border: 1px solid var(--ahd-border-soft);
+  border-radius: var(--ahd-radius);
+  font-size: 0.78rem;
+  flex-wrap: wrap;
+}
+
+.orderMeta {
+  color: var(--ahd-text-dim);
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  flex-wrap: wrap;
+}

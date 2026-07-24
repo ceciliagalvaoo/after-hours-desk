@@ -1,0 +1,10 @@
+{
+  "chainId": 11155111,
+  "mockUSDC": "0x68df20bfc035f6496e0593626579d00139aaa49c",
+  "confidentialUSDC": "0x45dd58bea3f072ce8cf704a43abc41be27337e4e",
+  "afterHoursDesk": "0x46b72a2615de7351699dcd5a64b854746a29fdb8",
+  "viewerRegistry": "0x7f5508360b37f41a6cca6c34aca233500b6c1678",
+  "complianceViewer": "0x3e442e77ee3d7514ab6600b539cb76a5a73ec3b0",
+  "uniswapPool": "0x3289680dd4d6c10bb19b899729cda5eef58aeff1",
+  "priceOracle": "0x20f68c8d394dabee5fea08a21a1596eb09c5554e"
+}

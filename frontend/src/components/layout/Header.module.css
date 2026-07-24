@@ -1,0 +1,52 @@
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.85rem 1.5rem;
+  border-bottom: 1px solid var(--ahd-border);
+  background: var(--ahd-bg-raised);
+  flex-wrap: wrap;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.brandText h1 {
+  font-size: 1.05rem;
+  color: var(--ahd-text);
+}
+
+.brandText p {
+  margin: 0;
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  color: var(--ahd-text-dim);
+  text-transform: uppercase;
+}
+
+.mascotSmall {
+  transform: scale(0.55);
+  transform-origin: left center;
+  width: 96px;
+  margin-right: -34px;
+}
+
+.right {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.account {
+  font-family: var(--ahd-font-mono);
+  font-size: 0.75rem;
+  color: var(--ahd-text-dim);
+  padding: 0.35rem 0.6rem;
+  border: 1px solid var(--ahd-border);
+  border-radius: var(--ahd-radius);
+}

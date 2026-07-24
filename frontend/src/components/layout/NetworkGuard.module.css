@@ -1,0 +1,41 @@
+.banner {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.75rem 1.25rem;
+  border-bottom: 1px solid var(--ahd-border);
+  background: var(--ahd-bg-raised);
+}
+
+.bannerBody {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  align-items: flex-start;
+}
+
+.bannerText {
+  max-width: 44rem;
+  color: var(--ahd-text-dim);
+  font-size: 0.82rem;
+  line-height: 1.45;
+}
+
+.meta {
+  font-family: var(--ahd-font-mono);
+  font-size: 0.75rem;
+  color: var(--ahd-text-faint);
+}
+
+.actions {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.error {
+  color: var(--ahd-danger);
+  font-family: var(--ahd-font-mono);
+  font-size: 0.78rem;
+  max-width: 32rem;
+}

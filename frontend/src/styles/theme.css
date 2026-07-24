@@ -1,0 +1,138 @@
+/*
+ * Confidential-Noir global theme.
+ *
+ * Palette: near-black + charcoal background, iExec yellow (#F5C518) as the ONLY action color
+ * (buttons, "MATCH FILLED" pop), phosphor green reserved for live/streaming data (tape, price
+ * strip ticks). Typography: a bold display face for headings, monospace for every number/
+ * handle/address ("terminal of record"). Fonts: JetBrains Mono + Space Grotesk, both loaded from
+ * Google Fonts in index.html (see the file's own "no third-party IP beyond licensed fonts" rule
+ * — no game sprites/characters/logos are used anywhere in this app).
+ */
+
+:root {
+  --ahd-bg: #0b0b0f;
+  --ahd-bg-raised: #131318;
+  --ahd-bg-panel: #17171d;
+  --ahd-border: #2a2a33;
+  --ahd-border-soft: #1e1e25;
+  --ahd-text: #e9e7e0;
+  --ahd-text-dim: #8d8b96;
+  --ahd-text-faint: #55535f;
+
+  --ahd-yellow: #f5c518;
+  --ahd-yellow-dim: #8a7011;
+  --ahd-yellow-glow: rgba(245, 197, 24, 0.35);
+
+  --ahd-phosphor: #3ddc84;
+  --ahd-phosphor-dim: #1f6b42;
+  --ahd-amber: #ffb020;
+
+  --ahd-danger: #e5484d;
+
+  --ahd-font-display: "Space Grotesk", "Segoe UI", sans-serif;
+  --ahd-font-mono: "JetBrains Mono", "Space Mono", ui-monospace, monospace;
+
+  --ahd-radius: 3px;
+  --ahd-shadow-panel: 0 0 0 1px var(--ahd-border), 0 8px 24px rgba(0, 0, 0, 0.45);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--ahd-bg);
+  color: var(--ahd-text);
+  font-family: var(--ahd-font-display);
+  -webkit-font-smoothing: antialiased;
+  background-image:
+    radial-gradient(circle at 20% 0%, rgba(245, 197, 24, 0.04), transparent 45%),
+    radial-gradient(circle at 100% 100%, rgba(61, 220, 132, 0.03), transparent 40%);
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--ahd-font-display);
+  letter-spacing: 0.01em;
+  margin: 0;
+}
+
+button {
+  font-family: inherit;
+}
+
+.mono {
+  font-family: var(--ahd-font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+.ahd-panel {
+  background: var(--ahd-bg-panel);
+  border: 1px solid var(--ahd-border);
+  border-radius: var(--ahd-radius);
+  box-shadow: var(--ahd-shadow-panel);
+}
+
+.ahd-btn {
+  font-family: var(--ahd-font-mono);
+  font-size: 0.8rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 0.55rem 1rem;
+  border-radius: var(--ahd-radius);
+  border: 1px solid var(--ahd-yellow-dim);
+  background: transparent;
+  color: var(--ahd-yellow);
+  cursor: pointer;
+  transition: background-color 120ms ease, color 120ms ease, box-shadow 120ms ease;
+}
+
+.ahd-btn:hover:not(:disabled) {
+  background: var(--ahd-yellow);
+  color: #14120a;
+  box-shadow: 0 0 0 1px var(--ahd-yellow), 0 0 18px var(--ahd-yellow-glow);
+}
+
+.ahd-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.ahd-btn--primary {
+  background: var(--ahd-yellow);
+  color: #14120a;
+  border-color: var(--ahd-yellow);
+}
+
+.ahd-btn--primary:hover:not(:disabled) {
+  filter: brightness(1.08);
+}
+
+.ahd-btn--ghost {
+  border-color: var(--ahd-border);
+  color: var(--ahd-text-dim);
+}
+
+.ahd-btn--ghost:hover:not(:disabled) {
+  background: var(--ahd-bg-raised);
+  color: var(--ahd-text);
+  box-shadow: none;
+}
+
+.ahd-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: var(--ahd-border) transparent;
+}
+
+a {
+  color: var(--ahd-phosphor);
+}

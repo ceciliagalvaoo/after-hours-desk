@@ -1,0 +1,45 @@
+.strip {
+  padding: 0.9rem 1.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.left {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.tag {
+  font-size: 0.62rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ahd-phosphor);
+}
+
+.pair {
+  font-size: 0.8rem;
+  color: var(--ahd-text-dim);
+}
+
+.price {
+  font-family: var(--ahd-font-mono);
+  font-size: 1.35rem;
+  color: var(--ahd-phosphor);
+  text-shadow: 0 0 12px rgba(61, 220, 132, 0.35);
+}
+
+.meta {
+  font-family: var(--ahd-font-mono);
+  font-size: 0.68rem;
+  color: var(--ahd-text-faint);
+  text-align: right;
+}
+
+.error {
+  color: var(--ahd-danger);
+  font-size: 0.75rem;
+}
