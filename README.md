@@ -4,12 +4,13 @@
 
 **A confidential OTC dark-pool settlement desk, built on Nox (iExec), live on Ethereum Sepolia.**
 
+[![Live app](https://img.shields.io/badge/live%20app-after--hours--desk.onrender.com-46b72a)](https://after-hours-desk.onrender.com)
 [![Network](https://img.shields.io/badge/network-Ethereum%20Sepolia-8c7ae6)](https://sepolia.etherscan.io/address/0x46b72a2615de7351699dcd5a64b854746a29fdb8)
 [![Solidity](https://img.shields.io/badge/solidity-0.8.35-363636)](contracts/)
 [![Hackathon](https://img.shields.io/badge/iExec-WTF%20Hackathon-F5C518)](https://dorahacks.io/hackathon/iexec-wtf)
 [![License](https://img.shields.io/badge/license-MIT-blue)](#license)
 
-📖 [Full documentation](#documentation) · 🧾 [`feedback.md`](feedback.md) · 🖥️ [Frontend](frontend/)
+🚀 [**Live app**](https://after-hours-desk.onrender.com) · 📖 [Full documentation](#documentation) · 🧾 [`feedback.md`](feedback.md) · 🖥️ [Frontend source](frontend/)
 
 </div>
 
@@ -121,6 +122,10 @@ npm run verify:all:sepolia           # re-verifies every deployed contract, safe
 ```
 
 ## Running the frontend
+
+Live, already-deployed instance — no setup required: **[after-hours-desk.onrender.com](https://after-hours-desk.onrender.com)**.
+
+To run it locally instead:
 
 ```bash
 cd frontend

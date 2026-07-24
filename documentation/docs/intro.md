@@ -10,6 +10,9 @@ slug: /
 Built by [Cecília Galvão](https://github.com/ceciliagalvaoo) and [Pablo Azevedo](https://github.com/zzaved)
 for the **iExec WTF Hackathon (Summer Edition)**.
 
+🚀 **[Try the live app →](https://after-hours-desk.onrender.com)** — no setup required, the public tape and
+Uniswap price strip render real Sepolia data immediately, even without a wallet.
+
 :::tip Live and verified
 Every contract referenced in this documentation is deployed and verified on Ethereum Sepolia
 today. Every screenshot is a real screenshot of the real application, running against those real

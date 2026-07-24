@@ -65,6 +65,11 @@ const config: Config = {
           label: 'Documentation',
         },
         {
+          href: 'https://after-hours-desk.onrender.com',
+          label: 'Live app',
+          position: 'right',
+        },
+        {
           href: 'https://github.com/ceciliagalvaoo/after-hours-desk',
           label: 'GitHub',
           position: 'right',
@@ -91,6 +96,7 @@ const config: Config = {
         {
           title: 'Project',
           items: [
+            {label: 'Live app', href: 'https://after-hours-desk.onrender.com'},
             {label: 'GitHub Repository', href: 'https://github.com/ceciliagalvaoo/after-hours-desk'},
             {label: 'feedback.md', href: 'https://github.com/ceciliagalvaoo/after-hours-desk/blob/master/feedback.md'},
             {label: 'Live contract (Etherscan)', href: 'https://sepolia.etherscan.io/address/0x46b72a2615de7351699dcd5a64b854746a29fdb8'},
