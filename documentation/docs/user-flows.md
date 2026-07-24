@@ -32,11 +32,24 @@ data that doesn't exist — until the trader clicks "Decrypt."
 New wallets with no cUSDC yet can use "Get testnet cUSDC," which chains three real transactions
 (`faucet` → `approve` → `wrap`) automatically — no pre-funded account or Etherscan required.
 
+Clicking "Decrypt" triggers a real MetaMask **signature request**, not a transaction — no gas, no
+network fee. This is `handleClient.decrypt(handle)`: an EIP-712 `DataAccessAuthorization` proving
+wallet ownership to the Handle Gateway, valid for a short window (one hour) rather than a standing
+grant:
+
+![MetaMask signature request for a decrypt call](/img/screenshots/10-metamask-decrypt-signature.png)
+
 ## Submitting an encrypted order
 
 The trader picks Buy or Sell, enters an amount, and submits. The amount is encrypted **client-side**
 via `encryptInput` before the transaction is even built — only the resulting `{handle, handleProof}`
-pair is ever sent. The moment the transaction is sent (before it's even mined), the public tape
+pair is ever sent. This is visible in MetaMask's own transaction preview: its simulation reports
+**"Estimated changes: No changes"**, because the calldata only carries an opaque handle and proof —
+there is no plaintext transfer for MetaMask's simulator to decode:
+
+![MetaMask transaction request showing "Estimated changes: No changes"](/img/screenshots/11-metamask-order-no-changes.png)
+
+The moment the transaction is sent (before it's even mined), the public tape
 updates live via `watchContractEvent`, showing a "pending…" entry with the order's real handle
 already redacted:
 
