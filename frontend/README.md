@@ -4,7 +4,7 @@ Confidential-Noir client for the After Hours Desk dark pool, built on the Nox (i
 Every number on screen is either a real Ethereum Sepolia contract read or a real Nox
 `HandleClient.decrypt`/`publicDecrypt` call — nothing on this screen is mocked. See
 `../feedback.md` for the full, dated log of SDK friction and design decisions (search
-"[Fase 5]" for this frontend's own entries).
+"[Phase 5]" for this frontend's own entries).
 
 ## Run it
 
@@ -38,7 +38,7 @@ Public reads (before/independent of any wallet) go through `sepolia.gateway.tend
 the more commonly cited `publicnode.com` — confirmed live in this session that publicnode's free
 tier rejects almost any `eth_getLogs` call wider than ~150 blocks with "Archive requests require
 a personal token," regardless of how recent the range is. See `config/chain.ts` and
-`feedback.md`, Fase 5, for the full debugging story (several alternative public RPCs tested live
+`feedback.md`, Phase 5, for the full debugging story (several alternative public RPCs tested live
 against this project's real deployed contracts before picking this one).
 
 Contract addresses and ABIs are never hand-copied: `src/config/contracts.ts` imports
@@ -76,7 +76,7 @@ private key, only `window.ethereum` (EIP-1193) interactions.
   afterHoursDesk)` — only the resulting `{handle, handleProof}` pair is ever sent in the
   `submitOrder` transaction, never the plaintext amount. Buy orders require the desk to
   already be an authorized cUSDC operator (`setOperator`, deliberately scoped to a short
-  15-minute window — see `feedback.md`, Fase 5, "operator window" entry — never a long-lived
+  15-minute window — see `feedback.md`, Phase 5, "operator window" entry — never a long-lived
   grant). Also exposes "attempt settleBatch()" (callable by anyone) and, once an order
   settles, a real "decrypt my fill" action for that order's own trader. A "Get testnet cUSDC"
   control (`src/hooks/useFaucetAndWrap.ts`) chains three real transactions
@@ -84,7 +84,7 @@ private key, only `window.ethereum` (EIP-1193) interactions.
   this repo's two pre-funded ones — can reach a confidential balance without Etherscan.
 - **Tape** (`src/components/Tape`): a real, live feed of `OrderSubmitted` / `BatchOpened` /
   `BatchSettled` (from `AfterHoursDesk`) and `FillRegistered` (from `ViewerRegistry`) events,
-  historical logs fetched sequentially (not in parallel — see `feedback.md`, Fase 5, on why) in
+  historical logs fetched sequentially (not in parallel — see `feedback.md`, Phase 5, on why) in
   a 30,000-block window, live updates via `watchContractEvent`. Every redacted (`███`) value sits
   over a real handle fetched via `getOrderHandle`/`getBatchMatchedAmountHandle`/
   `getBatchExecutionPriceHandle` — this tape never auto-decrypts anything, EXCEPT the "Reveal
