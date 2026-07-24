@@ -1,20 +1,46 @@
+<div align="center">
+
 # After Hours Desk
 
-A confidential OTC / dark-pool settlement desk built on **Nox** (iExec's confidential
-computation layer), deployed on **Ethereum Sepolia**, referencing a real public Uniswap V3 pool
-for price. Built for the **iExec WTF Hackathon (Summer Edition)**.
+**A confidential OTC dark-pool settlement desk, built on Nox (iExec), live on Ethereum Sepolia.**
 
-Traders submit encrypted order sizes (client-side `encryptInput`, never a plaintext amount on
-calldata). `AfterHoursDesk.sol` nets a batch's buy/sell sides entirely from composed Nox
-primitives (`safeAdd`, `lt`/`select`, `safeMul`/`safeDiv`/`safeSub`) and moves real confidential
-`cUSDC` balances between traders. Only the aggregate matched quantity and the execution price —
-read live from a real Uniswap V3 Sepolia pool — are ever publicly decryptable; individual order
-sizes and per-trader fills never are. A compliance-viewer address (the "auditor") can decrypt
-every fill; each trader can only decrypt their own.
+[![Network](https://img.shields.io/badge/network-Ethereum%20Sepolia-8c7ae6)](https://sepolia.etherscan.io/address/0x46b72a2615de7351699dcd5a64b854746a29fdb8)
+[![Solidity](https://img.shields.io/badge/solidity-0.8.35-363636)](contracts/)
+[![Hackathon](https://img.shields.io/badge/iExec-WTF%20Hackathon-F5C518)](https://dorahacks.io/hackathon/iexec-wtf)
+[![License](https://img.shields.io/badge/license-MIT-blue)](#license)
+
+📖 [Full documentation](#documentation) · 🧾 [`feedback.md`](feedback.md) · 🖥️ [Frontend](frontend/)
+
+</div>
+
+---
+
+Traders submit encrypted order sizes — client-side `encryptInput`, never a plaintext amount on
+calldata. `AfterHoursDesk.sol` nets a batch's buy/sell sides entirely from composed Nox primitives
+(`safeAdd`, `lt`/`select`, `safeMul`/`safeDiv`/`safeSub`) and moves real confidential `cUSDC`
+balances between traders. Only the aggregate matched quantity and the execution price — read live
+from a real Uniswap V3 Sepolia pool — are ever publicly decryptable; individual order sizes and
+per-trader fills never are. A compliance-viewer address (the "auditor") can decrypt every fill;
+each trader can only decrypt their own.
 
 No mocked UI data anywhere in the reachable path — every number on screen is a real Sepolia
-contract read or a real Nox `decrypt`/`publicDecrypt`. See `feedback.md` for the full, dated log
-of Nox integration friction encountered building this, and `video-script.md` for the demo script.
+contract read or a real Nox `decrypt`/`publicDecrypt`. See [`feedback.md`](feedback.md) for the
+full, dated log of Nox integration friction encountered building this.
+
+Built by **[Cecília Galvão](https://github.com/ceciliagalvaoo)** and **[Pablo Azevedo](https://github.com/zzaved)** for the **iExec WTF Hackathon (Summer Edition)**.
+
+## Table of contents
+
+- [Live deployment](#live-deployment-ethereum-sepolia-chainid-11155111)
+- [Repo layout](#repo-layout)
+- [Setup](#setup)
+- [Testing](#testing)
+- [Deploying](#deploying-ethereum-sepolia)
+- [Running the frontend](#running-the-frontend)
+- [Known limitations](#known-limitations-disclosed-not-hidden)
+- [Nox integration notes](#nox-integration-notes)
+- [Documentation](#documentation)
+- [License](#license)
 
 ## Live deployment (Ethereum Sepolia, chainId 11155111)
 
@@ -46,7 +72,6 @@ scripts/utils/       Shared helpers (network guard, Nox Sepolia config, deployme
 frontend/            Vite + React + TypeScript + viem client — see frontend/README.md
 deployments/         sepolia.json — canonical deployed-address record
 feedback.md          Dated, ongoing log of Nox integration friction (read this for the "why")
-video-script.md      4-minute demo script (filled in as the product is actually used)
 ```
 
 ## Setup
@@ -73,7 +98,7 @@ contract addresses (mirrors `deployments/sepolia.json` for convenience).
 ## Testing
 
 ```bash
-npm test                      # unit tests, local Nox stack via Docker (16/16 passing)
+npm test                      # unit tests, local Nox stack via Docker (23/23 passing)
 npm run test:e2e:sepolia      # real E2E against LIVE Sepolia — costs real testnet gas
 ```
 
@@ -105,21 +130,21 @@ npm run dev
 
 Open the printed `localhost` URL with an injected wallet (MetaMask) on Ethereum Sepolia. The
 public tape and Uniswap price strip render real data even before connecting a wallet; submitting
-orders, triggering settlement, and the auditor panel require a connected wallet. See
-`frontend/README.md` for the SDK integration details and the known single/second-account
-limitation.
+orders, triggering settlement, and the auditor panel require a connected wallet. A "Get testnet
+cUSDC" control in the order ticket lets any fresh wallet self-serve (faucet + wrap, chained
+automatically) — no pre-funded account or Etherscan required. See [`frontend/README.md`](frontend/README.md)
+for the SDK integration details.
 
-## Known limitations (disclosed, not hidden — see `feedback.md` for the full reasoning)
+## Known limitations (disclosed, not hidden)
 
-- The compliance-viewer ("auditor") role and the primary trader share the same funded Sepolia
-  account in the automated E2E scripts — a testnet funds limitation, not mocked data. Genuine
-  multi-account ACL isolation (auditor decrypts both fills; each trader decrypts only their own;
-  a stranger decrypts neither) is proven for real in `test/unit/ViewerRegistry.test.ts` using the
-  local Nox stack's free multi-account support.
 - The execution price is read live from a real Uniswap V3 Sepolia pool, using spot price
-  (`slot0`), not a TWAP — a deliberate, documented tradeoff (see `feedback.md`, Fase 4): the price
-  is a disclosed reference value that never gates real fund movement, so single-block
-  manipulation risk is low-stakes here.
+  (`slot0`), not a TWAP — a deliberate, documented tradeoff (see `feedback.md`): the price is a
+  disclosed reference value that never gates real fund movement, so single-block manipulation
+  risk is low-stakes here.
+- Pro-rata fill allocation across more than one order per side may leave a small integer-division
+  dust remainder inside the desk's own balance — documented, not swept, in this hackathon build.
+
+Full reasoning for every non-obvious decision is in [`feedback.md`](feedback.md).
 
 ## Nox integration notes
 
@@ -128,4 +153,13 @@ encrypted value; arithmetic happens off-chain in a TEE Runner, asynchronously. T
 architecture means every settlement is a chain of several sequential async jobs, not one atomic
 call — the frontend and E2E scripts treat every post-settlement decrypt as fire-and-forget +
 poll/retry, never assuming synchronous confirmation. Full details, including several
-documentation-vs-shipped-code discrepancies found and worked around, are in `feedback.md`.
+documentation-vs-shipped-code discrepancies found and worked around, are in [`feedback.md`](feedback.md).
+
+## Documentation
+
+The full documentation site — problem, solution, architecture, user flows, roadmap, and setup
+guides — is published at **[ceciliagalvaoo.github.io/after-hours-desk](https://ceciliagalvaoo.github.io/after-hours-desk/)**.
+
+## License
+
+MIT — see [LICENSE](LICENSE).

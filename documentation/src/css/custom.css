@@ -1,0 +1,31 @@
+/**
+ * Any CSS included here will be global. The classic template
+ * bundles Infima by default. Infima is a CSS framework designed to
+ * work well for content-centric websites.
+ *
+ * Palette matches the app's own Confidential-Noir aesthetic — iExec yellow
+ * (#F5C518) as the single accent color, near-black background in dark mode.
+ */
+:root {
+  --ifm-color-primary: #b3900f;
+  --ifm-color-primary-dark: #a18211;
+  --ifm-color-primary-darker: #987c10;
+  --ifm-color-primary-darkest: #7d660d;
+  --ifm-color-primary-light: #c59e17;
+  --ifm-color-primary-lighter: #cca426;
+  --ifm-color-primary-lightest: #d9b750;
+  --ifm-code-font-size: 95%;
+  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
+}
+
+[data-theme='dark'] {
+  --ifm-color-primary: #f5c518;
+  --ifm-color-primary-dark: #dcb115;
+  --ifm-color-primary-darker: #cfa714;
+  --ifm-color-primary-darkest: #ab8911;
+  --ifm-color-primary-light: #f6cd35;
+  --ifm-color-primary-lighter: #f7d146;
+  --ifm-color-primary-lightest: #f9dc72;
+  --ifm-background-color: #0b0b0f;
+  --docusaurus-highlighted-code-line-bg: rgba(245, 197, 24, 0.1);
+}
