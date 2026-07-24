@@ -19,6 +19,56 @@ Every arithmetic primitive (`add`, `safeAdd`, `lt`, `select`, …) emits an even
 actually computed **later, off-chain, inside a TEE Runner** (Intel TDX). Understanding this
 asynchronous, event-driven flow up front shapes almost every other design decision in this project.
 
+## What actually happens between a transaction and a decrypted result
+
+Six components sit behind every primitive call in the [architecture diagram](/docs/architecture),
+and understanding the pipeline between them explains why a handle can exist on-chain with no
+ciphertext behind it yet, seconds after the transaction that created it:
+
+1. **Input.** `encryptInput`, run client-side, has the Handle Gateway ECIES-encrypt the value with
+   the KMS's public key and return `{handle, handleProof}`. The transaction that follows validates
+   the proof via `Nox.fromExternal`, computes a *deterministic* handle for the result, grants
+   transient ACL on it, and emits an event — and that's the whole transaction. It's mined. The
+   result's ciphertext does not exist anywhere yet.
+2. **Compute.** The **Ingestor** (Rust, TDX) polls new blocks, groups events by transaction, and
+   publishes each as a job to **NATS JetStream**. The **Runner** (Rust, inside an Intel TDX
+   enclave — currently a single instance, processing jobs strictly sequentially) pulls the job,
+   fetches the encrypted operands from the **Handle Gateway** via a KMS decryption delegation,
+   decrypts them *only inside enclave memory*, executes the primitive, re-encrypts the result, and
+   acknowledges the job.
+3. **Output.** A `decrypt`/`publicDecrypt` call checks the on-chain ACL against the requester's
+   address, and the **KMS** performs a decryption delegation — it computes a shared secret and
+   RSA-OAEP-encrypts it to the requester's ephemeral key. The KMS itself never sees plaintext at
+   any point in this pipeline; only the Runner's enclave memory ever does, and only transiently.
+
+This is exactly why every part of this project that reads a result right after a transaction — the
+frontend, the E2E scripts — treats decryption as fire-and-forget followed by poll/retry rather than
+assuming synchronous confirmation: a chain of primitives (sums, comparisons, pro-rata math, real
+transfers, as in `settleBatch()`) is a chain of *sequential round-trips through this exact pipeline*,
+not one atomic in-transaction computation.
+
+## Client-side encryption is the only safe pattern — Pattern A, never Pattern B
+
+There are two ways a private value could reach a contract, and only one of them is actually
+private, even though both can look identical if you only glance at the Solidity parameter type.
+
+- **Pattern A (used everywhere in this project).** The value is encrypted client-side via
+  `handleClient.encryptInput()` *before* the transaction is even built. Only the resulting
+  `{handle, handleProof}` pair ever appears in calldata; the contract validates it with
+  `Nox.fromExternal()`. The plaintext never exists outside the browser and, later, the Runner's
+  enclave memory.
+- **Pattern B (a real leak, not a style nit).** A raw plaintext value is passed as a normal function
+  argument and the contract calls `Nox.toEuint256()` (or the equivalent for its type) on it
+  internally. The function signature can look exactly as "confidential" as Pattern A's — same
+  `euint256` storage, same downstream primitives — but the plaintext already sat in calldata,
+  visible to anyone watching the mempool, before the contract ever touched it. `Nox.toEuint256()`
+  and its siblings exist for wrapping *constants* and already-public state, not for laundering a
+  value that was supposed to stay private.
+
+Every field in this project that must stay private — order amount — is checked against this
+distinction specifically, not just typed as `euint256` and assumed safe on the strength of the type
+alone.
+
 ## There is no "custom confidential function" yet — compose primitives instead
 
 The Solidity SDK's "Custom Functions" section is explicitly marked "Coming Soon." A settlement
@@ -30,6 +80,17 @@ primitive over encrypted data), and token operations (`transfer/mint/burn`). Thi
 empirically before any production contract was written: a throwaway spike contract ran the full
 `safeAdd → lt+select → safeSub` chain against the real local Nox stack and produced correct
 decrypted results before `AfterHoursDesk.sol` existed at all.
+
+This composed-primitives design (call it **Plan A**) was the default target, but not the only one
+on the table going in: a **Plan B**, commit-reveal fallback — orders commit as encrypted handles,
+settlement reveals only the aggregate clearing price via `allowPublicDecryption`, never individual
+sizes — was kept as a documented fallback in case chaining that many sequential primitive calls
+(each its own async round-trip through the [three-phase pipeline](#what-actually-happens-between-a-transaction-and-a-decrypted-result))
+proved too slow or too expensive per settlement against the single-Runner deployment. It never had
+to be used — the spike above confirmed Plan A settles in seconds, comfortably inside budget — but
+the decision to keep it as a fallback, evaluated and *not* built, rather than silently assumed away,
+is itself the point: Plan A is closer to "the match actually happens inside the TEE," which
+commit-reveal alone wouldn't guarantee on its own.
 
 ## Only five types are actually usable today
 

@@ -67,11 +67,26 @@ can't have. It nets the batch entirely from composed Nox primitives:
 4. **Real balance movement** — buy-side fills are pulled via `ConfidentialUSDC.confidentialTransferFrom`
    (the buyer must have pre-authorized the desk as a cUSDC operator — see below); sell-side fills
    are pushed via `confidentialTransfer`. This is real, on-chain confidential balance movement, not
-   bookkeeping in a mapping that never touches the token contract.
+   bookkeeping in a mapping that never touches the token contract. Like every Nox token primitive,
+   these calls never revert on an insufficient balance — instead of throwing (which would leak
+   "this trader can't cover the fill" to anyone watching the mempool via a revert oracle), a
+   shortfall silently moves less than requested. This is *why* shortfall reconciliation is a
+   documented [Roadmap](/docs/roadmap) item rather than something patched over with a `require`.
 5. **Selective disclosure** — only the aggregate `matched` quantity and the execution price
    (read live from `UniswapV3PriceReader`) are ever marked `Nox.allowPublicDecryption`. Every
    per-order/per-fill handle stays behind `Nox.allow`/`Nox.addViewer`, scoped to that specific
    trader (and the auditor, via `ViewerRegistry`) — never public.
+
+**Why `safe*`, never the wrapping primitives, for any of this math:** Nox's plain
+`add`/`sub`/`mul`/`div` wrap silently on overflow/underflow — never revert, the same semantics as
+Solidity's `unchecked` block. That's a legitimate choice for logic bounded elsewhere, but it's the
+wrong default for settlement math: a wrapped overflow while summing `buySum`/`sellSum` would
+silently produce a wildly wrong `matched` quantity with no error signal anywhere on-chain. Every
+step above therefore uses the `safeAdd`/`safeSub`/`safeMul`/`safeDiv` variant, each of which returns
+`(ebool success, euint256 result)` instead of just a result — and that `success` flag feeds directly
+into `Nox.select()` to fall back to the prior, known-good value on failure. An overflow can't
+silently corrupt the batch, and the failure never surfaces as a revert an outside observer could use
+to infer anything about the encrypted operands that caused it.
 
 A genuinely non-obvious integration detail, confirmed by reading `ERC7984Base`'s actual source (not
 assumed): calling `confidentialTransferFrom`/`confidentialTransfer` with a handle *this* contract
@@ -91,7 +106,12 @@ dark without notice — exactly the kind of risk a hackathon demo can't afford).
 value 1:1 between the plaintext ERC-20 and the confidential balance; `confidentialTransfer(From)`
 moves confidential balances directly. Traders authorize the desk as an **operator** — not an
 allowance — with a deliberately short-lived window (15 minutes in this build), never a standing
-grant.
+grant. This distinction is load-bearing, not stylistic: ERC-7984's
+`setOperator(address, uint48 validUntilTimestamp)` grants the operator full transfer rights over the
+holder's *entire* confidential balance until that timestamp — there's no per-amount cap the way a
+plaintext ERC-20 `approve` has. A long-lived or unscoped operator grant on a confidential balance
+would be a real standing risk, not a convenience, so the window here is set tight (15 minutes) right
+before it's needed and left to expire on its own rather than explicitly revoked.
 
 ### `ViewerRegistry.sol` — the compliance-viewer (auditor) module
 
@@ -99,7 +119,13 @@ Deliberately a standalone contract, not inlined into the desk, so the entire "wh
 trader can decrypt a fill" surface is auditable in one small file. `complianceViewer` is set once,
 at deploy time, and is `immutable` — Nox viewer/admin ACL grants are irrevocable on-chain, so a
 "rotate the auditor" feature would only ever add access for new fills, never actually revoke access
-to past ones; rather than half-build that, it's documented as a known, deliberate limitation.
+to past ones; rather than half-build that, it's documented as a known, deliberate limitation. The
+only documented way to approximate revocation is migrating to a **fresh handle** —
+`Nox.add(oldHandle, Nox.toEuint256(0))` produces a new handle carrying the same value but a clean
+ACL, and the contract repoints its storage to it — but the *old* handle's ciphertext still exists,
+and anyone who was already a viewer on it can still decrypt that old value forever. This is an
+application-level isolation, not a cryptographic revoke, which is precisely why a real rotation
+feature belongs on the [Roadmap](/docs/roadmap) rather than being half-built here.
 `registerFill` grants the compliance viewer `Nox.addViewer` (viewer role — decrypt-only) over a
 fill, gated both by Nox's own ACL (the caller must already hold real access to the handle) and, as
 defense-in-depth added after an internal review, a one-time-set `desk` address so only the paired
