@@ -2,15 +2,18 @@ import { useEffect } from "react";
 import { WalletProvider, useWallet } from "./state/WalletContext";
 import { AppStateProvider, useAppState } from "./state/AppStateContext";
 import { TutorialProvider } from "./state/TutorialContext";
-import { NetworkGuard } from "./components/layout/NetworkGuard";
-import { Layout } from "./components/layout/Layout";
-import { TutorialModal } from "./components/Tutorial/TutorialModal";
+import { ScreenProvider, useScreen } from "./state/ScreenContext";
+import { IdentityProvider } from "./state/IdentityContext";
+import { FxProvider } from "./state/FxContext";
+import { TourProvider } from "./state/TourContext";
+import { IntroScreen } from "./screens/IntroScreen";
+import { IdentityScreen } from "./screens/IdentityScreen";
+import { DeskScreen } from "./screens/DeskScreen";
 
 /**
- * Bridges real wallet-connection events into the `AppStateContext` state machine. `READY` is
- * only ever entered here in response to `status === "connected" && isCorrectChain` actually
- * becoming true — never a timer standing in for that event (see `AppStateContext.tsx`'s own
- * docstring, and the aesthetic-spec state-machine section).
+ * Bridges real wallet-connection events into the `AppStateContext` state machine. `READY` is only
+ * ever entered here in response to `status === "connected" && isCorrectChain` actually becoming
+ * true — never a timer standing in for that event.
  */
 function AppStateBridge() {
   const { status, isCorrectChain } = useWallet();
@@ -26,14 +29,14 @@ function AppStateBridge() {
   return null;
 }
 
-function AppShell() {
+function AppRouter() {
+  const { screen } = useScreen();
   return (
     <>
       <AppStateBridge />
-      <TutorialModal />
-      <NetworkGuard>
-        <Layout />
-      </NetworkGuard>
+      {screen === "intro" && <IntroScreen />}
+      {screen === "identity" && <IdentityScreen />}
+      {screen === "desk" && <DeskScreen />}
     </>
   );
 }
@@ -43,7 +46,15 @@ export default function App() {
     <WalletProvider>
       <AppStateProvider>
         <TutorialProvider>
-          <AppShell />
+          <ScreenProvider>
+            <IdentityProvider>
+              <FxProvider>
+                <TourProvider>
+                  <AppRouter />
+                </TourProvider>
+              </FxProvider>
+            </IdentityProvider>
+          </ScreenProvider>
         </TutorialProvider>
       </AppStateProvider>
     </WalletProvider>
