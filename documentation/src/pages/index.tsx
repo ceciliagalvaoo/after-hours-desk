@@ -12,6 +12,7 @@ import styles from './index.module.css';
 const REPO = 'https://github.com/ceciliagalvaoo/after-hours-desk';
 const LIVE_APP = 'https://after-hours-desk.onrender.com';
 const FEEDBACK = 'https://github.com/ceciliagalvaoo/after-hours-desk/blob/master/feedback.md';
+const X_URL = 'https://x.com/AfterHoursDesk';
 
 function HomepageHeader() {
   const {siteConfig} = useDocusaurusContext();
@@ -49,6 +50,9 @@ function HomepageHeader() {
           </Link>
           <Link className={styles.btn} href={FEEDBACK}>
             feedback.md
+          </Link>
+          <Link className={styles.btn} href={X_URL}>
+            @AfterHoursDesk ↗
           </Link>
         </div>
       </div>
