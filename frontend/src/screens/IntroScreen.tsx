@@ -7,7 +7,7 @@ import { BrokerCanvas, CROP_HEAD } from "../components/mascot/BrokerCanvas";
 import type { BrokerLook } from "../lib/brokerGrid";
 
 const QA1 =
-  "You can prove the trade. Anyone can. The size never prints anywhere. Two keys exist: yours and the auditor’s. You are neither.";
+  "You can prove the trade happened. Anyone can. What you traded never prints anywhere. Two keys open a fill: yours and the auditor’s. You hold neither.";
 const QA2 =
   "Your seat at the table. A pixel persona shown beside your orders and in the auditor’s log. Cosmetic by design: it never touches an order, a key, or a fill.";
 
@@ -17,8 +17,8 @@ const LOOK_Q2: BrokerLook = { hat: "trilby", coat: "trench", eyes: "round", trim
 const mono13: React.CSSProperties = { fontFamily: "'JetBrains Mono',monospace", fontSize: 13.5, color: "var(--tx)" };
 
 const MECH = [
-  { n: "01", eyebrow: "Encrypt", color: "var(--ph)", t: "The number never leaves the browser.",
-    body: <>{" "}<code style={mono13}>encryptInput</code> seals your size client-side. What gets signed is a{" "}
+  { n: "01", eyebrow: "Encrypt", color: "var(--ph)", t: "The figure never leaves the browser.",
+    body: <>{" "}<code style={mono13}>encryptInput</code> seals it client-side. What gets signed is a{" "}
       <code style={mono13}>{"{handle, handleProof}"}</code> pair. Plaintext exists in exactly one place: your machine.</> },
   { n: "02", eyebrow: "Match", color: "var(--am)", t: "A TEE crosses the book in the dark.",
     body: <>Orders rest in a batch nobody can read. A single TEE runner computes the crossing off-chain. The operator can’t peek, the chain can’t leak, front-running has nothing to see.</> },
@@ -133,8 +133,8 @@ export function IntroScreen() {
         <div style={{ position: "absolute", inset: 0, pointerEvents: "none", backgroundImage: "repeating-linear-gradient(rgba(0,0,0,0) 0 2px,rgba(0,0,0,.18) 2px 3px)", animation: "ahd-flick 5s ease-in-out infinite" }} />
 
         <div style={{ position: "relative", maxWidth: 1080, margin: "0 auto", padding: "92px 32px 0", display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center" }}>
-          <h1 style={{ margin: 0, fontSize: "clamp(2.6rem,5.6vw,4.9rem)", lineHeight: 1.05, letterSpacing: "-.03em", fontWeight: 300, color: "var(--tx)" }}>It’s all here.<br />The size isn’t.</h1>
-          <p style={{ margin: "20px 0 0", fontSize: 15, lineHeight: 1.6, color: "var(--dm)" }}>We dare you to find the size.</p>
+          <h1 style={{ margin: 0, fontSize: "clamp(2.6rem,5.6vw,4.9rem)", lineHeight: 1.05, letterSpacing: "-.03em", fontWeight: 300, color: "var(--tx)" }}>It’s all here.<br />The number isn’t.</h1>
+          <p style={{ margin: "20px 0 0", fontSize: 15, lineHeight: 1.6, color: "var(--dm)" }}>We dare you to find what you traded.</p>
           <div style={{ display: "flex", gap: 12, marginTop: 30, flexWrap: "wrap", justifyContent: "center" }}>
             <button type="button" className="noir-primary" onClick={() => go("desk")}>Enter the desk</button>
             <button type="button" className="noir-ghost" style={{ color: "var(--tx)" }} onClick={startTour}>What are we hiding?</button>
@@ -197,7 +197,7 @@ export function IntroScreen() {
       {/* Q&A */}
       <div id="intro-qa" style={{ maxWidth: 1100, margin: "0 auto", padding: "96px 32px 0" }}>
         <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
-          <QaPill active={qa === "q1"} onClick={() => setQa("q1")}>Can’t I prove the size?</QaPill>
+          <QaPill active={qa === "q1"} onClick={() => setQa("q1")}>Can’t I prove the amount?</QaPill>
           <QaPill active={qa === "q2"} onClick={() => setQa("q2")}>Who’s the guy in the hat?</QaPill>
         </div>
         <div style={{ display: "grid", gridTemplateColumns: "minmax(0,.85fr) minmax(0,1.15fr)", gap: 56, alignItems: "center", padding: "56px 0 0" }}>

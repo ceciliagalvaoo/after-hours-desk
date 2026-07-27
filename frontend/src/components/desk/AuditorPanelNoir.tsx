@@ -25,9 +25,9 @@ export function AuditorPanelNoir() {
 
       {!auditor.isAuditor ? (
         <p style={{ margin: 0, padding: "18px", color: "var(--dm)", fontSize: 13, lineHeight: 1.5 }}>
-          Nice try. This desk answers to exactly one auditor — the wallet registered as{" "}
+          Nice try. This desk answers to exactly one auditor: the wallet registered as{" "}
           <code style={{ fontFamily: "'JetBrains Mono',monospace", color: "var(--tx)" }}>ViewerRegistry.complianceViewer</code>. Connected wallet{" "}
-          <code style={{ fontFamily: "'JetBrains Mono',monospace", color: "var(--tx)" }}>{shortAddress(account)}</code> is not that address. Real on-chain ACL check, not a UI lock.
+          <code style={{ fontFamily: "'JetBrains Mono',monospace", color: "var(--tx)" }}>{shortAddress(account)}</code> isn’t that address. Real on-chain ACL check, not a UI lock.
         </p>
       ) : (
         <>
@@ -76,7 +76,7 @@ function AuditorFillRow({ fillHandle, auditor }: { fillHandle: `0x${string}`; au
       });
       setDecryptedValue(value as bigint);
       appState.exitToReady(`Fill ${shortHandle(fillHandle)} decrypted`);
-      fx.show("smile", "Told you it was real.", "Compliance holds a key. The bar was never empty.");
+      fx.show("smile", "The key fits.", "Compliance holds a key. The bar was never empty.");
     } catch (e) {
       setError(e instanceof Error ? e.message : String(e));
       appState.exitToReady("Decrypt failed — not authorized or handle not ready");
@@ -91,9 +91,9 @@ function AuditorFillRow({ fillHandle, auditor }: { fillHandle: `0x${string}`; au
       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12, flexWrap: "wrap" }}>
         <span style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 12.5, color: "var(--dm)" }}>{shortHandle(fillHandle)}</span>
         {decryptedValue !== null ? (
-          <span title="Told you it was real." style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 14, color: "var(--ph)", fontVariantNumeric: "tabular-nums" }}>${formatUsdc(decryptedValue)}</span>
+          <span title="Real all along." style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 14, color: "var(--ph)", fontVariantNumeric: "tabular-nums" }}>${formatUsdc(decryptedValue)}</span>
         ) : (
-          <span title="Real handle underneath. Go on, try." className="noir-censor">{shortHandle(fillHandle)}</span>
+          <span title="Inspect element. It’s really there." className="noir-censor">{shortHandle(fillHandle)}</span>
         )}
       </div>
       <div style={{ display: "flex", gap: 9, flexWrap: "wrap" }}>

@@ -104,7 +104,7 @@ export function OrderTicketPanel() {
         appState.exitToReady(`Order submitted (tx ${hash.slice(0, 10)}…)`);
       }
       setAmountInput("");
-      fx.show("smirk", "Sent dark", "Nobody saw a number.");
+      fx.show("smirk", "Sent dark", "Nobody saw a figure.");
     } catch (e) {
       setFormError(e instanceof Error ? e.message : String(e));
       appState.exitToReady("Order submission failed");
@@ -131,7 +131,7 @@ export function OrderTicketPanel() {
       if (settled) {
         setMatchBanner({ batchId: settled.batchId, txHash: hash });
         appState.exitToReady(`MATCH FILLED — batch ${settled.batchId.toString()} (tx ${hash.slice(0, 10)}…)`);
-        fx.show("money", "Batch closed", "Matched. Public. And you still don’t know the size.");
+        fx.show("money", "Batch closed", "Matched. Public. You still don’t know the figure.");
       } else {
         appState.exitToReady(`Settlement tx mined (${hash.slice(0, 10)}…)`);
       }
@@ -174,7 +174,7 @@ export function OrderTicketPanel() {
             <span title="Told you it was real." style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 14, color: "var(--ph)", fontVariantNumeric: "tabular-nums" }}>${formatUsdc(balance.decryptedValue)}</span>
           ) : (
             <span style={{ display: "inline-flex", alignItems: "center", gap: 9 }}>
-              <span title="Real handle underneath. Go on, try." className="noir-censor" style={{ fontSize: 11.5 }}>{balance.handle && !isNullHandle(balance.handle) ? shortHandle(balance.handle) : "██████"}</span>
+              <span title="Real ciphertext under the bar. Inspect it." className="noir-censor" style={{ fontSize: 11.5 }}>{balance.handle && !isNullHandle(balance.handle) ? shortHandle(balance.handle) : "██████"}</span>
               <button type="button" className="noir-ghost" style={smallGhost} disabled={!balance.handle || isNullHandle(balance.handle) || balance.isDecrypting} onClick={() => void balance.decryptBalance()}>
                 {balance.isDecrypting ? (balance.decryptProgress ? `Computing… (${balance.decryptProgress.attempt}/${balance.decryptProgress.maxAttempts})` : "Decrypting…") : "Decrypt"}
               </button>
@@ -185,14 +185,14 @@ export function OrderTicketPanel() {
 
         {/* Faucet + wrap */}
         <div style={{ display: "flex", flexDirection: "column", gap: 8, padding: "11px 13px", border: "1px dashed var(--bd)", borderRadius: 8 }}>
-          <span style={{ fontSize: 11.5, color: "var(--ft)", lineHeight: 1.4 }}>New wallet? Get real testnet cUSDC — faucet + wrap, chained automatically.</span>
+          <span style={{ fontSize: 11.5, color: "var(--ft)", lineHeight: 1.4 }}>New wallet? Get real testnet cUSDC. Faucet plus wrap, chained automatically.</span>
           <div style={{ display: "flex", gap: 8 }}>
             <input className="noir-mono" value={faucetAmountInput} onChange={(e) => setFaucetAmountInput(e.target.value)} inputMode="decimal" disabled={faucetBusy} style={{ width: 96, padding: "8px 10px", background: "var(--bg)", border: "1px solid var(--bd)", borderRadius: 8, color: "var(--tx)", fontSize: 14 }} />
             <button type="button" className="noir-ghost" disabled={!account || faucetBusy} onClick={() => void handleFaucetAndWrap()}>
               {faucet.step === "faucet" ? "1/3 Fauceting…" : faucet.step === "approve" ? "2/3 Approving…" : faucet.step === "wrap" ? "3/3 Wrapping…" : "Get testnet cUSDC"}
             </button>
           </div>
-          {faucet.step === "done" && <p style={{ color: "var(--ph)", fontSize: 12, margin: 0 }}>Done — {faucetAmountInput} wrapped into real cUSDC. Click "Decrypt" above.</p>}
+          {faucet.step === "done" && <p style={{ color: "var(--ph)", fontSize: 12, margin: 0 }}>Done · {faucetAmountInput} wrapped into real cUSDC. Click "Decrypt" above.</p>}
           {faucet.error && <p style={err}>{faucet.error}</p>}
         </div>
 
@@ -210,7 +210,7 @@ export function OrderTicketPanel() {
         <div>
           <label style={{ display: "block", fontSize: 11.5, letterSpacing: ".06em", textTransform: "uppercase", color: "var(--dm)", marginBottom: 8 }}>Amount · USDC</label>
           <input value={amountInput} onChange={(e) => setAmountInput(e.target.value)} inputMode="decimal" placeholder="0.00" style={{ width: "100%", padding: "13px 14px", background: "var(--bg)", border: "1px solid var(--bd)", borderRadius: 8, color: "var(--tx)", fontFamily: "'JetBrains Mono',monospace", fontSize: 19, fontVariantNumeric: "tabular-nums" }} />
-          <p style={{ margin: "10px 0 0", fontSize: 12.5, lineHeight: 1.55, color: "var(--ft)" }}>Encrypted before it leaves your browser. Not even we see the number.</p>
+          <p style={{ margin: "10px 0 0", fontSize: 12.5, lineHeight: 1.55, color: "var(--ft)" }}>Encrypted before it leaves your browser. Not even we see how much.</p>
         </div>
 
         {formError && <p style={err}>{formError}</p>}
@@ -232,7 +232,7 @@ export function OrderTicketPanel() {
         {matchBanner && (
           <div style={{ padding: "13px 15px", borderRadius: 8, border: "1px solid var(--ak)", background: "rgba(245,197,24,.08)", animation: "ahd-rise .4s ease both" }}>
             <span style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 12.5, color: "var(--ak)", letterSpacing: ".04em" }}>MATCH FILLED · batch {matchBanner.batchId.toString()} · tx {matchBanner.txHash.slice(0, 10)}…</span>
-            <span style={{ display: "block", marginTop: 8, fontSize: 12.5, lineHeight: 1.5, color: "var(--dm)" }}>Matched. Public. And you still don’t know the size. Fills compute off-chain — decrypt below retries until ready.</span>
+            <span style={{ display: "block", marginTop: 8, fontSize: 12.5, lineHeight: 1.5, color: "var(--dm)" }}>Matched. Public. And you still don’t know how much. Fills compute off-chain, so decrypt below retries until ready.</span>
           </div>
         )}
 
@@ -286,7 +286,7 @@ function MyOrderRow({ order }: { order: MyOrder }) {
       }
       const { value } = await decryptWithRetry(() => handleClient.decrypt(handle as Handle<"uint256">), { onProgress: setProgress });
       setDecryptedFill(value as bigint);
-      fx.show("smile", "Told you it was real.", "Your fill, your key. Decrypted.");
+      fx.show("smile", "Real all along.", "Your fill, your key. Decrypted.");
     } catch (e) {
       setError(e instanceof Error ? e.message : String(e));
     } finally {
@@ -305,10 +305,10 @@ function MyOrderRow({ order }: { order: MyOrder }) {
       </span>
       {order.settled ? (
         decryptedFill !== null ? (
-          <span title="Told you it was real." style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 13, color: "var(--ph)", fontVariantNumeric: "tabular-nums" }}>${formatUsdc(decryptedFill)}</span>
+          <span title="Real all along." style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 13, color: "var(--ph)", fontVariantNumeric: "tabular-nums" }}>${formatUsdc(decryptedFill)}</span>
         ) : (
           <span style={{ display: "inline-flex", alignItems: "center", gap: 9 }}>
-            <span title="Real handle underneath. Go on, try." className="noir-censor">{fillHandle && !isNullHandle(fillHandle) ? shortHandle(fillHandle) : "██████"}</span>
+            <span title="That’s a live handle, not a placeholder." className="noir-censor">{fillHandle && !isNullHandle(fillHandle) ? shortHandle(fillHandle) : "██████"}</span>
             <button type="button" className="noir-ghost" style={{ fontSize: 12, padding: "5px 10px" }} disabled={isDecrypting || isFetchingHandle} onClick={() => void handleDecryptFill()}>
               {isDecrypting ? (progress ? `Computing… (${progress.attempt}/${progress.maxAttempts})` : "Decrypting…") : "Unlock my number"}
             </button>

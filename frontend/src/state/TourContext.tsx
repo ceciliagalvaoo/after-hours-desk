@@ -8,8 +8,8 @@ export interface TourStep {
 }
 
 export const TOUR_STEPS: TourStep[] = [
-  { k: "ticket", t: "The order ticket", b: "Size gets encrypted right here, before anything is signed. What leaves this panel is a handle and a proof. Never the number." },
-  { k: "side", t: "Pick a side", b: "Buy rides phosphor, sell rides amber. The side prints on the public tape; the size never does." },
+  { k: "ticket", t: "The order ticket", b: "The amount gets encrypted right here, before anything is signed. What leaves this panel is a handle and a proof. Never the figure." },
+  { k: "side", t: "Pick a side", b: "Buy rides phosphor, sell rides amber. The side prints on the public tape; how much never does." },
   { k: "price", t: "Public reference", b: "A live Uniswap price anchors the desk. It is the one number in this room that was never a secret." },
   { k: "depth", t: "Dark depth", b: "The resting book, drawn honestly: it exists, and you cannot read it. Neither can we. Depth stays sealed until match." },
   { k: "tape", t: "The tape", b: "Every order, batch and settlement prints here in real time. Decrypt buttons only work for keys your wallet actually holds." },

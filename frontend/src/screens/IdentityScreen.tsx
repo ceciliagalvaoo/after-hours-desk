@@ -47,7 +47,7 @@ export function IdentityScreen() {
         {/* Controls */}
         <div>
           <h1 style={{ margin: 0, fontSize: "clamp(2rem,3.4vw,2.7rem)", lineHeight: 1.06, letterSpacing: "-.028em", fontWeight: 300, color: "var(--tx)" }}>Create your Broker.</h1>
-          <p style={{ margin: "18px 0 0", fontSize: 15, lineHeight: 1.68, color: "var(--dm)", maxWidth: "56ch" }}>Cosmetic only. Stored locally and shown beside your orders. It never touches an order, a key, or a fill. The lens and hem glow stay reserved for desk state, so they are not yours to pick.</p>
+          <p style={{ margin: "18px 0 0", fontSize: 15, lineHeight: 1.68, color: "var(--dm)", maxWidth: "56ch" }}>Cosmetic only. Stored locally, shown beside your orders, and never once touching an order, a key, or a fill. The lens and hem glow answer to desk state, not to you, so those two aren’t yours to pick.</p>
 
           <div style={{ marginTop: 44, display: "flex", flexDirection: "column", gap: 34 }}>
             {GROUPS.map((g) => (

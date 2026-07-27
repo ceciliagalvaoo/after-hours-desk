@@ -33,7 +33,7 @@ export function DeskScreen() {
   useEffect(() => {
     if (!welcomed.current && account && status === "connected") {
       welcomed.current = true;
-      const t = window.setTimeout(() => fx.show("smile", "Desk knows you", "Nobody knows your size."), 500);
+      const t = window.setTimeout(() => fx.show("smile", "Desk knows you", "Nobody knows the figure."), 500);
       return () => window.clearTimeout(t);
     }
   }, [account, status, fx]);
@@ -73,7 +73,7 @@ export function DeskScreen() {
           <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
             <span style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 9.5, letterSpacing: ".22em", textTransform: "uppercase", color: "var(--ft)" }}>The desk</span>
             <span style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 19, color: "var(--tx)", letterSpacing: "-.01em" }}>It’s all here.</span>
-            <span style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 11, color: "var(--dm)" }}>The size isn’t.</span>
+            <span style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 11, color: "var(--dm)" }}>The number isn’t.</span>
           </div>
           <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 8 }}>
             <BrokerCanvas look={look} glow={glow} width={104} height={104} style={{ filter: "drop-shadow(0 8px 18px rgba(0,0,0,.6))" }} />

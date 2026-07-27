@@ -55,7 +55,7 @@ export function TapePanel() {
         <div key={event.id} data-tape-row style={rowStyle}>
           <span style={timeStyle}>{time}</span>
           <span style={descStyle}><span style={tagStyle(event.isBuy ? "var(--ph)" : "var(--am)")}>{event.isBuy ? "BUY" : "SELL"}</span> order #{event.orderId.toString()} · {shortAddress(event.trader)} · batch {event.batchId.toString()}</span>
-          {censor("Order size — confidential, redacted on the public tape", handle ? shortHandle(handle) : "██████")}
+          {censor("Order amount. Confidential, redacted on the public tape.", handle ? shortHandle(handle) : "██████")}
         </div>
       );
     }
@@ -75,7 +75,7 @@ export function TapePanel() {
       <div key={event.id} data-tape-row style={rowStyle}>
         <span style={timeStyle}>{time}</span>
         <span style={descStyle}>Fill registered for compliance viewer</span>
-        {censor("Per-order fill — only the trader and the compliance viewer can ever decrypt this", shortHandle(event.fillHandle))}
+        {censor("Per-order fill. Only the trader and the compliance viewer can ever decrypt this.", shortHandle(event.fillHandle))}
       </div>
     );
   }
@@ -84,11 +84,11 @@ export function TapePanel() {
     <section data-tour="tape" className="noir-card" style={{ display: "flex", flexDirection: "column" }}>
       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "15px 18px", borderBottom: "1px solid var(--bs)" }}>
         <h2 style={{ margin: 0, fontSize: 13, fontWeight: 400, letterSpacing: ".1em", textTransform: "uppercase", color: "var(--tx)" }}>Tape</h2>
-        <span style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 10, letterSpacing: ".14em", textTransform: "uppercase", color: "var(--ft)" }}>{isLoading ? "syncing…" : `${events.length} event${events.length === 1 ? "" : "s"} · every size a real secret`}</span>
+        <span style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 10, letterSpacing: ".14em", textTransform: "uppercase", color: "var(--ft)" }}>{isLoading ? "syncing…" : `${events.length} event${events.length === 1 ? "" : "s"} · every figure a real secret`}</span>
       </div>
       {error && <p style={{ padding: "12px 18px", color: "var(--dg)", fontSize: 12.5, margin: 0 }}>{error}</p>}
       {!error && events.length === 0 && !isLoading && (
-        <p style={{ padding: 32, textAlign: "center", color: "var(--ft)", fontSize: 13, margin: 0 }}>No orders yet. Submit one from the ticket to see it here.</p>
+        <p style={{ padding: 32, textAlign: "center", color: "var(--ft)", fontSize: 13, margin: 0 }}>No orders yet. Send one from the ticket and watch it print, redacted.</p>
       )}
       <div style={{ padding: "6px 0", maxHeight: 560, overflowY: "auto" }} className="ahd-scrollbar">{events.map(renderRow)}</div>
     </section>
@@ -137,9 +137,9 @@ function BatchSettledRow({ time, event, matchHandle, priceHandle }: {
         {revealed && <span style={{ color: "var(--ph)", fontFamily: "'JetBrains Mono',monospace", fontSize: 12 }}> · matched ${formatUsdc(matched)} @ ${formatUsdc(price ?? 0n)}/WETH</span>}
       </span>
       <span style={{ display: "flex", alignItems: "center", gap: 9, flexWrap: "wrap", justifyContent: "flex-end", minWidth: 0 }}>
-        {!revealed && censor("Matched quantity + execution price — publicly decryptable; click Reveal to call publicDecrypt", matchHandle && !isNullHandle(matchHandle) ? shortHandle(matchHandle) : "██████")}
+        {!revealed && censor("Matched quantity and execution price. Publicly decryptable · click to call publicDecrypt.", matchHandle && !isNullHandle(matchHandle) ? shortHandle(matchHandle) : "██████")}
         {!revealed && matchHandle && !isNullHandle(matchHandle) && (
-          <button type="button" className="noir-ghost" style={{ fontSize: 12, padding: "5px 10px" }} disabled={!handleClient || isRevealing} onClick={() => void handleReveal()} title={!handleClient ? "Connect any wallet — publicDecrypt needs no special authorization" : undefined}>
+          <button type="button" className="noir-ghost" style={{ fontSize: 12, padding: "5px 10px" }} disabled={!handleClient || isRevealing} onClick={() => void handleReveal()} title={!handleClient ? "Connect any wallet · publicDecrypt needs no special authorization" : undefined}>
             {isRevealing ? (progress ? `Computing… (${progress.attempt}/${progress.maxAttempts})` : "Revealing…") : "Prove it happened"}
           </button>
         )}

@@ -16,16 +16,16 @@ export function NetworkBanner() {
   let meta: string | null = null;
 
   if (!hasInjectedProvider) {
-    text = "No injected wallet (e.g. MetaMask) detected — the public tape and Uniswap price strip below are still real, live Sepolia data. Install a wallet and reload to trade or audit.";
+    text = "No injected wallet (e.g. MetaMask) detected. The public tape and Uniswap price strip below are still real, live Sepolia data. Install a wallet and reload to trade or audit.";
   } else if (status !== "connected" || !account) {
-    text = "Connect a wallet to submit orders, trigger settlement, or use the auditor panel — every value on this page is a real Sepolia read or a real Nox decrypt, never mocked.";
+    text = "Connect a wallet to submit orders, trigger settlement, or open the auditor panel. Every value on this page is a real Sepolia read or a real Nox decrypt, never mocked.";
     action = (
       <button type="button" className="noir-primary" onClick={() => void connect()}>
         {status === "connecting" ? "Connecting…" : "Connect wallet"}
       </button>
     );
   } else {
-    text = `Connected wallet is on chainId ${chainId ?? "unknown"}. This desk only operates on Ethereum Sepolia (${SEPOLIA_CHAIN_ID}) — it never silently falls back to Arbitrum Sepolia.`;
+    text = `Connected wallet is on chainId ${chainId ?? "unknown"}. This desk only operates on Ethereum Sepolia (${SEPOLIA_CHAIN_ID}). It never silently falls back to Arbitrum Sepolia.`;
     action = <button type="button" className="noir-primary" onClick={() => void switchToSepolia()}>Switch to Ethereum Sepolia</button>;
     meta = `Connected: ${account}`;
   }
