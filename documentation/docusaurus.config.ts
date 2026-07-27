@@ -94,47 +94,6 @@ const config: Config = {
         },
       ],
     },
-    footer: {
-      style: 'dark',
-      links: [
-        {
-          title: 'Documentation',
-          items: [
-            {label: 'Problem & Solution', to: '/docs/problem-and-solution'},
-            {label: 'Architecture', to: '/docs/how-it-works/architecture'},
-            {label: 'User Flows & UX', to: '/docs/using-it/user-flows'},
-            {label: 'Roadmap', to: '/docs/project/roadmap'},
-          ],
-        },
-        {
-          title: 'Project',
-          items: [
-            {label: 'Live app', href: 'https://after-hours-desk.onrender.com'},
-            {label: 'GitHub Repository', href: 'https://github.com/ceciliagalvaoo/after-hours-desk'},
-            {label: 'X (@AfterHoursDesk)', href: 'https://x.com/AfterHoursDesk'},
-            {label: 'feedback.md', href: 'https://github.com/ceciliagalvaoo/after-hours-desk/blob/master/feedback.md'},
-            {label: 'Live contract (Etherscan)', href: 'https://sepolia.etherscan.io/address/0x46b72a2615de7351699dcd5a64b854746a29fdb8'},
-          ],
-        },
-        {
-          title: 'Authors',
-          items: [
-            {label: 'Cecília Galvão · GitHub', href: 'https://github.com/ceciliagalvaoo'},
-            {label: 'Cecília Galvão · LinkedIn', href: 'https://www.linkedin.com/in/ceciliagalvaoo'},
-            {label: 'Pablo Azevedo · GitHub', href: 'https://github.com/zzaved'},
-            {label: 'Pablo Azevedo · LinkedIn', href: 'https://www.linkedin.com/in/pabloazevedo'},
-          ],
-        },
-        {
-          title: 'Built for',
-          items: [
-            {label: 'iExec WTF Hackathon', href: 'https://dorahacks.io/hackathon/iexec-wtf'},
-            {label: 'Nox Protocol docs', href: 'https://docs.iex.ec/nox-protocol/getting-started/welcome'},
-          ],
-        },
-      ],
-      copyright: `Built by Cecília Galvão and Pablo Azevedo · iExec WTF Hackathon (Summer Edition) · © ${new Date().getFullYear()}`,
-    },
     prism: {
       theme: prismThemes.github,
       darkTheme: prismThemes.dracula,
