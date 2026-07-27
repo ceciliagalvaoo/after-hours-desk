@@ -150,7 +150,7 @@ export function IntroScreen() {
               </span>
               <span style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 10, letterSpacing: ".2em", textTransform: "uppercase", color: "var(--dm)" }}>After Hours Desk · tape</span>
               <span style={{ display: "inline-flex", alignItems: "center", gap: 7, fontFamily: "'JetBrains Mono',monospace", fontSize: 10, letterSpacing: ".14em", textTransform: "uppercase", color: "var(--ft)" }}>
-                <i style={{ width: 5, height: 5, borderRadius: "50%", background: "var(--ph)", boxShadow: "0 0 7px var(--ph)", animation: "ahd-dot 2s steps(1) infinite", display: "block" }} />live · sepolia
+                <i style={{ width: 5, height: 5, borderRadius: "50%", background: "var(--ph)", boxShadow: "0 0 7px var(--ph)", animation: "ahd-dot 2s steps(1) infinite", display: "block" }} />live · preview
               </span>
             </div>
             <HeroTape />
