@@ -1,0 +1,177 @@
+/*
+ * Confidential-Noir — v2 global layer (Cloud Design redesign).
+ *
+ * Additive over theme.css: introduces the short design tokens the redesigned screens use, plus
+ * the global keyframes, the button activation ripple, and the type-weight defaults mandated by
+ * assets/broker-gifs/EXTENDING.md:
+ *   - Dark only. Page background #0b0b0f.
+ *   - No bold: Space Grotesk 300 (display) / 400 (body/labels). Never 500+.
+ *   - Humans speak in Space Grotesk; the desk speaks in JetBrains Mono (numbers/handles/addresses).
+ *   - One accent: iExec yellow #f5c518. Phosphor #3ddc84 = live/public/revealed/buy. Amber #ffb020 = sell/pending.
+ */
+
+:root,
+[data-theme="dark"] {
+  --bg: #0b0b0f; /* page */
+  --rz: #131318; /* raised (header bars, inset rows) */
+  --pn: #17171d; /* panel surface */
+  --pn2: #0e0e13; /* deep inset */
+  --plate: #0d0d12; /* dark screens behind pixel-art / charts */
+  --bd: #2a2a33; /* default border */
+  --bs: #1e1e25; /* soft divider */
+  --tx: #e9e7e0; /* primary text */
+  --dm: #8d8b96; /* secondary text */
+  --ft: #55535f; /* meta / faint */
+  --ph: #3ddc84; /* live / public / revealed / buy */
+  --am: #ffb020; /* sell / in-flight */
+  --ak: #f5c518; /* THE action color */
+  --ad: #8a7011; /* yellow-dim border */
+  --dg: #e5484d; /* danger */
+  --gl: rgba(11, 11, 15, 0.78); /* glass nav fill */
+  --shp: 0 8px 24px rgba(0, 0, 0, 0.45);
+}
+
+/* Space Grotesk 300/400 by default; the desk's data uses mono explicitly per element. */
+body {
+  font-family: "Space Grotesk", "Segoe UI", sans-serif;
+  font-weight: 400;
+}
+
+a {
+  color: var(--ph);
+  text-decoration: none;
+}
+a:hover {
+  color: var(--ak);
+}
+
+input::placeholder {
+  color: var(--ft);
+}
+
+::selection {
+  background: #f5c518;
+  color: #14120a;
+}
+
+/* ---- Global keyframes (ported from the prototype) ------------------------------------------- */
+@keyframes ahd-dot {
+  0%, 60% { opacity: 1; }
+  61%, 100% { opacity: 0.25; }
+}
+@keyframes ahd-flick {
+  0%, 100% { opacity: 0.42; }
+  47% { opacity: 0.34; }
+  53% { opacity: 0.52; }
+}
+@keyframes ahd-rise {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes ahd-pop {
+  from { opacity: 0; transform: scale(0.55); }
+  60% { opacity: 1; transform: scale(1.06); }
+  to { opacity: 1; transform: scale(1); }
+}
+@keyframes ahd-bubble {
+  from { opacity: 0.5; transform: translate(-50%, -50%) scale(1); }
+  to { opacity: 0; transform: translate(-50%, -50%) scale(20); }
+}
+
+/* ---- Global button feel: press-scale + activation ripple ------------------------------------ */
+button {
+  position: relative;
+  overflow: hidden;
+  -webkit-tap-highlight-color: transparent;
+}
+button::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.45);
+  opacity: 0;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  display: none;
+}
+button:active {
+  transform: scale(0.96);
+}
+button:active::after {
+  display: block;
+  animation: ahd-bubble 0.55s ease-out;
+}
+
+/* Reusable noir helpers ---------------------------------------------------------------------- */
+.noir-mono {
+  font-family: "JetBrains Mono", "Space Mono", ui-monospace, monospace;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Glass card: no visible border (transparent keeps geometry), inner top highlight + drop shadow. */
+.noir-card {
+  border: 1px solid transparent;
+  border-radius: 14px;
+  background: linear-gradient(165deg, rgba(30, 30, 39, 0.85), rgba(15, 15, 20, 0.92));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.07), 0 14px 34px rgba(0, 0, 0, 0.5);
+}
+
+/* Glass ghost button. */
+.noir-ghost {
+  font-family: "Space Grotesk", "Segoe UI", sans-serif;
+  font-size: 13.5px;
+  letter-spacing: 0.01em;
+  padding: 11px 20px;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  background: linear-gradient(150deg, rgba(255, 255, 255, 0.09), rgba(255, 255, 255, 0.02));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  color: var(--dm);
+  cursor: pointer;
+  transition: border-color 120ms ease, color 120ms ease;
+}
+.noir-ghost:hover:not(:disabled) {
+  border-color: var(--ft);
+  color: var(--tx);
+}
+.noir-ghost:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+/* Yellow primary button. */
+.noir-primary {
+  font-family: "Space Grotesk", "Segoe UI", sans-serif;
+  font-size: 14px;
+  letter-spacing: 0.01em;
+  padding: 12px 22px;
+  border-radius: 999px;
+  border: 1px solid #f5c518;
+  background: #f5c518;
+  color: #14120a;
+  cursor: pointer;
+  transition: filter 120ms ease;
+}
+.noir-primary:hover:not(:disabled) {
+  filter: brightness(1.1);
+}
+.noir-primary:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+/* The redaction bar — a real handle sits underneath in the DOM; this only overlays the hatch. */
+.noir-censor {
+  font-family: "JetBrains Mono", "Space Mono", ui-monospace, monospace;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  color: #55535f;
+  background: repeating-linear-gradient(135deg, #1a1a20, #1a1a20 4px, #202028 4px, #202028 8px);
+  border: 1px solid #1e1e25;
+  border-radius: 2px;
+  padding: 3px 9px;
+}
