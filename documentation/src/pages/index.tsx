@@ -1,37 +1,54 @@
 import type {ReactNode} from 'react';
 import clsx from 'clsx';
 import Link from '@docusaurus/Link';
+import useBaseUrl from '@docusaurus/useBaseUrl';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import Layout from '@theme/Layout';
 import Heading from '@theme/Heading';
 
+import HomepageFeatures from '@site/src/components/HomepageFeatures';
 import styles from './index.module.css';
+
+const REPO = 'https://github.com/ceciliagalvaoo/after-hours-desk';
+const LIVE_APP = 'https://after-hours-desk.onrender.com';
+const FEEDBACK = 'https://github.com/ceciliagalvaoo/after-hours-desk/blob/master/feedback.md';
 
 function HomepageHeader() {
   const {siteConfig} = useDocusaurusContext();
+  const talk = useBaseUrl('/img/broker/talk.gif');
+  const smirk = useBaseUrl('/img/broker/smirk.gif');
   return (
-    <header className={clsx('hero hero--primary', styles.heroBanner)}>
+    <header className={clsx('hero', styles.heroBanner)}>
       <div className="container">
-        <Heading as="h1" className="hero__title">
-          {siteConfig.title}
-        </Heading>
-        <p className="hero__subtitle">{siteConfig.tagline}</p>
-        <p className={styles.heroSub}>
-          Built by Cecília Galvão and Pablo Azevedo for the iExec WTF Hackathon (Summer Edition)
+        <div className={styles.mascotRow}>
+          <img src={talk} alt="The Broker, explaining" className={styles.heroMascot} />
+          <Heading as="h1" className={clsx('hero__title', styles.heroTitle)}>
+            {siteConfig.title}
+          </Heading>
+          <img src={smirk} alt="The Broker, smirking" className={styles.heroMascot} />
+        </div>
+
+        <p className={styles.heroTagline}>{siteConfig.tagline}</p>
+        <p className={styles.pitch}>
+          Traders submit <strong>encrypted</strong> order sizes — encrypted in the browser, never a
+          plaintext amount on calldata. The desk nets a batch entirely from composed Nox primitives
+          and moves real confidential cUSDC. Only the matched aggregate and the live Uniswap
+          execution price ever go public. <span className={styles.phosphor}>The trade is provable.
+          The size never prints.</span>
         </p>
+
         <div className={styles.buttons}>
-          <Link className="button button--primary button--lg" to="/docs/">
+          <Link className={clsx(styles.btn, styles.btnPrimary)} to="/docs/intro">
             Read the docs
           </Link>
-          <Link
-            className="button button--secondary button--lg"
-            to="https://github.com/ceciliagalvaoo/after-hours-desk">
-            View on GitHub
+          <Link className={styles.btn} href={LIVE_APP}>
+            Open the live app ↗
           </Link>
-          <Link
-            className="button button--secondary button--lg"
-            to="https://sepolia.etherscan.io/address/0x46b72a2615de7351699dcd5a64b854746a29fdb8">
-            Live contract ↗
+          <Link className={styles.btn} href={REPO}>
+            GitHub
+          </Link>
+          <Link className={styles.btn} href={FEEDBACK}>
+            feedback.md
           </Link>
         </div>
       </div>
@@ -46,26 +63,48 @@ const STATS: {label: string; value: string}[] = [
   {label: 'Order size ever plaintext on-chain', value: 'Never'},
 ];
 
-const HIGHLIGHTS: {title: string; body: string; to: string}[] = [
+type Member = {
+  name: string;
+  role: string;
+  photo: string;
+  broker: string;
+  github: string;
+};
+
+const TEAM: Member[] = [
   {
-    title: 'Confidential by construction',
-    body:
-      'Order sizes are encrypted client-side before anything is sent — the chain only ever sees an opaque handle. Only the matched aggregate and execution price ever become public, and only after settlement.',
-    to: '/docs/problem-and-solution',
+    name: 'Cecília Galvão',
+    role: 'Smart Contracts · Backend · Blockchain',
+    photo: '/img/team/Cecilia.png',
+    broker: '/img/broker/money.gif',
+    github: 'https://github.com/ceciliagalvaoo',
   },
   {
-    title: 'Real Uniswap composability',
-    body:
-      'Execution price is read live from a real, unmodified, public Uniswap V3 pool on Sepolia — called, never forked or modified.',
-    to: '/docs/architecture',
-  },
-  {
-    title: 'Selective disclosure, enforced on-chain',
-    body:
-      'A compliance-viewer address can decrypt every fill; each trader can only decrypt their own — a real ACL check, tested with four genuinely distinct accounts.',
-    to: '/docs/user-flows',
+    name: 'Pablo Azevedo',
+    role: 'Full-Stack · Frontend · Product',
+    photo: '/img/team/Pablo.png',
+    broker: '/img/broker/smirk.gif',
+    github: 'https://github.com/zzaved',
   },
 ];
+
+function TeamMember({member}: {member: Member}) {
+  const photo = useBaseUrl(member.photo);
+  const broker = useBaseUrl(member.broker);
+  return (
+    <div className={styles.teamCard}>
+      <div className={styles.teamPhotoWrap}>
+        <img src={photo} alt={member.name} className={styles.teamPhoto} />
+        <img src={broker} alt="" className={styles.teamBroker} />
+      </div>
+      <p className={styles.teamName}>{member.name}</p>
+      <p className={styles.teamRole}>{member.role}</p>
+      <p className={styles.teamLinks}>
+        <a href={member.github}>GitHub ↗</a>
+      </p>
+    </div>
+  );
+}
 
 export default function Home(): ReactNode {
   const {siteConfig} = useDocusaurusContext();
@@ -87,16 +126,20 @@ export default function Home(): ReactNode {
             </div>
           </div>
         </section>
-        <section className={styles.highlightsSection}>
+
+        <HomepageFeatures />
+
+        <section className={styles.teamSection}>
           <div className="container">
-            <div className="row">
-              {HIGHLIGHTS.map((item) => (
-                <div key={item.title} className="col col--4">
-                  <Link to={item.to} className={styles.highlightCard}>
-                    <Heading as="h3">{item.title}</Heading>
-                    <p>{item.body}</p>
-                  </Link>
-                </div>
+            <Heading as="h2" className={styles.sectionHeading}>
+              The desk crew
+            </Heading>
+            <p className={styles.sectionSub}>
+              Built by two people for the iExec WTF Hackathon (Summer Edition).
+            </p>
+            <div className={styles.teamRow}>
+              {TEAM.map((m) => (
+                <TeamMember key={m.name} member={m} />
               ))}
             </div>
           </div>

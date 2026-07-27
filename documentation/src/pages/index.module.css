@@ -1,89 +1,209 @@
-/**
- * CSS files with the .module.css suffix will be treated as CSS modules
- * and scoped locally.
- */
+/* After Hours Desk landing — Confidential-Noir. Dark near-black + iExec yellow accent. */
 
 .heroBanner {
-  padding: 4rem 0;
+  padding: 4.5rem 0 3.5rem;
   text-align: center;
   position: relative;
   overflow: hidden;
+  background:
+    radial-gradient(circle at 50% -20%, rgba(245, 197, 24, 0.09), transparent 55%),
+    var(--ahd-bg, #0b0b0f);
+  border-bottom: 1px solid var(--ahd-border-soft, #1e1e25);
 }
 
-@media screen and (max-width: 996px) {
-  .heroBanner {
-    padding: 2rem;
-  }
+.mascotRow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
 }
 
-.heroSub {
-  opacity: 0.85;
-  font-size: 0.95rem;
-  margin-bottom: 1.5rem;
+.heroMascot {
+  width: 72px;
+  height: 72px;
+  image-rendering: pixelated;
+}
+
+.heroTitle {
+  font-family: var(--ahd-font-display, 'Space Grotesk', sans-serif);
+  font-size: clamp(2.4rem, 6vw, 3.8rem);
+  letter-spacing: -0.02em;
+  margin: 0;
+  color: var(--ahd-text, #e9e7e0);
+}
+
+.heroTagline {
+  margin: 1.1rem auto 0;
+  max-width: 720px;
+  font-size: 1.1rem;
+  color: var(--ahd-yellow, #f5c518);
+  font-weight: 500;
+}
+
+.pitch {
+  margin: 1.1rem auto 1.75rem;
+  max-width: 720px;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--ahd-text-dim, #8d8b96);
+}
+
+.phosphor {
+  color: var(--ahd-phosphor, #3ddc84);
+  font-family: var(--ahd-font-mono, monospace);
+  font-size: 0.95em;
 }
 
 .buttons {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.75rem;
+  gap: 0.65rem;
   flex-wrap: wrap;
 }
 
+.btn {
+  font-family: var(--ahd-font-mono, monospace);
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 0.6rem 1.1rem;
+  border-radius: var(--ahd-radius, 3px);
+  border: 1px solid var(--ahd-border, #2a2a33);
+  background: transparent;
+  color: var(--ahd-text-dim, #8d8b96);
+  transition: background-color 120ms ease, color 120ms ease, box-shadow 120ms ease,
+    border-color 120ms ease;
+}
+
+.btn:hover {
+  color: var(--ahd-text, #e9e7e0);
+  border-color: var(--ahd-yellow-dim, #8a7011);
+  background: var(--ahd-bg-raised, #131318);
+  text-decoration: none;
+}
+
+.btnPrimary {
+  background: var(--ahd-yellow, #f5c518);
+  color: #14120a;
+  border-color: var(--ahd-yellow, #f5c518);
+}
+
+.btnPrimary:hover {
+  color: #14120a;
+  background: var(--ahd-yellow, #f5c518);
+  box-shadow: 0 0 0 1px var(--ahd-yellow, #f5c518), 0 0 20px var(--ahd-yellow-glow, rgba(245, 197, 24, 0.35));
+}
+
+/* ---- Stats ---------------------------------------------------------------------------------- */
 .statsSection {
-  padding: 2.5rem 0;
-  border-bottom: 1px solid var(--ifm-toc-border-color);
+  padding: 2.75rem 0;
+  border-bottom: 1px solid var(--ahd-border-soft, #1e1e25);
 }
 
 .statsGrid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 1.5rem;
+  gap: 1.25rem;
   text-align: center;
+}
+
+.statCard {
+  padding: 1.25rem 0.75rem;
+  border: 1px solid var(--ahd-border, #2a2a33);
+  border-radius: var(--ahd-radius, 3px);
+  background: var(--ahd-bg-panel, #17171d);
+}
+
+.statValue {
+  font-family: var(--ahd-font-mono, monospace);
+  font-size: 1.9rem;
+  font-weight: 700;
+  color: var(--ahd-yellow, #f5c518);
+  font-variant-numeric: tabular-nums;
+}
+
+.statLabel {
+  font-size: 0.8rem;
+  color: var(--ahd-text-dim, #8d8b96);
+  margin-top: 0.4rem;
+}
+
+/* ---- Team ----------------------------------------------------------------------------------- */
+.teamSection {
+  padding: 3rem 0 4rem;
+  border-top: 1px solid var(--ahd-border-soft, #1e1e25);
+}
+
+.sectionHeading {
+  text-align: center;
+  font-size: 1.7rem;
+  margin: 0;
+  color: var(--ahd-text, #e9e7e0);
+}
+
+.sectionSub {
+  text-align: center;
+  color: var(--ahd-text-dim, #8d8b96);
+  margin: 0.5rem 0 2rem;
+}
+
+.teamRow {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 3rem;
+}
+
+.teamCard {
+  text-align: center;
+}
+
+.teamPhotoWrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.teamPhoto {
+  width: 128px;
+  height: 128px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid var(--ahd-border, #2a2a33);
+}
+
+.teamBroker {
+  height: 44px;
+  image-rendering: pixelated;
+}
+
+.teamName {
+  margin: 0.7rem 0 0.15rem;
+  font-weight: 600;
+  color: var(--ahd-text, #e9e7e0);
+}
+
+.teamRole {
+  margin: 0 0 0.4rem;
+  font-family: var(--ahd-font-mono, monospace);
+  font-size: 0.78rem;
+  color: var(--ahd-text-dim, #8d8b96);
+}
+
+.teamLinks {
+  margin: 0;
+  font-size: 0.9rem;
 }
 
 @media screen and (max-width: 768px) {
   .statsGrid {
     grid-template-columns: repeat(2, 1fr);
   }
-}
-
-.statValue {
-  font-size: 2rem;
-  font-weight: 700;
-  color: var(--ifm-color-primary);
-}
-
-.statLabel {
-  font-size: 0.85rem;
-  opacity: 0.75;
-  margin-top: 0.25rem;
-}
-
-.highlightsSection {
-  padding: 3rem 0;
-}
-
-.highlightCard {
-  display: block;
-  height: 100%;
-  padding: 1.5rem;
-  border-radius: var(--ifm-card-border-radius);
-  border: 1px solid var(--ifm-toc-border-color);
-  color: var(--ifm-font-color-base);
-  text-decoration: none;
-  transition: border-color 0.15s ease, transform 0.15s ease;
-  margin-bottom: 1.5rem;
-}
-
-.highlightCard:hover {
-  border-color: var(--ifm-color-primary);
-  transform: translateY(-2px);
-  text-decoration: none;
-  color: var(--ifm-font-color-base);
-}
-
-.highlightCard p {
-  opacity: 0.85;
-  margin-bottom: 0;
+  .heroMascot {
+    width: 56px;
+    height: 56px;
+  }
 }
