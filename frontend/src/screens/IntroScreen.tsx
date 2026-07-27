@@ -119,7 +119,7 @@ export function IntroScreen() {
           <BrokerCanvas look={LOOK_Q1} glow={glow} crop={CROP_HEAD} width={26} height={29} />
           <span style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 12, letterSpacing: ".2em", textTransform: "uppercase", color: "var(--tx)" }}>After Hours Desk</span>
         </div>
-        <div style={{ display: "flex", alignItems: "center", gap: 26 }}>
+        <div className="ahd-intro-navlinks" style={{ display: "flex", alignItems: "center", gap: 26 }}>
           <span style={navLink} onClick={() => go("desk")}>The desk</span>
           <span style={navLink} onClick={startTour}>What are we hiding?</span>
           <span style={navLink} onClick={() => go("identity")}>The Broker</span>
@@ -178,7 +178,7 @@ export function IntroScreen() {
         <h2 style={{ margin: "0 0 8px", fontSize: "clamp(1.7rem,3vw,2.5rem)", lineHeight: 1.1, letterSpacing: "-.025em", fontWeight: 300, color: "var(--tx)" }}>Three moves. Zero leaks.</h2>
 
         {MECH.map((m) => (
-          <div key={m.n} data-mech-step style={{ display: "grid", gridTemplateColumns: "230px minmax(0,1fr)", gap: 44, alignItems: "center", minHeight: "42vh", opacity: 0.45, transform: "translateY(22px)", transition: "opacity .7s ease,transform .7s ease" }}>
+          <div key={m.n} data-mech-step className="ahd-mech-step" style={{ display: "grid", gap: 44, alignItems: "center", minHeight: "42vh", opacity: 0.45, transform: "translateY(22px)", transition: "opacity .7s ease,transform .7s ease" }}>
             <div style={{ position: "relative", alignSelf: "center", justifySelf: "start" }}>
               <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: "clamp(90px,12vw,168px)", fontWeight: 300, lineHeight: 0.85, WebkitTextStroke: "1.5px var(--ft)", color: "transparent", fontVariantNumeric: "tabular-nums" }}>{m.n}</div>
               <div data-mech-tape style={{ position: "absolute", inset: "-6px -12px", background: "repeating-linear-gradient(135deg,#0e0e13,#0e0e13 7px,#1b1b22 7px,#1b1b22 14px)", border: "1px solid var(--bd)", borderRadius: 6, display: "flex", alignItems: "center", justifyContent: "center", transition: "transform .9s cubic-bezier(.5,0,.15,1),opacity .9s ease" }}>
@@ -200,8 +200,8 @@ export function IntroScreen() {
           <QaPill active={qa === "q1"} onClick={() => setQa("q1")}>Can’t I prove the amount?</QaPill>
           <QaPill active={qa === "q2"} onClick={() => setQa("q2")}>Who’s the guy in the hat?</QaPill>
         </div>
-        <div style={{ display: "grid", gridTemplateColumns: "minmax(0,.85fr) minmax(0,1.15fr)", gap: 56, alignItems: "center", padding: "56px 0 0" }}>
-          <div style={{ justifySelf: "center", display: "flex", flexDirection: "column", alignItems: "center", gap: 12 }}>
+        <div className="ahd-qa-grid" style={{ display: "grid", gap: 56, alignItems: "center", padding: "56px 0 0" }}>
+          <div className="ahd-qa-broker" style={{ justifySelf: "center", display: "flex", flexDirection: "column", alignItems: "center", gap: 12 }}>
             <div style={{ background: "#08080b", border: "1px solid transparent", borderRadius: 16, padding: "22px 28px" }}>
               <BrokerCanvas look={qa === "q1" ? LOOK_Q1 : LOOK_Q2} glow={glow} talk width={196} height={196} />
             </div>
@@ -229,7 +229,7 @@ function DemoRow({ time, tag, tagColor, desc, barTitle, proven, last }: {
   time: string; tag: string; tagColor: string; desc: React.ReactNode; barTitle?: string; proven?: boolean; last?: boolean;
 }) {
   return (
-    <div style={{ display: "grid", gridTemplateColumns: "5.2rem 4.6rem minmax(0,1fr) auto", gap: 14, alignItems: "center", padding: "12px 20px", borderBottom: last ? "none" : "1px solid rgba(255,255,255,.05)" }}>
+    <div className="ahd-demo-row" style={{ display: "grid", gap: 14, alignItems: "center", padding: "12px 20px", borderBottom: last ? "none" : "1px solid rgba(255,255,255,.05)" }}>
       <span style={{ color: "var(--ft)", fontSize: 10.5 }}>{time}</span>
       <span style={{ color: tagColor, letterSpacing: ".08em" }}>{tag}</span>
       <span style={{ color: "var(--dm)" }}>{desc}</span>

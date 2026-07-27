@@ -25,6 +25,19 @@ export function TourOverlay() {
       box.style.top = r.top - 8 + "px";
       box.style.width = r.width + 16 + "px";
       box.style.height = r.height + 16 + "px";
+      if (window.innerWidth <= 640) {
+        // Mobile: dock the tooltip as a bottom sheet instead of squeezing it beside the target,
+        // which is what broke the layout on narrow screens.
+        tip.style.left = "16px";
+        tip.style.right = "16px";
+        tip.style.width = "auto";
+        tip.style.top = "auto";
+        tip.style.bottom = "16px";
+        return;
+      }
+      tip.style.right = "";
+      tip.style.bottom = "";
+      tip.style.width = "min(360px, calc(100vw - 32px))";
       const tw = Math.min(360, window.innerWidth - 32);
       const th = tip.offsetHeight || 220;
       let tl = r.right + 22;
