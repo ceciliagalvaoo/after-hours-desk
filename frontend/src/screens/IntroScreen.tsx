@@ -224,6 +224,8 @@ export function IntroScreen() {
  * tick, sometimes in bursts, always stamped with the current wall-clock time so it always reads as
  * "now", and older rows slide out the bottom of the fixed-height window.
  */
+type HeroMood = "smirk" | "money" | "smile" | "talk" | "sad";
+
 interface TapeRowData {
   id: number;
   time: string;
@@ -232,10 +234,20 @@ interface TapeRowData {
   desc: React.ReactNode;
   barTitle?: string;
   proven?: boolean;
+  mood: HeroMood;
 }
 
 const HERO_ADDRS = ["0x7a9f…2b1c", "0x2b8e…9d04", "0x3e44…c3b0", "0x91cd…4f7a", "0x5d20…be13", "0xa10f…77e2", "0xc4b8…1d9f", "0x6f33…0ac5"];
 const HERO_TAUNTS = ["What are you looking for here?", "Nice try.", "Still encrypted. Still not for you.", "Rubbing the bar won’t decrypt it.", "Real ciphertext under the bar. Inspect it.", "That’s a live handle, not a placeholder."];
+// Rare, real desk failure lines — they drive the Broker's "sad" reaction.
+const HERO_VOIDS = ["settle · batch not ready", "operator window lapsed", "no cross · unmatched"];
+const HERO_CAPTIONS: Record<HeroMood, string> = {
+  smirk: "Sent dark.",
+  money: "Batch closed.",
+  smile: "Fill’s in.",
+  talk: "Book’s moving.",
+  sad: "That one missed.",
+};
 const pickOne = <T,>(a: T[]): T => a[Math.floor(Math.random() * a.length)];
 const heroMoney = (n: number) => "$" + n.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 const clockAt = (d: Date) => d.toLocaleTimeString("en-GB", { hour12: false });
@@ -248,27 +260,31 @@ function HeroTape() {
   function make(time: string): TapeRowData {
     const id = ++idRef.current;
     const roll = Math.random();
-    if (roll < 0.58) {
+    if (roll < 0.08) {
+      // Rare failure — drives the Broker's sad reaction.
+      return { id, time, tag: "VOID", tagColor: "var(--dg)", mood: "sad", desc: pickOne(HERO_VOIDS) };
+    }
+    if (roll < 0.6) {
       const isBuy = Math.random() < 0.5;
       const o = ++orderRef.current;
-      return { id, time, tag: isBuy ? "BUY" : "SELL", tagColor: isBuy ? "var(--ph)" : "var(--am)", desc: `order #${o} · ${pickOne(HERO_ADDRS)} · batch ${batchRef.current}`, barTitle: pickOne(HERO_TAUNTS) };
+      return { id, time, tag: isBuy ? "BUY" : "SELL", tagColor: isBuy ? "var(--ph)" : "var(--am)", mood: "smirk", desc: `order #${o} · ${pickOne(HERO_ADDRS)} · batch ${batchRef.current}`, barTitle: pickOne(HERO_TAUNTS) };
     }
-    if (roll < 0.73) {
+    if (roll < 0.74) {
       const b = Math.max(1, batchRef.current - 1);
       const buy = 1 + Math.floor(Math.random() * 3);
       const sell = 1 + Math.floor(Math.random() * 3);
       if (Math.random() < 0.55) {
         const amt = (5 + Math.floor(Math.random() * 44)) * 250;
         const price = 2400 + Math.random() * 90;
-        return { id, time, tag: "MATCH", tagColor: "var(--ak)", proven: true, desc: <>batch {b} · {buy} buy / {sell} sell <span style={{ color: "var(--ph)" }}>· matched {heroMoney(amt)} @ {heroMoney(price)}/WETH</span></> };
+        return { id, time, tag: "MATCH", tagColor: "var(--ak)", mood: "money", proven: true, desc: <>batch {b} · {buy} buy / {sell} sell <span style={{ color: "var(--ph)" }}>· matched {heroMoney(amt)} @ {heroMoney(price)}/WETH</span></> };
       }
-      return { id, time, tag: "MATCH", tagColor: "var(--ak)", desc: `batch ${b} · ${buy} buy / ${sell} sell`, barTitle: pickOne(HERO_TAUNTS) };
+      return { id, time, tag: "MATCH", tagColor: "var(--ak)", mood: "money", desc: `batch ${b} · ${buy} buy / ${sell} sell`, barTitle: pickOne(HERO_TAUNTS) };
     }
     if (roll < 0.88) {
-      return { id, time, tag: "FILL", tagColor: "var(--ft)", desc: "fill registered for compliance viewer", barTitle: pickOne(HERO_TAUNTS) };
+      return { id, time, tag: "FILL", tagColor: "var(--ft)", mood: "smile", desc: "fill registered for compliance viewer", barTitle: pickOne(HERO_TAUNTS) };
     }
     batchRef.current += 1;
-    return { id, time, tag: "BATCH", tagColor: "var(--ft)", desc: `batch ${batchRef.current} opened · resting orders sealed` };
+    return { id, time, tag: "BATCH", tagColor: "var(--ft)", mood: "talk", desc: `batch ${batchRef.current} opened · resting orders sealed` };
   }
 
   const [rows, setRows] = useState<TapeRowData[]>(() => {
@@ -277,25 +293,40 @@ function HeroTape() {
     for (let i = 5; i >= 0; i--) seed.push(make(clockAt(new Date(now - i * 2400))));
     return seed.reverse(); // newest first
   });
+  const [notify, setNotify] = useState<{ mood: HeroMood; n: number }>({ mood: "talk", n: 0 });
 
   useEffect(() => {
     const id = window.setInterval(() => {
       const burst = Math.random() < 0.22 ? 3 : Math.random() < 0.5 ? 2 : 1;
-      setRows((prev) => {
-        const next = [...prev];
-        for (let i = 0; i < burst; i++) next.unshift(make(clockAt(new Date())));
-        return next.slice(0, 7);
-      });
+      // Generate outside the state updater so the ref-mutating generator runs exactly once.
+      const fresh: TapeRowData[] = [];
+      for (let i = 0; i < burst; i++) fresh.push(make(clockAt(new Date())));
+      const newest = fresh[fresh.length - 1];
+      const ordered = fresh.slice().reverse();
+      setRows((prev) => [...ordered, ...prev].slice(0, 7));
+      setNotify((p) => ({ mood: newest.mood, n: p.n + 1 }));
     }, 2000);
     return () => window.clearInterval(id);
     // eslint-disable-next-line react-hooks/exhaustive-deps -- generator refs are stable
   }, []);
 
+  const capColor = notify.mood === "sad" ? "var(--dg)" : notify.mood === "money" ? "var(--ak)" : "var(--ph)";
+
   return (
-    <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 12.5, fontVariantNumeric: "tabular-nums", height: 258, overflow: "hidden" }}>
-      {rows.map((r, i) => (
-        <DemoRow key={r.id} time={r.time} tag={r.tag} tagColor={r.tagColor} desc={r.desc} barTitle={r.barTitle} proven={r.proven} last={i === rows.length - 1} />
-      ))}
+    <div style={{ position: "relative" }}>
+      <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 12.5, fontVariantNumeric: "tabular-nums", height: 258, overflow: "hidden" }}>
+        {rows.map((r, i) => (
+          <DemoRow key={r.id} time={r.time} tag={r.tag} tagColor={r.tagColor} desc={r.desc} barTitle={r.barTitle} proven={r.proven} last={i === rows.length - 1} />
+        ))}
+      </div>
+      {/* The Broker, reacting to the feed at the corner of the desk — a constant persona from
+          first view. The GIF swaps with the newest event's mood (money/smile/smirk/talk/sad). */}
+      <div className="ahd-hero-notify" style={{ position: "absolute", top: 8, right: 10, zIndex: 6, pointerEvents: "none" }}>
+        <div key={notify.n} style={{ animation: "ahd-pop .5s cubic-bezier(.2,1.4,.4,1) both", display: "flex", flexDirection: "column", alignItems: "center", gap: 4, borderRadius: 14, border: "1px solid transparent", background: "linear-gradient(160deg,rgba(26,26,34,.94),rgba(11,11,16,.97))", boxShadow: "0 16px 34px rgba(0,0,0,.55),inset 0 1px 0 rgba(255,255,255,.1)", padding: "9px 9px 7px" }}>
+          <img src={`/broker/the-broker/${notify.mood}.gif`} width={68} height={68} alt="" style={{ imageRendering: "pixelated", display: "block", borderRadius: 8 }} />
+          <span style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 8.5, letterSpacing: ".14em", textTransform: "uppercase", color: capColor }}>{HERO_CAPTIONS[notify.mood]}</span>
+        </div>
+      </div>
     </div>
   );
 }
