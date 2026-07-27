@@ -111,6 +111,15 @@ const config: Config = {
           ],
         },
         {
+          title: 'Authors',
+          items: [
+            {label: 'Cecília Galvão · GitHub', href: 'https://github.com/ceciliagalvaoo'},
+            {label: 'Cecília Galvão · LinkedIn', href: 'https://www.linkedin.com/in/ceciliagalvaoo'},
+            {label: 'Pablo Azevedo · GitHub', href: 'https://github.com/zzaved'},
+            {label: 'Pablo Azevedo · LinkedIn', href: 'https://www.linkedin.com/in/pabloazevedo'},
+          ],
+        },
+        {
           title: 'Built for',
           items: [
             {label: 'iExec WTF Hackathon', href: 'https://dorahacks.io/hackathon/iexec-wtf'},

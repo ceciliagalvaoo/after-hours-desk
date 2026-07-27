@@ -1,5 +1,5 @@
 /**
- * After Hours Desk documentation theme — "Confidential-Noir".
+ * After Hours Desk documentation theme: "Confidential-Noir".
  *
  * This mirrors the product's own front-end (frontend/src/styles/theme.css + frontend/index.html):
  * near-black surfaces, iExec yellow (#f5c518) as the ONLY accent, phosphor green (#3ddc84) for
@@ -184,7 +184,7 @@ code {
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
 }
 
-/* The Broker mascot GIFs are 256px pixel art — render crisp and keep them small + purposeful. */
+/* The Broker mascot GIFs are 256px pixel art, render crisp and keep them small + purposeful. */
 .markdown img[src$='.gif'],
 .markdown img[src*='/broker/'] {
   image-rendering: pixelated;

@@ -16,7 +16,7 @@ const FeatureList: FeatureItem[] = [
     title: 'Encrypted order sizes',
     description: (
       <>
-        Sizes are encrypted client-side before anything is sent — the chain only ever sees an opaque
+        Sizes are encrypted client-side before anything is sent: the chain only ever sees an opaque
         32-byte handle. The plaintext never touches Sepolia, not even for a moment.
       </>
     ),
@@ -28,7 +28,7 @@ const FeatureList: FeatureItem[] = [
     description: (
       <>
         <code>settleBatch()</code> nets buys and sells entirely from composed Nox primitives and
-        moves real confidential cUSDC balances — not bookkeeping in a mapping.
+        moves real confidential cUSDC balances, not bookkeeping in a mapping.
       </>
     ),
     to: '/docs/how-it-works/architecture',
@@ -38,7 +38,7 @@ const FeatureList: FeatureItem[] = [
     title: 'Public Uniswap reference',
     description: (
       <>
-        Execution price is read live from a real, unmodified Uniswap V3 pool on Sepolia — called
+        Execution price is read live from a real, unmodified Uniswap V3 pool on Sepolia, called
         through a <code>view</code>-only adapter, never forked or wrapped.
       </>
     ),
@@ -50,7 +50,7 @@ const FeatureList: FeatureItem[] = [
     description: (
       <>
         A compliance viewer can decrypt every fill; each trader only their own; a stranger nothing at
-        all — a real on-chain ACL, proven across four distinct accounts.
+        all, a real on-chain ACL, proven across four distinct accounts.
       </>
     ),
     to: '/docs/using-it/user-flows',

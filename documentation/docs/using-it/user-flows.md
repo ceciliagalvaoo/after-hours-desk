@@ -5,13 +5,13 @@ sidebar_position: 4
 # User Flows & UX
 
 Every screenshot on this page is a real screenshot from a real, manual test session against the
-live Sepolia deployment — two genuinely distinct MetaMask wallets, real transactions, real
+live Sepolia deployment: two genuinely distinct MetaMask wallets, real transactions, real
 decrypts. Nothing here was staged after the fact; this is the actual walkthrough performed to
 validate the product end to end.
 
 ## Before connecting a wallet
 
-The public tape and the Uniswap price strip render real, live Sepolia data immediately — no wallet
+The public tape and the Uniswap price strip render real, live Sepolia data immediately, no wallet
 required. A judge opening the link with no wallet installed still sees genuine on-chain proof that
 the system works, not a blank gate screen.
 
@@ -23,17 +23,17 @@ flow on this page.
 ## Connecting and reading your confidential balance
 
 After connecting (MetaMask, Ethereum Sepolia), the order ticket, tape, and auditor panel all become
-interactive. The trader's own confidential cUSDC balance is shown redacted (`███`) by default —
+interactive. The trader's own confidential cUSDC balance is shown redacted (`███`) by default,
 sitting over a real handle already fetched from `confidentialBalanceOf`, never a placeholder for
-data that doesn't exist — until the trader clicks "Decrypt." Inspect the bar in the DOM: the handle
+data that doesn't exist, until the trader clicks "Decrypt." Inspect the bar in the DOM: the handle
 is genuinely there, you just can't read the number off it here.
 
 ![Connected: order ticket and auditor panel](/img/screenshots/02-connected-order-ticket-auditor.png)
 
 New wallets with no cUSDC yet can use "Get testnet cUSDC," which chains three real transactions
-(`faucet` → `approve` → `wrap`) automatically — no pre-funded account or Etherscan required.
+(`faucet` → `approve` → `wrap`) automatically, no pre-funded account or Etherscan required.
 
-Clicking "Decrypt" triggers a real MetaMask **signature request**, not a transaction — no gas, no
+Clicking "Decrypt" triggers a real MetaMask **signature request**, not a transaction, no gas, no
 network fee. This is `handleClient.decrypt(handle)`: an EIP-712 `DataAccessAuthorization` proving
 wallet ownership to the Handle Gateway, valid for a short window (one hour) rather than a standing
 grant:
@@ -45,9 +45,9 @@ grant:
 ![The Broker: send it dark](/img/broker/smirk.gif)
 
 The trader picks Buy or Sell, enters an amount, and submits. The amount is encrypted **client-side**
-via `encryptInput` before the transaction is even built — only the resulting `{handle, handleProof}`
+via `encryptInput` before the transaction is even built: only the resulting `{handle, handleProof}`
 pair is ever sent. This is visible in MetaMask's own transaction preview: its simulation reports
-**"Estimated changes: No changes"**, because the calldata only carries an opaque handle and proof —
+**"Estimated changes: No changes"**, because the calldata only carries an opaque handle and proof:
 there is no plaintext transfer for MetaMask's simulator to decode:
 
 ![MetaMask transaction request showing "Estimated changes: No changes"](/img/screenshots/11-metamask-order-no-changes.png)
@@ -62,17 +62,17 @@ plaintext transfer for it to decode.
 
 The moment the transaction is sent (before it's even mined), the public tape
 updates live via `watchContractEvent`. Everyone watching sees that an order landed; nobody watching
-sees how big — the "pending…" entry carries the order's real handle, already redacted:
+sees how big: the "pending…" entry carries the order's real handle, already redacted:
 
 ![Order submitted, live tape update](/img/screenshots/03-order-submitted-live-tape.png)
 
-Buy orders require the desk to be pre-authorized as a cUSDC operator — a real, separate
+Buy orders require the desk to be pre-authorized as a cUSDC operator, a real, separate
 transaction, deliberately scoped to a short (15-minute) window rather than a standing grant.
 
 ## The auditor panel is a real on-chain check, not a UI lock
 
 Connecting a wallet that is **not** the registered compliance viewer shows a real, honest "not
-authorized" state — this is `ViewerRegistry.complianceViewer()` compared against the connected
+authorized" state: this is `ViewerRegistry.complianceViewer()` compared against the connected
 address on-chain, not a cosmetic UI gate:
 
 ![The Broker: access denied](/img/broker/sad.gif)
@@ -83,9 +83,9 @@ address on-chain, not a cosmetic UI gate:
 
 ![The Broker: match filled](/img/broker/money.gif)
 
-Once a batch has at least one buy and one sell order, **anyone** can trigger `settleBatch()` — no
+Once a batch has at least one buy and one sell order, **anyone** can trigger `settleBatch()`, no
 privileged keeper. After the transaction confirms, a banner shows the real result and is explicit
-that fills are still computing off-chain (the single Nox Runner processes jobs sequentially — this
+that fills are still computing off-chain (the single Nox Runner processes jobs sequentially, this
 UI never assumes synchronous confirmation):
 
 ![MATCH FILLED banner](/img/screenshots/05-match-filled-banner.png)
@@ -103,7 +103,7 @@ this test session it resolved in roughly 5 seconds:
 
 The matched quantity and execution price are the *only* two values `settleBatch()` ever marks
 publicly decryptable. Clicking "Reveal (publicDecrypt)" on the tape's MATCH FILLED row calls the
-real `publicDecrypt` — no special authorization needed, by design — and shows the matched amount
+real `publicDecrypt`, no special authorization needed, by design, and shows the matched amount
 alongside the real, live Uniswap price used for execution. This is the public half of the duality:
 the batch's aggregate is provable to anyone, while the individual sizes that composed it stay sealed.
 
@@ -116,7 +116,7 @@ every real fill, from every trader, listed with `View ACL` and `Decrypt Fill` ac
 
 ![Auditor panel, authorized](/img/screenshots/08-auditor-panel-authorized.png)
 
-The auditor can decrypt a fill that belongs to a **different** trader entirely — proving the
+The auditor can decrypt a fill that belongs to a **different** trader entirely, proving the
 compliance-viewer grant actually works across accounts, not just for the auditor's own orders:
 
 ![Auditor decrypting another trader's fill](/img/screenshots/09-auditor-decrypt-other-fill.png)
@@ -124,8 +124,8 @@ compliance-viewer grant actually works across accounts, not just for the auditor
 :::info[Selective disclosure, enforced on-chain]
 
 The auditor decrypts *every* fill; each trader decrypts *only their own*; a stranger decrypts
-nothing. That is a real Nox ACL check — proven in `test/unit/ViewerRegistry.test.ts` with four
-genuinely distinct accounts — not a UI-layer promise.
+nothing. That is a real Nox ACL check, proven in `test/unit/ViewerRegistry.test.ts` with four
+genuinely distinct accounts, not a UI-layer promise.
 
 :::
 

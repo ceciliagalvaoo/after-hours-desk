@@ -1,4 +1,4 @@
-/* After Hours Desk landing — Confidential-Noir. Dark near-black + iExec yellow accent. */
+/* After Hours Desk landing: Confidential-Noir. Dark near-black + iExec yellow accent. */
 
 .heroBanner {
   padding: 4.5rem 0 3.5rem;
@@ -63,7 +63,10 @@
   flex-wrap: wrap;
 }
 
-.btn {
+/* Scoped under .buttons so these win over the global `[data-theme='dark'] a` link color
+   (specificity 0,1,1). Without the scope, the anchor rule paints the label phosphor-green
+   on the yellow primary fill (illegible) and yellow-on-yellow on hover (invisible). */
+.buttons .btn {
   font-family: var(--ahd-font-mono, monospace);
   font-size: 0.78rem;
   letter-spacing: 0.06em;
@@ -73,26 +76,28 @@
   border: 1px solid var(--ahd-border, #2a2a33);
   background: transparent;
   color: var(--ahd-text-dim, #8d8b96);
+  text-decoration: none;
   transition: background-color 120ms ease, color 120ms ease, box-shadow 120ms ease,
     border-color 120ms ease;
 }
 
-.btn:hover {
+.buttons .btn:hover {
   color: var(--ahd-text, #e9e7e0);
   border-color: var(--ahd-yellow-dim, #8a7011);
   background: var(--ahd-bg-raised, #131318);
   text-decoration: none;
 }
 
-.btnPrimary {
+.buttons .btnPrimary {
   background: var(--ahd-yellow, #f5c518);
   color: #14120a;
   border-color: var(--ahd-yellow, #f5c518);
 }
 
-.btnPrimary:hover {
+.buttons .btnPrimary:hover {
   color: #14120a;
   background: var(--ahd-yellow, #f5c518);
+  text-decoration: none;
   box-shadow: 0 0 0 1px var(--ahd-yellow, #f5c518), 0 0 20px var(--ahd-yellow-glow, rgba(245, 197, 24, 0.35));
 }
 
@@ -195,7 +200,30 @@
 
 .teamLinks {
   margin: 0;
-  font-size: 0.9rem;
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.teamLinks .teamLink {
+  font-family: var(--ahd-font-mono, monospace);
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 0.32rem 0.72rem;
+  border-radius: var(--ahd-radius, 3px);
+  border: 1px solid var(--ahd-border, #2a2a33);
+  background: transparent;
+  color: var(--ahd-text-dim, #8d8b96);
+  text-decoration: none;
+  transition: color 120ms ease, border-color 120ms ease, background-color 120ms ease;
+}
+
+.teamLinks .teamLink:hover {
+  color: var(--ahd-text, #e9e7e0);
+  border-color: var(--ahd-yellow-dim, #8a7011);
+  background: var(--ahd-bg-raised, #131318);
+  text-decoration: none;
 }
 
 @media screen and (max-width: 768px) {

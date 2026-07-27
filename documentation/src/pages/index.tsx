@@ -30,7 +30,7 @@ function HomepageHeader() {
 
         <p className={styles.heroTagline}>{siteConfig.tagline}</p>
         <p className={styles.pitch}>
-          Traders submit <strong>encrypted</strong> order sizes — encrypted in the browser, never a
+          Traders submit <strong>encrypted</strong> order sizes, encrypted in the browser, never a
           plaintext amount on calldata. The desk nets a batch entirely from composed Nox primitives
           and moves real confidential cUSDC. Only the matched aggregate and the live Uniswap
           execution price ever go public. <span className={styles.phosphor}>The trade is provable.
@@ -69,6 +69,7 @@ type Member = {
   photo: string;
   broker: string;
   github: string;
+  linkedin: string;
 };
 
 const TEAM: Member[] = [
@@ -78,6 +79,7 @@ const TEAM: Member[] = [
     photo: '/img/team/Cecilia.png',
     broker: '/img/broker/money.gif',
     github: 'https://github.com/ceciliagalvaoo',
+    linkedin: 'https://www.linkedin.com/in/ceciliagalvaoo',
   },
   {
     name: 'Pablo Azevedo',
@@ -85,6 +87,7 @@ const TEAM: Member[] = [
     photo: '/img/team/Pablo.png',
     broker: '/img/broker/smirk.gif',
     github: 'https://github.com/zzaved',
+    linkedin: 'https://www.linkedin.com/in/pabloazevedo',
   },
 ];
 
@@ -99,9 +102,10 @@ function TeamMember({member}: {member: Member}) {
       </div>
       <p className={styles.teamName}>{member.name}</p>
       <p className={styles.teamRole}>{member.role}</p>
-      <p className={styles.teamLinks}>
-        <a href={member.github}>GitHub ↗</a>
-      </p>
+      <div className={styles.teamLinks}>
+        <a className={styles.teamLink} href={member.github}>GitHub ↗</a>
+        <a className={styles.teamLink} href={member.linkedin}>LinkedIn ↗</a>
+      </div>
     </div>
   );
 }
