@@ -162,8 +162,21 @@ documentation-vs-shipped-code discrepancies found and worked around, are in [`fe
 
 ## Documentation
 
-The full documentation site — problem, solution, architecture, user flows, roadmap, and setup
-guides — is published at **[ceciliagalvaoo.github.io/after-hours-desk](https://ceciliagalvaoo.github.io/after-hours-desk/)**.
+The full documentation site is published at
+**[ceciliagalvaoo.github.io/after-hours-desk](https://ceciliagalvaoo.github.io/after-hours-desk/)** —
+a themed Docusaurus site (Confidential-Noir, matching the app) with the complete walkthrough:
+
+- [Introduction](https://ceciliagalvaoo.github.io/after-hours-desk/docs/intro) — the one-paragraph overview + live deployment table
+- [Problem & Solution](https://ceciliagalvaoo.github.io/after-hours-desk/docs/problem-and-solution) — why dark pools need confidentiality, and why it's hard on a public chain
+- **How It Works**
+  - [Architecture](https://ceciliagalvaoo.github.io/after-hours-desk/docs/how-it-works/architecture) — contracts, the Nox primitive composition, the ACL model, the frontend
+  - [Nox Integration](https://ceciliagalvaoo.github.io/after-hours-desk/docs/how-it-works/nox-integration) — hands-on findings, distilled from [`feedback.md`](feedback.md)
+- **Using It**
+  - [User Flows & UX](https://ceciliagalvaoo.github.io/after-hours-desk/docs/using-it/user-flows) — real, screenshotted walkthroughs of every screen and role
+  - [Setup & Deployment](https://ceciliagalvaoo.github.io/after-hours-desk/docs/using-it/setup-and-deployment) — run it yourself
+- **Project**
+  - [Roadmap](https://ceciliagalvaoo.github.io/after-hours-desk/docs/project/roadmap) — what a production version looks like beyond this hackathon
+  - [Team](https://ceciliagalvaoo.github.io/after-hours-desk/docs/project/team) — who built this
 
 ## License
 
