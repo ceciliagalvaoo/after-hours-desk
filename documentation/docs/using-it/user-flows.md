@@ -15,11 +15,15 @@ The public tape and the Uniswap price strip render real, live Sepolia data immed
 required. A judge opening the link with no wallet installed still sees genuine on-chain proof that
 the system works, not a blank gate screen.
 
+<div className="ahd-figure">
+
 **Image 1: The public tape and Uniswap price strip before any wallet is connected**
 
 ![Initial view, no wallet connected](/img/screenshots/01-initial-no-wallet.png)
 
 *Source: The authors (2026).*
+
+</div>
 
 A first-time visitor also gets a 7-step "How it works" tutorial modal automatically, covering every
 flow on this page.
@@ -32,11 +36,15 @@ sitting over a real handle already fetched from `confidentialBalanceOf`, never a
 data that doesn't exist, until the trader clicks "Decrypt." Inspect the bar in the DOM: the handle
 is genuinely there, you just can't read the number off it here.
 
+<div className="ahd-figure">
+
 **Image 2: The connected desk with order ticket and auditor panel, balance still redacted**
 
 ![Connected: order ticket and auditor panel](/img/screenshots/02-connected-order-ticket-auditor.png)
 
 *Source: The authors (2026).*
+
+</div>
 
 New wallets with no cUSDC yet can use "Get testnet cUSDC," which chains three real transactions
 (`faucet` → `approve` → `wrap`) automatically, no pre-funded account or Etherscan required.
@@ -46,11 +54,15 @@ network fee. This is `handleClient.decrypt(handle)`: an EIP-712 `DataAccessAutho
 wallet ownership to the Handle Gateway, valid for a short window (one hour) rather than a standing
 grant:
 
+<div className="ahd-figure">
+
 **Image 3: MetaMask signature request for a gasless decrypt authorization**
 
 ![MetaMask signature request for a decrypt call](/img/screenshots/10-metamask-decrypt-signature.png)
 
 *Source: The authors (2026).*
+
+</div>
 
 ## Submitting an encrypted order
 
@@ -62,11 +74,15 @@ pair is ever sent. This is visible in MetaMask's own transaction preview: its si
 **"Estimated changes: No changes"**, because the calldata only carries an opaque handle and proof:
 there is no plaintext transfer for MetaMask's simulator to decode:
 
+<div className="ahd-figure">
+
 **Image 4: MetaMask transaction preview reporting "Estimated changes: No changes" for an encrypted order**
 
 ![MetaMask transaction request showing "Estimated changes: No changes"](/img/screenshots/11-metamask-order-no-changes.png)
 
 *Source: The authors (2026).*
+
+</div>
 
 :::tip["No changes" is the proof, not a bug]
 
@@ -80,11 +96,15 @@ The moment the transaction is sent (before it's even mined), the public tape
 updates live via `watchContractEvent`. Everyone watching sees that an order landed; nobody watching
 sees how big: the "pending…" entry carries the order's real handle, already redacted:
 
+<div className="ahd-figure">
+
 **Image 5: The public tape updating live with a redacted pending order**
 
 ![Order submitted, live tape update](/img/screenshots/03-order-submitted-live-tape.png)
 
 *Source: The authors (2026).*
+
+</div>
 
 Buy orders require the desk to be pre-authorized as a cUSDC operator, a real, separate
 transaction, deliberately scoped to a short (15-minute) window rather than a standing grant.
@@ -97,11 +117,15 @@ address on-chain, not a cosmetic UI gate:
 
 ![The Broker: access denied](/img/broker/sad.gif)
 
+<div className="ahd-figure">
+
 **Image 6: The auditor panel denying access to a non-compliance-viewer wallet**
 
 ![Auditor panel correctly denying access](/img/screenshots/04-auditor-panel-access-denied.png)
 
 *Source: The authors (2026).*
+
+</div>
 
 ## Settling a batch
 
@@ -112,11 +136,15 @@ privileged keeper. After the transaction confirms, a banner shows the real resul
 that fills are still computing off-chain (the single Nox Runner processes jobs sequentially, this
 UI never assumes synchronous confirmation):
 
+<div className="ahd-figure">
+
 **Image 7: The MATCH FILLED banner after a batch is settled**
 
 ![MATCH FILLED banner](/img/screenshots/05-match-filled-banner.png)
 
 *Source: The authors (2026).*
+
+</div>
 
 ## Decrypting your own fill
 
@@ -125,11 +153,15 @@ UI never assumes synchronous confirmation):
 "Decrypt my fill" triggers a real, gasless EIP-712-signed decrypt request through the Nox SDK. In
 this test session it resolved in roughly 5 seconds:
 
+<div className="ahd-figure">
+
 **Image 8: A trader's own fill decrypted to plaintext**
 
 ![Own fill decrypted](/img/screenshots/06-decrypt-own-fill-result.png)
 
 *Source: The authors (2026).*
+
+</div>
 
 ## Revealing the public aggregate
 
@@ -139,16 +171,22 @@ real `publicDecrypt`, no special authorization needed, by design, and shows the 
 alongside the real, live Uniswap price used for execution. This is the public half of the duality:
 the batch's aggregate is provable to anyone, while the individual sizes that composed it stay sealed.
 
+<div className="ahd-figure">
+
 **Image 9: The public aggregate and execution price revealed via publicDecrypt**
 
 ![Public aggregate revealed via publicDecrypt](/img/screenshots/07-public-decrypt-reveal.png)
 
 *Source: The authors (2026).*
 
+</div>
+
 ## The auditor sees everything, but only the auditor
 
 Switching back to the wallet registered as the compliance viewer unlocks the full auditor panel:
 every real fill, from every trader, listed with `View ACL` and `Decrypt Fill` actions.
+
+<div className="ahd-figure">
 
 **Image 10: The unlocked auditor panel listing every fill for the compliance viewer**
 
@@ -156,14 +194,20 @@ every real fill, from every trader, listed with `View ACL` and `Decrypt Fill` ac
 
 *Source: The authors (2026).*
 
+</div>
+
 The auditor can decrypt a fill that belongs to a **different** trader entirely, proving the
 compliance-viewer grant actually works across accounts, not just for the auditor's own orders:
+
+<div className="ahd-figure">
 
 **Image 11: The auditor decrypting a different trader's fill across accounts**
 
 ![Auditor decrypting another trader's fill](/img/screenshots/09-auditor-decrypt-other-fill.png)
 
 *Source: The authors (2026).*
+
+</div>
 
 :::info[Selective disclosure, enforced on-chain]
 

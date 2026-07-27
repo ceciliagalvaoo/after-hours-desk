@@ -38,6 +38,8 @@ ever decrypt their own.
 
 ## Live deployment
 
+<div className="ahd-figure">
+
 **Table 1: Deployed and verified Sepolia contract addresses**
 
 | Contract | Address |
@@ -49,6 +51,8 @@ ever decrypt their own.
 | `AfterHoursDesk` | [`0x46b72...9fdb8`](https://sepolia.etherscan.io/address/0x46b72a2615de7351699dcd5a64b854746a29fdb8#code) |
 
 *Source: The authors (2026).*
+
+</div>
 
 ## Where to go from here
 
