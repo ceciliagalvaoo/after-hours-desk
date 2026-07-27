@@ -44,10 +44,12 @@ flowchart TB
 Order size never exists as plaintext anywhere in this diagram except transiently, inside the
 Runner's enclave memory. The chain only ever holds opaque 32-byte handles.
 
-:::note One handle, followed everywhere
+:::note[One handle, followed everywhere]
+
 Trace any encrypted value through the diagram above and it stays a handle at every on-chain hop —
 `submitOrder`, the primitive events, `confidentialTransfer`, `registerFill`. Plaintext only appears
 inside the dashed "Nox off-chain (TEE)" box, and only while the Runner is computing.
+
 :::
 
 ## Contracts
@@ -81,14 +83,18 @@ can't have. It nets the batch entirely from composed Nox primitives:
 5. **Selective disclosure** — only the aggregate `matched` quantity and the execution price
    (read live from `UniswapV3PriceReader`) are ever marked `Nox.allowPublicDecryption`. Every
    per-order/per-fill handle stays behind `Nox.allow`/`Nox.addViewer`, scoped to that specific
-   trader (and the auditor, via `ViewerRegistry`) — never public.
+   trader (and the auditor, via `ViewerRegistry`) — never public. Anyone can read that the batch
+   cleared and at what price; the size behind any single order stays sealed to all but its trader
+   and the auditor.
 
 ![The Broker: batch settled](/img/broker/money.gif)
 
-:::danger Settlement math never wraps silently
+:::danger[Settlement math never wraps silently]
+
 The bare `add`/`sub`/`mul`/`div` primitives wrap on overflow with no revert — Solidity `unchecked`
 semantics. That is the wrong default for balance-critical netting, so every step above uses the
 `safe*` variant and feeds its `success` flag into `select()` to fall back to a known-good value.
+
 :::
 
 **Why `safe*`, never the wrapping primitives, for any of this math:** Nox's plain
@@ -156,11 +162,13 @@ manipulation risk is low-stakes here. The interface (`IUniswapV3PoolMinimal`) de
 `slot0()/token0()/token1()` — no mutating Uniswap function is even reachable from this contract,
 satisfying the hackathon's composability requirement literally: called, never modified.
 
-:::warning Spot price, not TWAP — a disclosed tradeoff
+:::warning[Spot price, not TWAP — a disclosed tradeoff]
+
 The reader uses `slot0()` spot price, not a time-weighted average. That is deliberate for this build:
 the price is a disclosed *reference* that never gates or moves real funds, so single-block
 manipulation is low-stakes here. A production TWAP path is a documented
 [Roadmap](/docs/project/roadmap) item.
+
 :::
 
 ## The ACL model

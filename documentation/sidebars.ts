@@ -4,6 +4,7 @@ const sidebars: SidebarsConfig = {
   docsSidebar: [
     'intro',
     'problem-and-solution',
+    'evaluation-criteria',
     {
       type: 'category',
       label: 'How It Works',

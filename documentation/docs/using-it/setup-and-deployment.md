@@ -55,9 +55,11 @@ nothing.
 npm run test:e2e:sepolia
 ```
 
-:::warning Real gas, real network
+:::warning[Real gas, real network]
+
 The E2E scripts run against the live Sepolia deployment — every step is a real transaction and
 spends real testnet gas. Fund the wallet you configured before running them.
+
 :::
 
 This runs four real, standalone, idempotent scripts in sequence against the actual live
@@ -93,7 +95,8 @@ npm run dev
 ```
 
 Open the printed `localhost` URL with an injected wallet (MetaMask) on Ethereum Sepolia. The public
-tape and Uniswap price strip work immediately, with no wallet connected. A "Get testnet cUSDC"
+tape and Uniswap price strip work immediately, with no wallet connected — public by design, while
+the size behind every order stays sealed regardless of who's looking. A "Get testnet cUSDC"
 control in the order ticket lets any fresh wallet self-serve real testnet funds (faucet + wrap,
 chained automatically) without touching Etherscan directly.
 

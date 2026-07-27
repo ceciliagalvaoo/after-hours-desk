@@ -25,7 +25,8 @@ flow on this page.
 After connecting (MetaMask, Ethereum Sepolia), the order ticket, tape, and auditor panel all become
 interactive. The trader's own confidential cUSDC balance is shown redacted (`███`) by default —
 sitting over a real handle already fetched from `confidentialBalanceOf`, never a placeholder for
-data that doesn't exist — until the trader clicks "Decrypt."
+data that doesn't exist — until the trader clicks "Decrypt." Inspect the bar in the DOM: the handle
+is genuinely there, you just can't read the number off it here.
 
 ![Connected: order ticket and auditor panel](/img/screenshots/02-connected-order-ticket-auditor.png)
 
@@ -51,15 +52,17 @@ there is no plaintext transfer for MetaMask's simulator to decode:
 
 ![MetaMask transaction request showing "Estimated changes: No changes"](/img/screenshots/11-metamask-order-no-changes.png)
 
-:::tip "No changes" is the proof, not a bug
+:::tip["No changes" is the proof, not a bug]
+
 MetaMask's simulator reporting **"Estimated changes: No changes"** is exactly what confidentiality
 looks like from the wallet's side: the calldata carries only a handle and a proof, so there is no
 plaintext transfer for it to decode.
+
 :::
 
 The moment the transaction is sent (before it's even mined), the public tape
-updates live via `watchContractEvent`, showing a "pending…" entry with the order's real handle
-already redacted:
+updates live via `watchContractEvent`. Everyone watching sees that an order landed; nobody watching
+sees how big — the "pending…" entry carries the order's real handle, already redacted:
 
 ![Order submitted, live tape update](/img/screenshots/03-order-submitted-live-tape.png)
 
@@ -101,7 +104,8 @@ this test session it resolved in roughly 5 seconds:
 The matched quantity and execution price are the *only* two values `settleBatch()` ever marks
 publicly decryptable. Clicking "Reveal (publicDecrypt)" on the tape's MATCH FILLED row calls the
 real `publicDecrypt` — no special authorization needed, by design — and shows the matched amount
-alongside the real, live Uniswap price used for execution:
+alongside the real, live Uniswap price used for execution. This is the public half of the duality:
+the batch's aggregate is provable to anyone, while the individual sizes that composed it stay sealed.
 
 ![Public aggregate revealed via publicDecrypt](/img/screenshots/07-public-decrypt-reveal.png)
 
@@ -117,10 +121,12 @@ compliance-viewer grant actually works across accounts, not just for the auditor
 
 ![Auditor decrypting another trader's fill](/img/screenshots/09-auditor-decrypt-other-fill.png)
 
-:::info Selective disclosure, enforced on-chain
+:::info[Selective disclosure, enforced on-chain]
+
 The auditor decrypts *every* fill; each trader decrypts *only their own*; a stranger decrypts
 nothing. That is a real Nox ACL check — proven in `test/unit/ViewerRegistry.test.ts` with four
 genuinely distinct accounts — not a UI-layer promise.
+
 :::
 
 ## What this proves, end to end

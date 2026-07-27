@@ -21,10 +21,12 @@ asynchronous, event-driven flow up front shapes almost every other design decisi
 
 ![The Broker walks through Nox](/img/broker/talk.gif)
 
-:::info TEE, not FHE
+:::info[TEE, not FHE]
+
 A Nox `euintN` is a pointer to ciphertext held off-chain, not a homomorphically encrypted integer you
 compute on directly. The math runs inside a hardware-attested enclave — the one place plaintext ever
 materializes, and only transiently.
+
 :::
 
 ## What actually happens between a transaction and a decrypted result
@@ -77,10 +79,12 @@ Every field in this project that must stay private — order amount — is check
 distinction specifically, not just typed as `euint256` and assumed safe on the strength of the type
 alone.
 
-:::danger Pattern B looks confidential and isn't
+:::danger[Pattern B looks confidential and isn't]
+
 Passing a raw plaintext value and calling `Nox.toEuint256()` inside the contract yields the same
 `euint256` storage and the same downstream primitives — but the plaintext already sat in calldata,
 visible to the whole mempool, before the contract ran. Same-looking signature, real leak.
+
 :::
 
 ## There is no "custom confidential function" yet — compose primitives instead
@@ -119,7 +123,9 @@ schema directly: amount is a confidential `uint256`; trader address, order id, a
 A freshly created handle is transient-only by default (valid for the current transaction, then
 gone). Anything meant to survive past the current transaction, or be decryptable by a specific
 account, needs an explicit `Nox.allowThis()` / `Nox.allow()` / `Nox.addViewer()` call **before the
-function returns**. This is the single most common way to accidentally build something that looks
+function returns**. Sealed is the default; readable is the exception you deliberately grant — that
+asymmetry is the whole confidentiality model, not an accident of the SDK. This is the single most
+common way to accidentally build something that looks
 confidential but silently isn't — every new handle in this codebase is traced back to its explicit
 ACL grant, and it's the first thing checked in every internal review pass.
 
@@ -148,10 +154,12 @@ inside the retry budget built for it, not the pessimistic worst case originally 
 
 ![The Broker: the batch clears](/img/broker/money.gif)
 
-:::warning Treat every decrypt as async
+:::warning[Treat every decrypt as async]
+
 One Runner, jobs strictly sequential. A single one-buy/one-sell settlement is ~10–12 sequential
 off-chain jobs, not one atomic call. The frontend and E2E scripts fire decrypts and poll/retry —
 they never assume synchronous confirmation.
+
 :::
 
 ## Never trust chain-ID auto-detection

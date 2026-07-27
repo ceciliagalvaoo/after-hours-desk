@@ -15,10 +15,12 @@ the desk's noir mascot, who shows up whenever there's something worth pointing a
 🚀 **[Try the live app →](https://after-hours-desk.onrender.com)** — no setup required, the public tape and
 Uniswap price strip render real Sepolia data immediately, even without a wallet.
 
-:::tip Live and verified
+:::tip[Live and verified]
+
 Every contract referenced in this documentation is deployed and verified on Ethereum Sepolia
 today. Every screenshot is a real screenshot of the real application, running against those real
 contracts — nothing in this documentation is mocked or staged.
+
 :::
 
 ## What this is, in one paragraph
@@ -29,8 +31,10 @@ nets a batch's buy and sell sides entirely from composed [Nox](https://docs.iex.
 primitives, and moves real confidential `cUSDC` balances between traders. Only the *aggregate*
 matched quantity and the execution price — read live from a real Uniswap V3 pool on Sepolia — ever
 become publicly decryptable, and only once a batch actually settles. Individual order sizes and
-per-trader fills never do. A designated compliance-viewer address (the "auditor") can decrypt every
-fill; each trader can only ever decrypt their own.
+per-trader fills never do. So the tape tells you a trade happened, what it cleared at, that a fill
+exists — and stops there. The size behind it is not viable to read on the frontend, by design.
+A designated compliance-viewer address (the "auditor") can decrypt every fill; each trader can only
+ever decrypt their own.
 
 ## Live deployment
 
