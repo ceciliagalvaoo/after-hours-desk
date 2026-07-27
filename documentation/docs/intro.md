@@ -38,6 +38,8 @@ ever decrypt their own.
 
 ## Live deployment
 
+**Table 1: Deployed and verified Sepolia contract addresses**
+
 | Contract | Address |
 |---|---|
 | `MockUSDC` | [`0x68df2...aa49c`](https://sepolia.etherscan.io/address/0x68df20bfc035f6496e0593626579d00139aaa49c#code) |
@@ -45,6 +47,8 @@ ever decrypt their own.
 | `ViewerRegistry` | [`0x7f550...33f2f8`](https://sepolia.etherscan.io/address/0x7f5508360b37f41a6cca6c34aca233500b6c1678#code) |
 | `UniswapV3PriceReader` | [`0x20f68...c5554e`](https://sepolia.etherscan.io/address/0x20f68c8d394dabee5fea08a21a1596eb09c5554e#code) |
 | `AfterHoursDesk` | [`0x46b72...9fdb8`](https://sepolia.etherscan.io/address/0x46b72a2615de7351699dcd5a64b854746a29fdb8#code) |
+
+*Source: The authors (2026).*
 
 ## Where to go from here
 

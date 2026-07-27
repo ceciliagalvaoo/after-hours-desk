@@ -6,6 +6,8 @@ sidebar_position: 3
 
 ## System overview
 
+**Flowchart 1: End-to-end system architecture across browser, Sepolia and the Nox TEE**
+
 ```mermaid
 flowchart TB
     subgraph Browser
@@ -40,6 +42,8 @@ flowchart TB
     Reader -- "slot0() [view, read-only]" --> Pool
     UI -- "decrypt / publicDecrypt" --> Gateway
 ```
+
+*Source: The authors (2026).*
 
 Order size never exists as plaintext anywhere in this diagram except transiently, inside the
 Runner's enclave memory. The chain only ever holds opaque 32-byte handles.
@@ -173,6 +177,8 @@ manipulation is low-stakes here. A production TWAP path is a documented
 
 ## The ACL model
 
+**Flowchart 2: The per-handle access-control model for order, fill and aggregate values**
+
 ```mermaid
 flowchart LR
     subgraph "Order amount handle"
@@ -189,6 +195,8 @@ flowchart LR
         B2["executionPrice → Nox.allowPublicDecryption"]
     end
 ```
+
+*Source: The authors (2026).*
 
 The rule that holds everywhere in this codebase: **a handle's ACL is granted explicitly, before the
 function that created it returns, never left implicit.** A freshly created handle starts
