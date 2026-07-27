@@ -150,17 +150,10 @@ export function IntroScreen() {
               </span>
               <span style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 10, letterSpacing: ".2em", textTransform: "uppercase", color: "var(--dm)" }}>After Hours Desk · tape</span>
               <span style={{ display: "inline-flex", alignItems: "center", gap: 7, fontFamily: "'JetBrains Mono',monospace", fontSize: 10, letterSpacing: ".14em", textTransform: "uppercase", color: "var(--ft)" }}>
-                <i style={{ width: 5, height: 5, borderRadius: "50%", background: "var(--ph)", boxShadow: "0 0 7px var(--ph)", animation: "ahd-dot 2s steps(1) infinite", display: "block" }} />live · sepolia
+                <i style={{ width: 5, height: 5, borderRadius: "50%", background: "var(--ph)", boxShadow: "0 0 7px var(--ph)", animation: "ahd-dot 2s steps(1) infinite", display: "block" }} />live · preview
               </span>
             </div>
-            <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 12.5, fontVariantNumeric: "tabular-nums" }}>
-              <DemoRow time="14:32:07" tag="SELL" tagColor="var(--am)" desc="order #42 · 0x7a9f…2b1c · batch 7" barTitle="What are you looking for here?" />
-              <DemoRow time="14:31:55" tag="BUY" tagColor="var(--ph)" desc="order #41 · 0x2b8e…9d04 · batch 7" barTitle="Nice try." />
-              <DemoRow time="14:30:12" tag="BATCH" tagColor="var(--ft)" desc="batch 7 opened · resting orders sealed" />
-              <DemoRow time="14:28:40" tag="MATCH" tagColor="var(--ak)" desc={<>batch 6 · 2 buy / 2 sell <span style={{ color: "var(--ph)" }}>· matched $12,500.00 @ $2,438.19/WETH</span></>} proven />
-              <DemoRow time="14:27:03" tag="MATCH" tagColor="var(--ak)" desc="batch 5 · 1 buy / 1 sell" barTitle="Still encrypted. Still not for you." />
-              <DemoRow time="14:26:58" tag="FILL" tagColor="var(--ft)" desc="fill registered for compliance viewer" barTitle="Rubbing the bar won’t decrypt it." last />
-            </div>
+            <HeroTape />
             <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 14, padding: "10px 20px", borderTop: "1px solid rgba(255,255,255,.08)", fontFamily: "'JetBrains Mono',monospace", fontSize: 10, letterSpacing: ".12em", textTransform: "uppercase", color: "var(--ft)" }}>
               <span>batch #7 · open · 2 resting</span>
               <span>every bar hides a real ciphertext</span>
@@ -225,11 +218,93 @@ export function IntroScreen() {
   );
 }
 
+/**
+ * The hero's tape is a SIMULATED live feed — a marketing showcase, not real chain data (the real
+ * desk tape, behind "Open the desk", streams genuine on-chain events). New rows arrive on a ~2s
+ * tick, sometimes in bursts, always stamped with the current wall-clock time so it always reads as
+ * "now", and older rows slide out the bottom of the fixed-height window.
+ */
+interface TapeRowData {
+  id: number;
+  time: string;
+  tag: string;
+  tagColor: string;
+  desc: React.ReactNode;
+  barTitle?: string;
+  proven?: boolean;
+}
+
+const HERO_ADDRS = ["0x7a9f…2b1c", "0x2b8e…9d04", "0x3e44…c3b0", "0x91cd…4f7a", "0x5d20…be13", "0xa10f…77e2", "0xc4b8…1d9f", "0x6f33…0ac5"];
+const HERO_TAUNTS = ["What are you looking for here?", "Nice try.", "Still encrypted. Still not for you.", "Rubbing the bar won’t decrypt it.", "Real ciphertext under the bar. Inspect it.", "That’s a live handle, not a placeholder."];
+const pickOne = <T,>(a: T[]): T => a[Math.floor(Math.random() * a.length)];
+const heroMoney = (n: number) => "$" + n.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+const clockAt = (d: Date) => d.toLocaleTimeString("en-GB", { hour12: false });
+
+function HeroTape() {
+  const idRef = useRef(0);
+  const orderRef = useRef(41);
+  const batchRef = useRef(7);
+
+  function make(time: string): TapeRowData {
+    const id = ++idRef.current;
+    const roll = Math.random();
+    if (roll < 0.58) {
+      const isBuy = Math.random() < 0.5;
+      const o = ++orderRef.current;
+      return { id, time, tag: isBuy ? "BUY" : "SELL", tagColor: isBuy ? "var(--ph)" : "var(--am)", desc: `order #${o} · ${pickOne(HERO_ADDRS)} · batch ${batchRef.current}`, barTitle: pickOne(HERO_TAUNTS) };
+    }
+    if (roll < 0.73) {
+      const b = Math.max(1, batchRef.current - 1);
+      const buy = 1 + Math.floor(Math.random() * 3);
+      const sell = 1 + Math.floor(Math.random() * 3);
+      if (Math.random() < 0.55) {
+        const amt = (5 + Math.floor(Math.random() * 44)) * 250;
+        const price = 2400 + Math.random() * 90;
+        return { id, time, tag: "MATCH", tagColor: "var(--ak)", proven: true, desc: <>batch {b} · {buy} buy / {sell} sell <span style={{ color: "var(--ph)" }}>· matched {heroMoney(amt)} @ {heroMoney(price)}/WETH</span></> };
+      }
+      return { id, time, tag: "MATCH", tagColor: "var(--ak)", desc: `batch ${b} · ${buy} buy / ${sell} sell`, barTitle: pickOne(HERO_TAUNTS) };
+    }
+    if (roll < 0.88) {
+      return { id, time, tag: "FILL", tagColor: "var(--ft)", desc: "fill registered for compliance viewer", barTitle: pickOne(HERO_TAUNTS) };
+    }
+    batchRef.current += 1;
+    return { id, time, tag: "BATCH", tagColor: "var(--ft)", desc: `batch ${batchRef.current} opened · resting orders sealed` };
+  }
+
+  const [rows, setRows] = useState<TapeRowData[]>(() => {
+    const now = Date.now();
+    const seed: TapeRowData[] = [];
+    for (let i = 5; i >= 0; i--) seed.push(make(clockAt(new Date(now - i * 2400))));
+    return seed.reverse(); // newest first
+  });
+
+  useEffect(() => {
+    const id = window.setInterval(() => {
+      const burst = Math.random() < 0.22 ? 3 : Math.random() < 0.5 ? 2 : 1;
+      setRows((prev) => {
+        const next = [...prev];
+        for (let i = 0; i < burst; i++) next.unshift(make(clockAt(new Date())));
+        return next.slice(0, 7);
+      });
+    }, 2000);
+    return () => window.clearInterval(id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- generator refs are stable
+  }, []);
+
+  return (
+    <div style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 12.5, fontVariantNumeric: "tabular-nums", height: 258, overflow: "hidden" }}>
+      {rows.map((r, i) => (
+        <DemoRow key={r.id} time={r.time} tag={r.tag} tagColor={r.tagColor} desc={r.desc} barTitle={r.barTitle} proven={r.proven} last={i === rows.length - 1} />
+      ))}
+    </div>
+  );
+}
+
 function DemoRow({ time, tag, tagColor, desc, barTitle, proven, last }: {
   time: string; tag: string; tagColor: string; desc: React.ReactNode; barTitle?: string; proven?: boolean; last?: boolean;
 }) {
   return (
-    <div className="ahd-demo-row" style={{ display: "grid", gap: 14, alignItems: "center", padding: "12px 20px", borderBottom: last ? "none" : "1px solid rgba(255,255,255,.05)" }}>
+    <div className="ahd-demo-row" style={{ display: "grid", gap: 14, alignItems: "center", padding: "12px 20px", borderBottom: last ? "none" : "1px solid rgba(255,255,255,.05)", animation: "ahd-rise .45s ease both" }}>
       <span style={{ color: "var(--ft)", fontSize: 10.5 }}>{time}</span>
       <span style={{ color: tagColor, letterSpacing: ".08em" }}>{tag}</span>
       <span style={{ color: "var(--dm)" }}>{desc}</span>
