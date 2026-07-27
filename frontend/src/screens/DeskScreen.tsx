@@ -72,8 +72,8 @@ export function DeskScreen() {
         <div className="ahd-desk-band" style={{ maxWidth: 1400, margin: "0 auto", padding: "18px 24px", display: "grid", gap: 24, alignItems: "center" }}>
           <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
             <span style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 9.5, letterSpacing: ".22em", textTransform: "uppercase", color: "var(--ft)" }}>The desk</span>
-            <span style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 19, color: "var(--tx)", letterSpacing: "-.01em" }}>It’s all here.</span>
-            <span style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 11, color: "var(--dm)" }}>The number isn’t.</span>
+            <span style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 19, color: "var(--tx)", letterSpacing: "-.01em" }}>It’s all on-chain.</span>
+            <span style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 11, color: "var(--dm)" }}><span style={{ color: "var(--ak)" }}>Except</span> the amount.</span>
           </div>
           <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 8 }}>
             <BrokerCanvas look={look} glow={glow} width={104} height={104} style={{ filter: "drop-shadow(0 8px 18px rgba(0,0,0,.6))" }} />

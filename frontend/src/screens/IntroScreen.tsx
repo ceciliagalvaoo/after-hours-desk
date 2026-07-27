@@ -124,7 +124,7 @@ export function IntroScreen() {
           <span style={navLink} onClick={startTour}>What are we hiding?</span>
           <span style={navLink} onClick={() => go("identity")}>The Broker</span>
         </div>
-        <button type="button" className="noir-primary" style={{ padding: "9px 18px", fontSize: 13.5 }} onClick={() => go("desk")}>Enter the desk</button>
+        <button type="button" className="noir-primary" style={{ padding: "9px 18px", fontSize: 13.5 }} onClick={() => go("desk")}>Open the desk</button>
       </div>
 
       {/* Hero */}
@@ -133,10 +133,10 @@ export function IntroScreen() {
         <div style={{ position: "absolute", inset: 0, pointerEvents: "none", backgroundImage: "repeating-linear-gradient(rgba(0,0,0,0) 0 2px,rgba(0,0,0,.18) 2px 3px)", animation: "ahd-flick 5s ease-in-out infinite" }} />
 
         <div style={{ position: "relative", maxWidth: 1080, margin: "0 auto", padding: "92px 32px 0", display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center" }}>
-          <h1 style={{ margin: 0, fontSize: "clamp(2.6rem,5.6vw,4.9rem)", lineHeight: 1.05, letterSpacing: "-.03em", fontWeight: 300, color: "var(--tx)" }}>It’s all here.<br />The number isn’t.</h1>
-          <p style={{ margin: "20px 0 0", fontSize: 15, lineHeight: 1.6, color: "var(--dm)" }}>We dare you to find what you traded.</p>
+          <h1 style={{ margin: 0, fontSize: "clamp(2.6rem,5.6vw,4.9rem)", lineHeight: 1.05, letterSpacing: "-.03em", fontWeight: 300, color: "var(--tx)" }}>It’s all on-chain.<br /><span style={{ color: "var(--ak)" }}>Except</span> the amount.</h1>
+          <p style={{ margin: "20px 0 0", fontSize: 15, lineHeight: 1.6, color: "var(--dm)" }}>Provable to everyone. Legible to no one.</p>
           <div style={{ display: "flex", gap: 12, marginTop: 30, flexWrap: "wrap", justifyContent: "center" }}>
-            <button type="button" className="noir-primary" onClick={() => go("desk")}>Enter the desk</button>
+            <button type="button" className="noir-primary" onClick={() => go("desk")}>Open the desk</button>
             <button type="button" className="noir-ghost" style={{ color: "var(--tx)" }} onClick={startTour}>What are we hiding?</button>
           </div>
         </div>
