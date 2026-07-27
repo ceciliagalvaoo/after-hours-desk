@@ -29,10 +29,10 @@ export function IdentityScreen() {
         <button type="button" className="noir-ghost" onClick={() => go("intro")}>Back</button>
       </div>
 
-      <div style={{ maxWidth: 1180, margin: "0 auto", padding: "52px 32px 72px", display: "grid", gridTemplateColumns: "minmax(0,340px) minmax(0,1fr)", gap: 56, alignItems: "start" }}>
+      <div className="ahd-identity-grid" style={{ maxWidth: 1180, margin: "0 auto", padding: "52px 32px 72px", display: "grid", gap: 56, alignItems: "start" }}>
 
         {/* Sticky preview */}
-        <div style={{ position: "sticky", top: 32, display: "flex", flexDirection: "column", gap: 18 }}>
+        <div className="ahd-identity-preview" style={{ position: "sticky", top: 32, display: "flex", flexDirection: "column", gap: 18 }}>
           <div style={{ position: "relative", border: "1px solid transparent", borderRadius: 12, background: "#08080b", boxShadow: "var(--shp)", padding: "30px 24px 26px", display: "flex", flexDirection: "column", alignItems: "center", gap: 18, overflow: "hidden" }}>
             <div style={{ position: "absolute", left: 0, right: 0, bottom: 0, height: "56%", pointerEvents: "none", background: `radial-gradient(60% 100% at 50% 100%, ${glow}22, transparent 72%)` }} />
             <BrokerCanvas look={look} glow={glow} width={264} height={264} style={{ position: "relative" }} />

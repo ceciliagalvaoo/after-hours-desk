@@ -164,6 +164,44 @@ button:active::after {
   cursor: not-allowed;
 }
 
+/* ---- Responsive layout ---------------------------------------------------------------------
+ * The app styles inline, and inline `grid-template-columns` would win over any media query, so
+ * every multi-column layout owns its columns HERE (as a class) and collapses to one column on
+ * mobile. Containers keep `display:grid`, gap, padding etc. inline; only the column track and its
+ * mobile override live here. `!important` on the band children is deliberate: it is the one case
+ * where CSS must beat the children's inline alignment.
+ * -------------------------------------------------------------------------------------------- */
+.ahd-desk-grid { grid-template-columns: minmax(340px, 420px) minmax(0, 1fr); }
+.ahd-desk-band { grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); }
+.ahd-identity-grid { grid-template-columns: minmax(0, 340px) minmax(0, 1fr); }
+.ahd-mech-step { grid-template-columns: 230px minmax(0, 1fr); }
+.ahd-qa-grid { grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr); }
+.ahd-demo-row { grid-template-columns: 5.2rem 4.6rem minmax(0, 1fr) auto; }
+
+@media (max-width: 960px) {
+  .ahd-desk-grid { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 860px) {
+  .ahd-identity-grid { grid-template-columns: minmax(0, 1fr); gap: 32px; }
+  .ahd-identity-preview { position: static !important; }
+  .ahd-mech-step { grid-template-columns: minmax(0, 1fr); gap: 24px !important; min-height: 0 !important; }
+  .ahd-qa-grid { grid-template-columns: minmax(0, 1fr); gap: 28px !important; }
+  .ahd-qa-broker { justify-self: center !important; }
+}
+@media (max-width: 720px) {
+  .ahd-desk-band { grid-template-columns: minmax(0, 1fr); justify-items: center; gap: 14px; }
+  .ahd-desk-band > * { align-items: center !important; text-align: center !important; }
+}
+@media (max-width: 640px) {
+  .ahd-intro-navlinks { display: none !important; }
+  .ahd-desk-grid { padding-left: 14px !important; padding-right: 14px !important; }
+}
+@media (max-width: 600px) {
+  .ahd-demo-row { grid-template-columns: minmax(0, 1fr) auto; }
+  .ahd-demo-row > :nth-child(1) { display: none; } /* timestamp */
+  .ahd-demo-row > :nth-child(2) { display: none; } /* side tag */
+}
+
 /* The redaction bar — a real handle sits underneath in the DOM; this only overlays the hatch. */
 .noir-censor {
   font-family: "JetBrains Mono", "Space Mono", ui-monospace, monospace;
