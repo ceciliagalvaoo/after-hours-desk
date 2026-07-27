@@ -200,6 +200,7 @@ button:active::after {
   .ahd-demo-row { grid-template-columns: minmax(0, 1fr) auto; }
   .ahd-demo-row > :nth-child(1) { display: none; } /* timestamp */
   .ahd-demo-row > :nth-child(2) { display: none; } /* side tag */
+  .ahd-hero-notify { transform: scale(0.8); transform-origin: top right; }
 }
 
 /* The redaction bar — a real handle sits underneath in the DOM; this only overlays the hatch. */
