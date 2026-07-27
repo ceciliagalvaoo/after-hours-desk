@@ -44,6 +44,12 @@ flowchart TB
 Order size never exists as plaintext anywhere in this diagram except transiently, inside the
 Runner's enclave memory. The chain only ever holds opaque 32-byte handles.
 
+:::note One handle, followed everywhere
+Trace any encrypted value through the diagram above and it stays a handle at every on-chain hop —
+`submitOrder`, the primitive events, `confidentialTransfer`, `registerFill`. Plaintext only appears
+inside the dashed "Nox off-chain (TEE)" box, and only while the Runner is computing.
+:::
+
 ## Contracts
 
 ### `AfterHoursDesk.sol` — the settlement core
@@ -71,11 +77,19 @@ can't have. It nets the batch entirely from composed Nox primitives:
    these calls never revert on an insufficient balance — instead of throwing (which would leak
    "this trader can't cover the fill" to anyone watching the mempool via a revert oracle), a
    shortfall silently moves less than requested. This is *why* shortfall reconciliation is a
-   documented [Roadmap](/docs/roadmap) item rather than something patched over with a `require`.
+   documented [Roadmap](/docs/project/roadmap) item rather than something patched over with a `require`.
 5. **Selective disclosure** — only the aggregate `matched` quantity and the execution price
    (read live from `UniswapV3PriceReader`) are ever marked `Nox.allowPublicDecryption`. Every
    per-order/per-fill handle stays behind `Nox.allow`/`Nox.addViewer`, scoped to that specific
    trader (and the auditor, via `ViewerRegistry`) — never public.
+
+![The Broker: batch settled](/img/broker/money.gif)
+
+:::danger Settlement math never wraps silently
+The bare `add`/`sub`/`mul`/`div` primitives wrap on overflow with no revert — Solidity `unchecked`
+semantics. That is the wrong default for balance-critical netting, so every step above uses the
+`safe*` variant and feeds its `success` flag into `select()` to fall back to a known-good value.
+:::
 
 **Why `safe*`, never the wrapping primitives, for any of this math:** Nox's plain
 `add`/`sub`/`mul`/`div` wrap silently on overflow/underflow — never revert, the same semantics as
@@ -95,7 +109,7 @@ runs with the **token contract**, not the desk, as `msg.sender` from NoxCompute'
 desk must explicitly grant the token contract *transient* access
 (`Nox.allowTransient(fill, address(settlementToken))`) immediately before calling, or the deeper
 call reverts with `NotAllowed`. The same cross-contract ACL hand-off is needed a second time, for
-`ViewerRegistry.registerFill`. See [Nox Integration](/docs/nox-integration) for the full story.
+`ViewerRegistry.registerFill`. See [Nox Integration](/docs/how-it-works/nox-integration) for the full story.
 
 ### `ConfidentialUSDC.sol` (cUSDC) — the confidential token
 
@@ -125,7 +139,7 @@ only documented way to approximate revocation is migrating to a **fresh handle**
 ACL, and the contract repoints its storage to it — but the *old* handle's ciphertext still exists,
 and anyone who was already a viewer on it can still decrypt that old value forever. This is an
 application-level isolation, not a cryptographic revoke, which is precisely why a real rotation
-feature belongs on the [Roadmap](/docs/roadmap) rather than being half-built here.
+feature belongs on the [Roadmap](/docs/project/roadmap) rather than being half-built here.
 `registerFill` grants the compliance viewer `Nox.addViewer` (viewer role — decrypt-only) over a
 fill, gated both by Nox's own ACL (the caller must already hold real access to the handle) and, as
 defense-in-depth added after an internal review, a one-time-set `desk` address so only the paired
@@ -141,6 +155,13 @@ using spot price to execute an actual swap or as loan-to-value collateral input)
 manipulation risk is low-stakes here. The interface (`IUniswapV3PoolMinimal`) declares only
 `slot0()/token0()/token1()` — no mutating Uniswap function is even reachable from this contract,
 satisfying the hackathon's composability requirement literally: called, never modified.
+
+:::warning Spot price, not TWAP — a disclosed tradeoff
+The reader uses `slot0()` spot price, not a time-weighted average. That is deliberate for this build:
+the price is a disclosed *reference* that never gates or moves real funds, so single-block
+manipulation is low-stakes here. A production TWAP path is a documented
+[Roadmap](/docs/project/roadmap) item.
+:::
 
 ## The ACL model
 
@@ -181,4 +202,4 @@ drift from what's actually deployed.
 Public reads (the tape, the Uniswap price strip) work with **no wallet connected at all** — a judge
 opening the link should see real, live data immediately, not a connect-wallet wall. Only
 write-requiring actions (submitting an order, settling, the auditor panel) gate on a connected
-wallet. See [User Flows & UX](/docs/user-flows) for the actual screens.
+wallet. See [User Flows & UX](/docs/using-it/user-flows) for the actual screens.

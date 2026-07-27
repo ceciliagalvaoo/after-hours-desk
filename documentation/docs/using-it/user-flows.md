@@ -41,6 +41,8 @@ grant:
 
 ## Submitting an encrypted order
 
+![The Broker: send it dark](/img/broker/smirk.gif)
+
 The trader picks Buy or Sell, enters an amount, and submits. The amount is encrypted **client-side**
 via `encryptInput` before the transaction is even built — only the resulting `{handle, handleProof}`
 pair is ever sent. This is visible in MetaMask's own transaction preview: its simulation reports
@@ -48,6 +50,12 @@ pair is ever sent. This is visible in MetaMask's own transaction preview: its si
 there is no plaintext transfer for MetaMask's simulator to decode:
 
 ![MetaMask transaction request showing "Estimated changes: No changes"](/img/screenshots/11-metamask-order-no-changes.png)
+
+:::tip "No changes" is the proof, not a bug
+MetaMask's simulator reporting **"Estimated changes: No changes"** is exactly what confidentiality
+looks like from the wallet's side: the calldata carries only a handle and a proof, so there is no
+plaintext transfer for it to decode.
+:::
 
 The moment the transaction is sent (before it's even mined), the public tape
 updates live via `watchContractEvent`, showing a "pending…" entry with the order's real handle
@@ -64,9 +72,13 @@ Connecting a wallet that is **not** the registered compliance viewer shows a rea
 authorized" state — this is `ViewerRegistry.complianceViewer()` compared against the connected
 address on-chain, not a cosmetic UI gate:
 
+![The Broker: access denied](/img/broker/sad.gif)
+
 ![Auditor panel correctly denying access](/img/screenshots/04-auditor-panel-access-denied.png)
 
 ## Settling a batch
+
+![The Broker: match filled](/img/broker/money.gif)
 
 Once a batch has at least one buy and one sell order, **anyone** can trigger `settleBatch()` — no
 privileged keeper. After the transaction confirms, a banner shows the real result and is explicit
@@ -76,6 +88,8 @@ UI never assumes synchronous confirmation):
 ![MATCH FILLED banner](/img/screenshots/05-match-filled-banner.png)
 
 ## Decrypting your own fill
+
+![The Broker: your fill, revealed](/img/broker/smile.gif)
 
 "Decrypt my fill" triggers a real, gasless EIP-712-signed decrypt request through the Nox SDK. In
 this test session it resolved in roughly 5 seconds:
@@ -102,6 +116,12 @@ The auditor can decrypt a fill that belongs to a **different** trader entirely �
 compliance-viewer grant actually works across accounts, not just for the auditor's own orders:
 
 ![Auditor decrypting another trader's fill](/img/screenshots/09-auditor-decrypt-other-fill.png)
+
+:::info Selective disclosure, enforced on-chain
+The auditor decrypts *every* fill; each trader decrypts *only their own*; a stranger decrypts
+nothing. That is a real Nox ACL check — proven in `test/unit/ViewerRegistry.test.ts` with four
+genuinely distinct accounts — not a UI-layer promise.
+:::
 
 ## What this proves, end to end
 

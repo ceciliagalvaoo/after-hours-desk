@@ -4,10 +4,12 @@ sidebar_position: 8
 
 # Team
 
+![The Broker tips his hat to the desk crew](/img/broker/talk.gif)
+
 After Hours Desk was built by:
 
-- **Cecília Galvão** — [github.com/ceciliagalvaoo](https://github.com/ceciliagalvaoo)
-- **Pablo Azevedo** — [github.com/zzaved](https://github.com/zzaved)
+- **Cecília Galvão** — Smart Contracts · Backend · Blockchain — [github.com/ceciliagalvaoo](https://github.com/ceciliagalvaoo)
+- **Pablo Azevedo** — Full-Stack · Frontend · Product — [github.com/zzaved](https://github.com/zzaved)
 
 Built for the **iExec WTF Hackathon (Summer Edition)**, targeting the challenge to add privacy to
 existing, public-by-design infrastructure using [Nox](https://docs.iex.ec/nox-protocol/getting-started/welcome)

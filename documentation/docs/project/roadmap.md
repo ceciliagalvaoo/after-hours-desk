@@ -7,6 +7,14 @@ sidebar_position: 7
 This hackathon build proves the mechanism end to end on real infrastructure. A production version
 would extend it in these directions, roughly in priority order.
 
+![The Broker: what's next](/img/broker/talk.gif)
+
+:::note Disclosed, not hidden
+Everything below is a *known* limitation of the hackathon scope, documented on purpose. Nothing here
+is a surprise found after the fact — each item was a deliberate line drawn to ship a real, honest
+demo on real infrastructure.
+:::
+
 ## Near-term
 
 - **TWAP execution pricing.** The current reader uses spot price (`slot0`) — a deliberate,

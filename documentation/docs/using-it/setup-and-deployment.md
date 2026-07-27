@@ -41,6 +41,8 @@ deployed contract addresses (mirrors `deployments/sepolia.json` for convenience)
 npm test
 ```
 
+![The Broker: green across the board](/img/broker/smile.gif)
+
 23/23 tests pass against the local Nox offchain stack (Docker Compose: KMS, Ingestor, Runner,
 Handle Gateway, NATS, S3-compatible storage — booted automatically by the `nox-hardhat-plugin`
 test override). This includes real multi-account ACL isolation tests: a compliance viewer that
@@ -52,6 +54,11 @@ nothing.
 ```bash
 npm run test:e2e:sepolia
 ```
+
+:::warning Real gas, real network
+The E2E scripts run against the live Sepolia deployment — every step is a real transaction and
+spends real testnet gas. Fund the wallet you configured before running them.
+:::
 
 This runs four real, standalone, idempotent scripts in sequence against the actual live
 deployment — real gas is spent:

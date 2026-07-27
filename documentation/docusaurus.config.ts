@@ -96,9 +96,9 @@ const config: Config = {
           title: 'Documentation',
           items: [
             {label: 'Problem & Solution', to: '/docs/problem-and-solution'},
-            {label: 'Architecture', to: '/docs/architecture'},
-            {label: 'User Flows & UX', to: '/docs/user-flows'},
-            {label: 'Roadmap', to: '/docs/roadmap'},
+            {label: 'Architecture', to: '/docs/how-it-works/architecture'},
+            {label: 'User Flows & UX', to: '/docs/using-it/user-flows'},
+            {label: 'Roadmap', to: '/docs/project/roadmap'},
           ],
         },
         {

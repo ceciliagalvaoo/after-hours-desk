@@ -19,9 +19,17 @@ Every arithmetic primitive (`add`, `safeAdd`, `lt`, `select`, …) emits an even
 actually computed **later, off-chain, inside a TEE Runner** (Intel TDX). Understanding this
 asynchronous, event-driven flow up front shapes almost every other design decision in this project.
 
+![The Broker walks through Nox](/img/broker/talk.gif)
+
+:::info TEE, not FHE
+A Nox `euintN` is a pointer to ciphertext held off-chain, not a homomorphically encrypted integer you
+compute on directly. The math runs inside a hardware-attested enclave — the one place plaintext ever
+materializes, and only transiently.
+:::
+
 ## What actually happens between a transaction and a decrypted result
 
-Six components sit behind every primitive call in the [architecture diagram](/docs/architecture),
+Six components sit behind every primitive call in the [architecture diagram](/docs/how-it-works/architecture),
 and understanding the pipeline between them explains why a handle can exist on-chain with no
 ciphertext behind it yet, seconds after the transaction that created it:
 
@@ -68,6 +76,12 @@ private, even though both can look identical if you only glance at the Solidity 
 Every field in this project that must stay private — order amount — is checked against this
 distinction specifically, not just typed as `euint256` and assumed safe on the strength of the type
 alone.
+
+:::danger Pattern B looks confidential and isn't
+Passing a raw plaintext value and calling `Nox.toEuint256()` inside the contract yields the same
+`euint256` storage and the same downstream primitives — but the plaintext already sat in calldata,
+visible to the whole mempool, before the contract ran. Same-looking signature, real leak.
+:::
 
 ## There is no "custom confidential function" yet — compose primitives instead
 
@@ -131,6 +145,14 @@ result right after a transaction — the frontend, the E2E scripts — treats de
 fire-and-forget followed by poll/retry, never assuming synchronous confirmation. In practice,
 measured against the live deployment, this settled in a handful of seconds per decrypt — comfortably
 inside the retry budget built for it, not the pessimistic worst case originally planned for.
+
+![The Broker: the batch clears](/img/broker/money.gif)
+
+:::warning Treat every decrypt as async
+One Runner, jobs strictly sequential. A single one-buy/one-sell settlement is ~10–12 sequential
+off-chain jobs, not one atomic call. The frontend and E2E scripts fire decrypts and poll/retry —
+they never assume synchronous confirmation.
+:::
 
 ## Never trust chain-ID auto-detection
 

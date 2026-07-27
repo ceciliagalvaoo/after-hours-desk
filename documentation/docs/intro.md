@@ -1,14 +1,16 @@
 ---
 sidebar_position: 1
-slug: /
 ---
 
 # After Hours Desk
 
 **A confidential OTC dark-pool settlement desk, built on Nox (iExec), live on Ethereum Sepolia.**
 
+![The Broker, explaining the desk](/img/broker/talk.gif)
+
 Built by [Cecília Galvão](https://github.com/ceciliagalvaoo) and [Pablo Azevedo](https://github.com/zzaved)
-for the **iExec WTF Hackathon (Summer Edition)**.
+for the **iExec WTF Hackathon (Summer Edition)**. Your host for this walkthrough is **The Broker** —
+the desk's noir mascot, who shows up whenever there's something worth pointing at.
 
 🚀 **[Try the live app →](https://after-hours-desk.onrender.com)** — no setup required, the public tape and
 Uniswap price strip render real Sepolia data immediately, even without a wallet.
@@ -43,9 +45,9 @@ fill; each trader can only ever decrypt their own.
 ## Where to go from here
 
 - **[Problem & Solution](/docs/problem-and-solution)** — why dark pools need confidentiality, and why that's hard on a public blockchain
-- **[Architecture](/docs/architecture)** — contracts, the Nox primitive composition, the ACL model, the frontend
-- **[User Flows & UX](/docs/user-flows)** — real, screenshotted walkthroughs of every screen and role
-- **[Nox Integration](/docs/nox-integration)** — what it's actually like building on Nox today, distilled from [`feedback.md`](https://github.com/ceciliagalvaoo/after-hours-desk/blob/master/feedback.md)
-- **[Setup & Deployment](/docs/setup-and-deployment)** — run it yourself
-- **[Roadmap](/docs/roadmap)** — what a production version looks like beyond this hackathon
-- **[Team](/docs/team)** — who built this
+- **[Architecture](/docs/how-it-works/architecture)** — contracts, the Nox primitive composition, the ACL model, the frontend
+- **[Nox Integration](/docs/how-it-works/nox-integration)** — what it's actually like building on Nox today, distilled from [`feedback.md`](https://github.com/ceciliagalvaoo/after-hours-desk/blob/master/feedback.md)
+- **[User Flows & UX](/docs/using-it/user-flows)** — real, screenshotted walkthroughs of every screen and role
+- **[Setup & Deployment](/docs/using-it/setup-and-deployment)** — run it yourself
+- **[Roadmap](/docs/project/roadmap)** — what a production version looks like beyond this hackathon
+- **[Team](/docs/project/team)** — who built this

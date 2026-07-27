@@ -52,6 +52,15 @@ size.** Only the aggregate matched quantity and the (real, live) execution price
 and only after settlement, by design — the exact shape of information a dark pool is supposed to
 disclose, and no more.
 
+![The Broker talks through the mechanism](/img/broker/talk.gif)
+
+:::info The privacy guarantee, stated precisely
+An order size is encrypted **in the browser** and only ever reaches the chain as an opaque 32-byte
+handle. The plaintext exists in exactly two places, both transient: your browser before submit, and
+the TEE Runner's enclave memory during compute. It is never written to Sepolia, never seen by the
+desk operator, and never recoverable from calldata.
+:::
+
 ## Why this isn't just a private swap
 
 The hackathon brief specifically asks builders to add privacy to **existing, public-by-design
@@ -61,6 +70,12 @@ unmodified Uniswap V3 pool on Sepolia (`UniswapV3PriceReader.sol` — a `view`-o
 mutating surface even reachable). The dark pool composes with public DeFi for pricing while
 keeping its own order flow confidential — it doesn't fork Uniswap, doesn't wrap it in a privacy
 shell, just reads its real, public price the same way any other contract could.
+
+:::tip Why this satisfies the brief literally
+The challenge is to add privacy to *existing, public-by-design* infrastructure without breaking its
+composability. After Hours Desk reads a real Uniswap V3 pool's live price with a `view`-only adapter
+— **called, never forked, never modified** — while keeping its own order flow confidential.
+:::
 
 ## Who this is for
 
