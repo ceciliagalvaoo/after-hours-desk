@@ -234,4 +234,13 @@
     width: 56px;
     height: 56px;
   }
+  /* Phones: stack a single centered Broker above the title (the two-gif row
+     wrapped and dropped the second gif below). */
+  .mascotRow {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .mascotRow .heroMascot:last-of-type {
+    display: none;
+  }
 }

@@ -120,8 +120,11 @@ h1, h2, h3, h4, h5, h6,
   backdrop-filter: saturate(140%) blur(8px);
   border-bottom: 1px solid var(--ahd-border-soft);
 }
-[data-theme='dark'] .footer {
-  border-top: 1px solid var(--ahd-border-soft);
+/* Mobile navbar drawer must be fully opaque: the translucent navbar background
+   left the open hamburger menu see-through and unreadable on phones. */
+.navbar-sidebar,
+.navbar-sidebar__brand {
+  background-color: var(--ahd-bg);
 }
 
 /* ---- Sidebar --------------------------------------------------------------------------------- */

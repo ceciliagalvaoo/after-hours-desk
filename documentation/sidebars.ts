@@ -21,7 +21,7 @@ const sidebars: SidebarsConfig = {
       type: 'category',
       label: 'Project',
       collapsed: false,
-      items: ['project/roadmap', 'project/team'],
+      items: ['project/roadmap', 'project/team', 'project/feedback-summary'],
     },
   ],
 };
