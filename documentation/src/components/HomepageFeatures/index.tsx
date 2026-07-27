@@ -1,57 +1,72 @@
 import type {ReactNode} from 'react';
-import clsx from 'clsx';
+import Link from '@docusaurus/Link';
 import Heading from '@theme/Heading';
 import styles from './styles.module.css';
 
 type FeatureItem = {
+  tag: string;
   title: string;
-  Svg: React.ComponentType<React.ComponentProps<'svg'>>;
   description: ReactNode;
+  to: string;
 };
 
 const FeatureList: FeatureItem[] = [
   {
-    title: 'Easy to Use',
-    Svg: require('@site/static/img/undraw_docusaurus_mountain.svg').default,
+    tag: 'confidential',
+    title: 'Encrypted order sizes',
     description: (
       <>
-        Docusaurus was designed from the ground up to be easily installed and
-        used to get your website up and running quickly.
+        Sizes are encrypted client-side before anything is sent: the chain only ever sees an opaque
+        32-byte handle. The plaintext never touches Sepolia, not even for a moment.
       </>
     ),
+    to: '/docs/problem-and-solution',
   },
   {
-    title: 'Focus on What Matters',
-    Svg: require('@site/static/img/undraw_docusaurus_tree.svg').default,
+    tag: 'settlement',
+    title: 'Real Nox settlement',
     description: (
       <>
-        Docusaurus lets you focus on your docs, and we&apos;ll do the chores. Go
-        ahead and move your docs into the <code>docs</code> directory.
+        <code>settleBatch()</code> nets buys and sells entirely from composed Nox primitives and
+        moves real confidential cUSDC balances, not bookkeeping in a mapping.
       </>
     ),
+    to: '/docs/how-it-works/architecture',
   },
   {
-    title: 'Powered by React',
-    Svg: require('@site/static/img/undraw_docusaurus_react.svg').default,
+    tag: 'composable',
+    title: 'Public Uniswap reference',
     description: (
       <>
-        Extend or customize your website layout by reusing React. Docusaurus can
-        be extended while reusing the same header and footer.
+        Execution price is read live from a real, unmodified Uniswap V3 pool on Sepolia, called
+        through a <code>view</code>-only adapter, never forked or wrapped.
       </>
     ),
+    to: '/docs/how-it-works/architecture',
+  },
+  {
+    tag: 'auditable',
+    title: 'Audited disclosure',
+    description: (
+      <>
+        A compliance viewer can decrypt every fill; each trader only their own; a stranger nothing at
+        all, a real on-chain ACL, proven across four distinct accounts.
+      </>
+    ),
+    to: '/docs/using-it/user-flows',
   },
 ];
 
-function Feature({title, Svg, description}: FeatureItem) {
+function Feature({tag, title, description, to}: FeatureItem) {
   return (
-    <div className={clsx('col col--4')}>
-      <div className="text--center">
-        <Svg className={styles.featureSvg} role="img" />
-      </div>
-      <div className="text--center padding-horiz--md">
-        <Heading as="h3">{title}</Heading>
-        <p>{description}</p>
-      </div>
+    <div className="col col--3">
+      <Link to={to} className={styles.featureCard}>
+        <span className={styles.featureTag}>{tag}</span>
+        <Heading as="h3" className={styles.featureTitle}>
+          {title}
+        </Heading>
+        <p className={styles.featureBody}>{description}</p>
+      </Link>
     </div>
   );
 }
@@ -60,9 +75,12 @@ export default function HomepageFeatures(): ReactNode {
   return (
     <section className={styles.features}>
       <div className="container">
+        <Heading as="h2" className={styles.featuresHeading}>
+          What makes it real
+        </Heading>
         <div className="row">
-          {FeatureList.map((props, idx) => (
-            <Feature key={idx} {...props} />
+          {FeatureList.map((props) => (
+            <Feature key={props.title} {...props} />
           ))}
         </div>
       </div>

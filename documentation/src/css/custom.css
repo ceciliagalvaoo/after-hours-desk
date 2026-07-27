@@ -1,23 +1,61 @@
 /**
- * Any CSS included here will be global. The classic template
- * bundles Infima by default. Infima is a CSS framework designed to
- * work well for content-centric websites.
+ * After Hours Desk documentation theme: "Confidential-Noir".
  *
- * Palette matches the app's own Confidential-Noir aesthetic — iExec yellow
- * (#F5C518) as the single accent color, near-black background in dark mode.
+ * This mirrors the product's own front-end (frontend/src/styles/theme.css + frontend/index.html):
+ * near-black surfaces, iExec yellow (#f5c518) as the ONLY accent, phosphor green (#3ddc84) for
+ * links / live data, Space Grotesk for display + body, JetBrains Mono for code and every number.
+ * Dark is the product identity; a restrained light mode is kept for accessibility.
  */
+
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+
+/* ---- App tokens, exposed for MDX + module CSS ------------------------------------------------ */
 :root {
-  --ifm-color-primary: #b3900f;
-  --ifm-color-primary-dark: #a18211;
-  --ifm-color-primary-darker: #987c10;
-  --ifm-color-primary-darkest: #7d660d;
-  --ifm-color-primary-light: #c59e17;
-  --ifm-color-primary-lighter: #cca426;
-  --ifm-color-primary-lightest: #d9b750;
-  --ifm-code-font-size: 95%;
-  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
+  --ahd-bg: #0b0b0f;
+  --ahd-bg-raised: #131318;
+  --ahd-bg-panel: #17171d;
+  --ahd-border: #2a2a33;
+  --ahd-border-soft: #1e1e25;
+  --ahd-text: #e9e7e0;
+  --ahd-text-dim: #8d8b96;
+  --ahd-text-faint: #55535f;
+
+  --ahd-yellow: #f5c518;
+  --ahd-yellow-dim: #8a7011;
+  --ahd-yellow-glow: rgba(245, 197, 24, 0.35);
+
+  --ahd-phosphor: #3ddc84;
+  --ahd-phosphor-dim: #1f6b42;
+  --ahd-amber: #ffb020;
+  --ahd-danger: #e5484d;
+
+  --ahd-font-display: 'Space Grotesk', 'Segoe UI', system-ui, sans-serif;
+  --ahd-font-mono: 'JetBrains Mono', 'Space Mono', ui-monospace, 'SFMono-Regular', monospace;
+  --ahd-radius: 3px;
 }
 
+/* ---- Infima base + fonts --------------------------------------------------------------------- */
+:root {
+  --ifm-font-family-base: var(--ahd-font-display);
+  --ifm-font-family-monospace: var(--ahd-font-mono);
+  --ifm-heading-font-family: var(--ahd-font-display);
+  --ifm-code-font-size: 92%;
+  --ifm-code-border-radius: var(--ahd-radius);
+  --ifm-card-border-radius: var(--ahd-radius);
+  --ifm-global-radius: var(--ahd-radius);
+
+  /* Light mode: yellow is dark enough to read on white, so darken the ramp for AA contrast. */
+  --ifm-color-primary: #8a6f0d;
+  --ifm-color-primary-dark: #7c640c;
+  --ifm-color-primary-darker: #755e0b;
+  --ifm-color-primary-darkest: #604d09;
+  --ifm-color-primary-light: #987b0e;
+  --ifm-color-primary-lighter: #9f810f;
+  --ifm-color-primary-lightest: #b89512;
+  --docusaurus-highlighted-code-line-bg: rgba(245, 197, 24, 0.12);
+}
+
+/* ---- Dark mode = the product identity -------------------------------------------------------- */
 [data-theme='dark'] {
   --ifm-color-primary: #f5c518;
   --ifm-color-primary-dark: #dcb115;
@@ -26,6 +64,134 @@
   --ifm-color-primary-light: #f6cd35;
   --ifm-color-primary-lighter: #f7d146;
   --ifm-color-primary-lightest: #f9dc72;
-  --ifm-background-color: #0b0b0f;
-  --docusaurus-highlighted-code-line-bg: rgba(245, 197, 24, 0.1);
+
+  --ifm-background-color: var(--ahd-bg);
+  --ifm-background-surface-color: var(--ahd-bg-raised);
+  --ifm-navbar-background-color: rgba(11, 11, 15, 0.85);
+  --ifm-footer-background-color: #08080b;
+  --ifm-color-content: var(--ahd-text);
+  --ifm-color-content-secondary: var(--ahd-text-dim);
+  --ifm-heading-color: var(--ahd-text);
+  --ifm-toc-border-color: var(--ahd-border);
+  --ifm-table-border-color: var(--ahd-border);
+  --ifm-hr-border-color: var(--ahd-border-soft);
+  --ifm-blockquote-color: var(--ahd-text-dim);
+  --ifm-card-background-color: var(--ahd-bg-panel);
+  --ifm-menu-color: var(--ahd-text-dim);
+  --ifm-menu-color-active: var(--ahd-yellow);
+  --ifm-code-background: #1c1c22;
+  --ifm-link-color: var(--ahd-phosphor);
+  --ifm-link-hover-color: var(--ahd-yellow);
+
+  --docusaurus-highlighted-code-line-bg: rgba(245, 197, 24, 0.14);
+}
+
+/* ---- Typography ------------------------------------------------------------------------------ */
+[data-theme='dark'] body {
+  background-image:
+    radial-gradient(circle at 18% -5%, rgba(245, 197, 24, 0.05), transparent 42%),
+    radial-gradient(circle at 100% 100%, rgba(61, 220, 132, 0.03), transparent 40%);
+  background-attachment: fixed;
+}
+
+h1, h2, h3, h4, h5, h6,
+.navbar__title,
+.hero__title {
+  font-family: var(--ahd-font-display);
+  letter-spacing: 0.005em;
+}
+
+.markdown h1:first-child {
+  letter-spacing: -0.01em;
+}
+
+/* Links: phosphor with yellow hover, mirroring the app. */
+[data-theme='dark'] a {
+  color: var(--ahd-phosphor);
+  text-decoration: none;
+}
+[data-theme='dark'] a:hover {
+  color: var(--ahd-yellow);
+  text-decoration: underline;
+}
+
+/* ---- Navbar / footer ------------------------------------------------------------------------- */
+[data-theme='dark'] .navbar {
+  backdrop-filter: saturate(140%) blur(8px);
+  border-bottom: 1px solid var(--ahd-border-soft);
+}
+[data-theme='dark'] .footer {
+  border-top: 1px solid var(--ahd-border-soft);
+}
+
+/* ---- Sidebar --------------------------------------------------------------------------------- */
+[data-theme='dark'] .menu__link--active {
+  color: var(--ahd-yellow);
+  background: rgba(245, 197, 24, 0.08);
+}
+[data-theme='dark'] .menu__list-item-collapsible:hover,
+[data-theme='dark'] .menu__link:hover {
+  background: var(--ahd-bg-raised);
+}
+.menu__link--sublist-caret,
+.menu__list-item-collapsible {
+  font-family: var(--ahd-font-display);
+}
+
+/* ---- Cards / tables / code ------------------------------------------------------------------- */
+[data-theme='dark'] .card {
+  border: 1px solid var(--ahd-border);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+}
+[data-theme='dark'] .table-of-contents__link--active {
+  color: var(--ahd-yellow);
+}
+
+code {
+  font-family: var(--ahd-font-mono);
+}
+[data-theme='dark'] :not(pre) > code {
+  border: 1px solid var(--ahd-border-soft);
+}
+
+/* ---- Admonitions get the yellow-accent treatment in dark ------------------------------------- */
+[data-theme='dark'] .theme-admonition {
+  background: var(--ahd-bg-raised);
+  border: 1px solid var(--ahd-border);
+}
+[data-theme='dark'] .theme-admonition-tip {
+  border-left: 3px solid var(--ahd-phosphor);
+}
+[data-theme='dark'] .theme-admonition-note,
+[data-theme='dark'] .theme-admonition-info {
+  border-left: 3px solid var(--ahd-yellow);
+}
+[data-theme='dark'] .theme-admonition-warning,
+[data-theme='dark'] .theme-admonition-caution {
+  border-left: 3px solid var(--ahd-amber);
+}
+[data-theme='dark'] .theme-admonition-danger {
+  border-left: 3px solid var(--ahd-danger);
+}
+
+/* ---- Screenshots + the Broker pixel gifs ----------------------------------------------------- */
+.markdown img {
+  border-radius: var(--ahd-radius);
+  max-width: 100%;
+}
+[data-theme='dark'] .markdown img[src$='.png']:not([src*='/broker/']) {
+  border: 1px solid var(--ahd-border);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+/* The Broker mascot GIFs are 256px pixel art, render crisp and keep them small + purposeful. */
+.markdown img[src$='.gif'],
+.markdown img[src*='/broker/'] {
+  image-rendering: pixelated;
+  width: 132px;
+  height: auto;
+  border: 0;
+  box-shadow: none;
+  display: block;
+  margin: 1.25rem 0;
 }

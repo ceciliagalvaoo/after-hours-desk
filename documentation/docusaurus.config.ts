@@ -96,9 +96,9 @@ const config: Config = {
           title: 'Documentation',
           items: [
             {label: 'Problem & Solution', to: '/docs/problem-and-solution'},
-            {label: 'Architecture', to: '/docs/architecture'},
-            {label: 'User Flows & UX', to: '/docs/user-flows'},
-            {label: 'Roadmap', to: '/docs/roadmap'},
+            {label: 'Architecture', to: '/docs/how-it-works/architecture'},
+            {label: 'User Flows & UX', to: '/docs/using-it/user-flows'},
+            {label: 'Roadmap', to: '/docs/project/roadmap'},
           ],
         },
         {
@@ -108,6 +108,15 @@ const config: Config = {
             {label: 'GitHub Repository', href: 'https://github.com/ceciliagalvaoo/after-hours-desk'},
             {label: 'feedback.md', href: 'https://github.com/ceciliagalvaoo/after-hours-desk/blob/master/feedback.md'},
             {label: 'Live contract (Etherscan)', href: 'https://sepolia.etherscan.io/address/0x46b72a2615de7351699dcd5a64b854746a29fdb8'},
+          ],
+        },
+        {
+          title: 'Authors',
+          items: [
+            {label: 'Cecília Galvão · GitHub', href: 'https://github.com/ceciliagalvaoo'},
+            {label: 'Cecília Galvão · LinkedIn', href: 'https://www.linkedin.com/in/ceciliagalvaoo'},
+            {label: 'Pablo Azevedo · GitHub', href: 'https://github.com/zzaved'},
+            {label: 'Pablo Azevedo · LinkedIn', href: 'https://www.linkedin.com/in/pabloazevedo'},
           ],
         },
         {
