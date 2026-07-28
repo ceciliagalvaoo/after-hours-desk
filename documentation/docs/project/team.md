@@ -20,6 +20,8 @@ After Hours Desk was built by:
     <a href="https://github.com/ceciliagalvaoo">GitHub ↗</a>
     {' · '}
     <a href="https://www.linkedin.com/in/ceciliagalvaoo">LinkedIn ↗</a>
+    {' · '}
+    Discord: ceciliabtriz
   </p>
 </div>
 
@@ -31,6 +33,8 @@ After Hours Desk was built by:
     <a href="https://github.com/zzaved">GitHub ↗</a>
     {' · '}
     <a href="https://www.linkedin.com/in/pabloazevedo">LinkedIn ↗</a>
+    {' · '}
+    Discord: zzaved
   </p>
 </div>
 

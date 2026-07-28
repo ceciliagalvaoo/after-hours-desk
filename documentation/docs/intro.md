@@ -9,7 +9,8 @@ sidebar_position: 1
 ![The Broker, explaining the desk](/img/broker/talk.gif)
 
 Built by [Cecília Galvão](https://github.com/ceciliagalvaoo) and [Pablo Azevedo](https://github.com/zzaved)
-for the **iExec WTF Hackathon (Summer Edition)**. Your host for this walkthrough is **The Broker**,
+for the **iExec WTF Hackathon (Summer Edition)**. On Discord, Cecília is `ceciliabtriz` and Pablo is
+`zzaved`. Your host for this walkthrough is **The Broker**,
 the desk's noir mascot, who shows up whenever there's something worth pointing at.
 
 🚀 **[Try the live app →](https://after-hours-desk.onrender.com)**: no setup required, the public tape and

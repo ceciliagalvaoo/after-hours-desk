@@ -10,7 +10,7 @@ After Hours Desk was built by:
 
 **Smart Contracts · Backend · Blockchain**
 
-[GitHub ↗](https://github.com/ceciliagalvaoo) · [LinkedIn ↗](https://www.linkedin.com/in/ceciliagalvaoo)
+[GitHub ↗](https://github.com/ceciliagalvaoo) · [LinkedIn ↗](https://www.linkedin.com/in/ceciliagalvaoo) · Discord: ceciliabtriz
 
 ### Pablo Azevedo
 
@@ -18,7 +18,7 @@ After Hours Desk was built by:
 
 **Full-Stack · Frontend · Product**
 
-[GitHub ↗](https://github.com/zzaved) · [LinkedIn ↗](https://www.linkedin.com/in/pabloazevedo)
+[GitHub ↗](https://github.com/zzaved) · [LinkedIn ↗](https://www.linkedin.com/in/pabloazevedo) · Discord: zzaved
 
 Built for the **iExec WTF Hackathon (Summer Edition)**, targeting the challenge to add privacy to
 existing, public-by-design infrastructure using [Nox](https://docs.iex.ec/nox-protocol/getting-started/welcome)

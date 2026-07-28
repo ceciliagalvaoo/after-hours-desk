@@ -74,6 +74,7 @@ type Member = {
   broker: string;
   github: string;
   linkedin: string;
+  discord: string;
 };
 
 const TEAM: Member[] = [
@@ -84,6 +85,7 @@ const TEAM: Member[] = [
     broker: '/img/broker/money.gif',
     github: 'https://github.com/ceciliagalvaoo',
     linkedin: 'https://www.linkedin.com/in/ceciliagalvaoo',
+    discord: 'ceciliabtriz',
   },
   {
     name: 'Pablo Azevedo',
@@ -92,6 +94,7 @@ const TEAM: Member[] = [
     broker: '/img/broker/smirk.gif',
     github: 'https://github.com/zzaved',
     linkedin: 'https://www.linkedin.com/in/pabloazevedo',
+    discord: 'zzaved',
   },
 ];
 
@@ -109,6 +112,7 @@ function TeamMember({member}: {member: Member}) {
       <div className={styles.teamLinks}>
         <a className={styles.teamLink} href={member.github}>GitHub ↗</a>
         <a className={styles.teamLink} href={member.linkedin}>LinkedIn ↗</a>
+        <span className={styles.teamLink}>Discord: {member.discord}</span>
       </div>
     </div>
   );
