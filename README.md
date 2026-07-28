@@ -159,18 +159,22 @@ Every claim here has a real Sepolia transaction behind it, not a unit test again
 <table>
   <tr>
     <td align="center" width="50%">
+      <img src="documentation/static/img/team/Cecilia.png" width="150" alt="Cecília Galvão" /><br/><br/>
       <b>Cecília Galvão</b><br/>
       <sub>Smart Contracts · Backend · Blockchain</sub>
       <br/><br/>
       <a href="https://www.linkedin.com/in/ceciliagalvaoo/"><img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn" /></a>
       <a href="https://github.com/ceciliagalvaoo"><img src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white" alt="GitHub" /></a>
+      <img src="https://img.shields.io/badge/Discord-ceciliabtriz-5865F2?style=for-the-badge&logo=discord&logoColor=white" alt="Discord: ceciliabtriz" />
     </td>
     <td align="center" width="50%">
+      <img src="documentation/static/img/team/Pablo.png" width="150" alt="Pablo Azevedo" /><br/><br/>
       <b>Pablo Azevedo</b><br/>
       <sub>Full-Stack · Frontend · Product</sub>
       <br/><br/>
       <a href="https://www.linkedin.com/in/pabloazevedo"><img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn" /></a>
       <a href="https://github.com/zzaved"><img src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white" alt="GitHub" /></a>
+      <img src="https://img.shields.io/badge/Discord-zzaved-5865F2?style=for-the-badge&logo=discord&logoColor=white" alt="Discord: zzaved" />
     </td>
   </tr>
 </table>
