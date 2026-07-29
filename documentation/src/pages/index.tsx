@@ -105,7 +105,7 @@ function TeamMember({member}: {member: Member}) {
     <div className={styles.teamCard}>
       <div className={styles.teamPhotoWrap}>
         <img src={photo} alt={member.name} className={styles.teamPhoto} />
-        <img src={broker} alt="" className={styles.teamBroker} />
+        <img src={broker} alt={`The Broker mascot, animated beside ${member.name}`} className={styles.teamBroker} />
       </div>
       <p className={styles.teamName}>{member.name}</p>
       <p className={styles.teamRole}>{member.role}</p>

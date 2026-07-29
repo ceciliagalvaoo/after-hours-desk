@@ -31,6 +31,52 @@ Suggested entry format:
 
 ---
 
+## At a glance
+
+Before the phase-by-phase log below, three diagrams summarize what the desk
+actually does and where Nox/iExec specifically shaped the design. Everything in
+them is expanded — with dates and sources — in the entries that follow. The
+first two are here; the third (the redeploy coupling Phase 4 uncovered) appears
+inline in its own entry.
+
+### The confidential settlement flow
+
+An order's amount is encrypted in the browser and never leaves the machine in
+the clear; only an opaque handle is ever stored on-chain. Settlement runs
+off-chain inside a hardware-attested Nox TEE, netting the batch purely from
+composed primitives (`safeAdd`, `lt` + `select`, `safeSub`, `transfer`) and
+moving real confidential cUSDC. Only the matched aggregate and the live Uniswap
+V3 execution price go public — individual order sizes stay sealed, except to the
+trader who owns a fill and to the compliance auditor through an on-chain ACL.
+
+<div align="center">
+
+**Image 1: The confidential settlement flow, from browser-side encryption to selective disclosure**
+
+<img src="documentation/static/img/diagrams/01-confidential-settlement-flow.png" alt="Top-to-bottom flowchart in four stages. Stage one, in the browser: the trader types an amount, which encryptInput turns into an externalEuint256 plus a proof, and only an opaque handle leaves the machine. Stage two, on-chain on public Ethereum Sepolia: AfterHoursDesk stores the encrypted order, and once both sides are present anyone can trigger settleBatch with no privileged operator. Stage three, off-chain in a confidential Nox TEE: the batch is netted with safeAdd on the buy side and the sell side, lt plus select to take matched equals the minimum of buy and sell, safeSub twice for the residuals, and transfer to move real confidential cUSDC between the two traders. Stage four, selective disclosure after settlement lands on Sepolia: the matched aggregate and the live Uniswap V3 execution price become public (highlighted green), the trader decrypts only their own fill, the auditor decrypts every fill through the ViewerRegistry ACL, and everyone else sees individual order sizes stay sealed (highlighted red)." width="720" />
+
+*Source: The authors (2026).*
+
+</div>
+
+### Where Nox shaped the build, phase by phase
+
+This log is organized by build phase, and each phase carried its own piece of
+Nox/iExec friction that changed a concrete design decision. The map below is the
+short version; every node is a full, dated entry further down.
+
+<div align="center">
+
+**Image 2: The Nox/iExec friction that shaped each build phase**
+
+<img src="documentation/static/img/diagrams/02-nox-friction-by-phase.png" alt="Vertical flowchart of seven build phases, each a box of notes connected top to bottom. Phase 0, Foundation: spikes prove batch netting is expressible from primitives alone, encryptInput supports five types, and the Sepolia config must be forced. Phase 1, cToken: the ERC-7984 wrapper is confirmed real, and getAddress via getAddresses index zero breaks local multi-account tests. Phase 2, Desk core: in the ACL, msg.sender is the calling contract rather than the handle's author, leading to the allowTransient pattern. Phase 3, ACL and Viewer: viewer and admin grants are irrevocable, so complianceViewer is made immutable with no half-working rotation. Phase 4, Uniswap composability: toEuint256 is always public so it is routed through add of zero, and setDesk being one-time-use forces a second redeploy. Phase 5, Frontend: the public Sepolia RPC caps eth_getLogs at fifty thousand blocks, requiring windowed queries. Phase 6, End-to-end and proof: two real wallets, in-UI faucet plus wrap onboarding, and every fill auditable." width="440" />
+
+*Source: The authors (2026).*
+
+</div>
+
+---
+
 ## Phase 0 — Foundation
 
 ### Phase 0 — Kickoff — 2026-07-20
@@ -1350,6 +1396,16 @@ redeploys, at no additional redeploy cost. If a future phase changes the
 desk's constructor again, this same cost (a fresh `ViewerRegistry`) will
 repeat — worth revisiting this design decision if the desk keeps changing
 its signature frequently (out of scope for this phase to decide).
+
+<div align="center">
+
+**Image 3: The one-time-use `setDesk` coupling — why every desk redeploy forces a fresh `ViewerRegistry`**
+
+<img src="documentation/static/img/diagrams/03-setdesk-redeploy-coupling.png" alt="Top-to-bottom decision flowchart. It starts when the AfterHoursDesk constructor changes, for example adding a new argument such as viewerRegistry then priceOracle, which forces a redeploy of AfterHoursDesk. A decision diamond asks whether to reuse the existing ViewerRegistry. Trying setDesk with the new desk address hits the guard desk not equal to address zero, which reverts with DeskAlreadySet because the setter is one-time-use (highlighted red); therefore a fresh ViewerRegistry must be minted first by re-running the re-runnable 04-deploy-viewer-registry script, and only then running 07-deploy-after-hours-desk (highlighted green). A contrasting branch notes that UniswapV3PriceReader is stateless, has no pairing with the desk, and can be reused indefinitely (highlighted blue)." width="500" />
+
+*Source: The authors (2026).*
+
+</div>
 
 ---
 
