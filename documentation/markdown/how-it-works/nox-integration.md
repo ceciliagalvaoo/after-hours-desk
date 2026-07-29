@@ -3,8 +3,7 @@
 This page distills the real, hands-on findings from building on Nox for this project. The full,
 dated, entry-by-entry log, including every source consulted and every decision made because of
 it, lives in [`feedback.md`](https://github.com/ceciliagalvaoo/after-hours-desk/blob/master/feedback.md)
-at the repo root, updated continuously across every phase of building this, not written the night
-before submission.
+at the repo root, updated continuously across every phase of building this.
 
 ## Nox is TEE-based, not FHE, and that changes how you think about it
 
@@ -172,11 +171,3 @@ blocks with "Archive requests require a personal token", regardless of how recen
 This was diagnosed with direct `curl` bisection against the real endpoint, not guessed at, and
 fixed by switching to a different free provider confirmed to serve the exact range this app needs
 against the real deployed contracts.
-
-## Read the full log
-
-This page is a distillation. The complete, dated, phase-by-phase account, including every source
-URL, every package version pinned and why, every dead end investigated before being ruled out, and
-every self-correction made after an internal review, is
-[`feedback.md`](https://github.com/ceciliagalvaoo/after-hours-desk/blob/master/feedback.md) in the
-repository root.

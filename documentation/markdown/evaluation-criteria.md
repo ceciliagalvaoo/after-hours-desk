@@ -47,8 +47,7 @@ For this criterion, see the address table on the [home page](./intro.md).
 
 [`feedback.md`](https://github.com/ceciliagalvaoo/after-hours-desk/blob/master/feedback.md) is a
 dated, incremental log of the real friction hit while integrating Nox, including several
-documentation-versus-shipped-code discrepancies, written as it happened rather than backfilled the
-night before submission.
+documentation-versus-shipped-code discrepancies, written as it happened rather than backfilled after the fact.
 
 For this criterion, read [Nox Integration](./how-it-works/nox-integration.md), which distills it.
 

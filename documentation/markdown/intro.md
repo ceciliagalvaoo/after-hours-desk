@@ -40,7 +40,7 @@ ever decrypt their own.
 |---|---|
 | `MockUSDC` | [`0x68df2...aa49c`](https://sepolia.etherscan.io/address/0x68df20bfc035f6496e0593626579d00139aaa49c#code) |
 | `ConfidentialUSDC` (cUSDC) | [`0x45dd5...37e4e`](https://sepolia.etherscan.io/address/0x45dd58bea3f072ce8cf704a43abc41be27337e4e#code) |
-| `ViewerRegistry` | [`0x7f550...33f2f8`](https://sepolia.etherscan.io/address/0x7f5508360b37f41a6cca6c34aca233500b6c1678#code) |
+| `ViewerRegistry` | [`0x7f550...c1678`](https://sepolia.etherscan.io/address/0x7f5508360b37f41a6cca6c34aca233500b6c1678#code) |
 | `UniswapV3PriceReader` | [`0x20f68...c5554e`](https://sepolia.etherscan.io/address/0x20f68c8d394dabee5fea08a21a1596eb09c5554e#code) |
 | `AfterHoursDesk` | [`0x46b72...9fdb8`](https://sepolia.etherscan.io/address/0x46b72a2615de7351699dcd5a64b854746a29fdb8#code) |
 

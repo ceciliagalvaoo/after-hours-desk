@@ -95,7 +95,7 @@ poll/retry**, never as a synchronous confirmation.
 
 `ConfidentialUSDC` (cUSDC) is a thin shell over `ERC20ToERC7984Wrapper` from
 `@iexec-nox/nox-confidential-contracts`, confirmed by reading the installed source rather than
-trusting the name from a brief. `wrap` takes a plaintext amount (the underlying ERC-20 is public
+trusting the package name at face value. `wrap` takes a plaintext amount (the underlying ERC-20 is public
 anyway); `unwrap` never does. A non-obvious property, kept on purpose: the wrapper's
 `confidentialTotalSupply()` is decryptable by **no one** — not the deployer, not the public — because
 the base only grants the contract itself internal access. For a dark pool, hiding even aggregate

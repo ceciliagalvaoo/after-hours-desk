@@ -148,7 +148,7 @@ Full instructions are in [Setup & Deployment](https://ceciliagalvaoo.github.io/a
 
 ## The Nox integration log, `feedback.md`
 
-[`feedback.md`](feedback.md) is a scored hackathon deliverable: a dated, incremental log of the real friction hit while integrating Nox, written as it happened rather than backfilled the night before submission. It records several documentation-versus-shipped-code discrepancies found and worked around, and the reasoning behind every non-obvious decision (spot price vs TWAP, pro-rata dust, the single-Runner async settlement model). It is distilled into the [Nox Integration](https://ceciliagalvaoo.github.io/after-hours-desk/docs/how-it-works/nox-integration) page in the docs.
+[`feedback.md`](feedback.md) is a scored hackathon deliverable: a dated, incremental log of the real friction hit while integrating Nox, written as it happened rather than backfilled after the fact. It records several documentation-versus-shipped-code discrepancies found and worked around, and the reasoning behind every non-obvious decision (spot price vs TWAP, pro-rata dust, the single-Runner async settlement model). It is distilled into the [Nox Integration](https://ceciliagalvaoo.github.io/after-hours-desk/docs/how-it-works/nox-integration) page in the docs.
 
 ## Validated end-to-end, not just in theory
 
