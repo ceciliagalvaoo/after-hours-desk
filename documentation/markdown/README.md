@@ -8,10 +8,6 @@ Same content, same diagrams, same screenshots, rendered with GitHub-Flavored Mar
 Docusaurus. Mermaid flowcharts render natively on GitHub; the admonitions become GitHub alert
 blockquotes; every image points back into `documentation/static/img/`. The Broker still runs the tour.
 
-<p align="center">
-  <a href="https://youtu.be/ahGHJuBm0xs"><img src="https://img.youtube.com/vi/ahGHJuBm0xs/maxresdefault.jpg" alt="Watch the After Hours Desk demo on YouTube: a 3-minute walkthrough of the confidential dark pool" width="560" /></a>
-</p>
-
 **[🎬 Watch the demo →](https://youtu.be/ahGHJuBm0xs)**
 
 ## Table of contents
