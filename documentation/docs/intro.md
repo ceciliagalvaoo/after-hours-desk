@@ -24,6 +24,14 @@ contracts, nothing in this documentation is mocked or staged.
 
 :::
 
+## Watch the demo
+
+<div style={{position:'relative',paddingBottom:'56.25%',height:0,overflow:'hidden',maxWidth:'760px',margin:'0 auto',borderRadius:'8px'}}>
+  <iframe style={{position:'absolute',top:0,left:0,width:'100%',height:'100%',border:0}} src="https://www.youtube.com/embed/ahGHJuBm0xs" title="After Hours Desk demo" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen></iframe>
+</div>
+
+<div style={{textAlign:'center',opacity:0.8,marginTop:'0.8rem'}}>The transfer is public. The size is not.</div>
+
 ## What this is, in one paragraph
 
 Traders submit encrypted order sizes: a size is encrypted **in the browser** before anything is

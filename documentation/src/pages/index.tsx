@@ -13,6 +13,7 @@ const REPO = 'https://github.com/ceciliagalvaoo/after-hours-desk';
 const LIVE_APP = 'https://after-hours-desk.onrender.com';
 const FEEDBACK = 'https://github.com/ceciliagalvaoo/after-hours-desk/blob/master/feedback.md';
 const X_URL = 'https://x.com/AfterHoursDesk';
+const VIDEO = 'https://youtu.be/ahGHJuBm0xs';
 
 function HomepageHeader() {
   const {siteConfig} = useDocusaurusContext();
@@ -39,7 +40,10 @@ function HomepageHeader() {
         </p>
 
         <div className={styles.buttons}>
-          <Link className={clsx(styles.btn, styles.btnPrimary)} to="/docs/intro">
+          <Link className={clsx(styles.btn, styles.btnPrimary)} href={VIDEO}>
+            🎬 Watch the demo
+          </Link>
+          <Link className={styles.btn} to="/docs/intro">
             Read the docs
           </Link>
           <Link className={styles.btn} href={LIVE_APP}>
@@ -126,6 +130,28 @@ export default function Home(): ReactNode {
       description="A confidential OTC dark-pool settlement desk built on Nox (iExec), live on Ethereum Sepolia.">
       <HomepageHeader />
       <main>
+        <section style={{padding: '3rem 0 1rem'}}>
+          <div className="container">
+            <Heading as="h2" className={styles.sectionHeading}>
+              Watch the demo
+            </Heading>
+            <div style={{maxWidth: 820, margin: '0 auto'}}>
+              <div style={{position: 'relative', paddingBottom: '56.25%', height: 0, overflow: 'hidden', borderRadius: 8}}>
+                <iframe
+                  style={{position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', border: 0}}
+                  src="https://www.youtube.com/embed/ahGHJuBm0xs"
+                  title="After Hours Desk demo"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowFullScreen
+                />
+              </div>
+              <p style={{textAlign: 'center', opacity: 0.8, marginTop: '0.8rem'}}>
+                The transfer is public. The size is not.
+              </p>
+            </div>
+          </div>
+        </section>
+
         <section className={styles.statsSection}>
           <div className="container">
             <div className={styles.statsGrid}>

@@ -19,6 +19,12 @@ Uniswap price strip render real Sepolia data immediately, even without a wallet.
 > today. Every screenshot is a real screenshot of the real application, running against those real
 > contracts, nothing in this documentation is mocked or staged.
 
+## Watch the demo
+
+[![Watch the After Hours Desk demo on YouTube: a 3-minute walkthrough of the confidential dark pool](https://img.youtube.com/vi/ahGHJuBm0xs/maxresdefault.jpg)](https://youtu.be/ahGHJuBm0xs)
+
+*The transfer is public. The size is not.*
+
 ## What this is, in one paragraph
 
 Traders submit encrypted order sizes: a size is encrypted **in the browser** before anything is
