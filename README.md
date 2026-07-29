@@ -18,8 +18,6 @@ A confidential OTC dark-pool settlement desk, built on Nox (iExec), live on Ethe
 
 ### [🎬 Watch the demo](https://youtu.be/ahGHJuBm0xs) · [🚀 Live app](https://after-hours-desk.onrender.com) · [🖼️ Screen-by-screen](https://ceciliagalvaoo.github.io/after-hours-desk/docs/using-it/user-flows) · [🧾 feedback.md](feedback.md) · [𝕏 @AfterHoursDesk](https://x.com/AfterHoursDesk)
 
-<a href="https://youtu.be/ahGHJuBm0xs"><img src="https://img.youtube.com/vi/ahGHJuBm0xs/maxresdefault.jpg" alt="Watch the After Hours Desk demo on YouTube: a 3-minute walkthrough of the confidential dark pool" width="640" /></a>
-
 </div>
 
 ---
