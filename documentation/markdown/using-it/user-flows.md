@@ -5,6 +5,9 @@ live Sepolia deployment: two genuinely distinct MetaMask wallets, real transacti
 decrypts. Nothing here was staged after the fact; this is the actual walkthrough performed to
 validate the product end to end.
 
+> [!TIP]
+> This page is the screen-by-screen walkthrough. For the same flow narrated end to end, **[watch the demo video →](https://youtu.be/ahGHJuBm0xs)** (about 3 minutes).
+
 ## Before connecting a wallet
 
 The public tape and the Uniswap price strip render real, live Sepolia data immediately, no wallet

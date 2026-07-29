@@ -60,6 +60,8 @@ For this criterion, read [Nox Integration](/docs/how-it-works/nox-integration), 
 
 ## Demo video
 
+**▶️ [Watch the demo →](https://youtu.be/ahGHJuBm0xs)** (about 3 minutes)
+
 A sharp, focused walkthrough of the real flow on live Sepolia state: an encrypted order submitted
 (MetaMask showing **"Estimated changes: No changes"**), settlement, decrypting your own fill, and
 the public reveal of the aggregate.
